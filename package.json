@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install": "npm install --prefix frontend && npm install --prefix backend",
-    "build": "cd frontend && npm run build",
-    "start": "NODE_ENV=production node backend/server.js"
-  },
+  "install": "npm install --prefix frontend && npm install --prefix backend",
+  "build": "npm run build --prefix frontend",
+  "start": "node backend/server.js"
+},
   "engines": {
     "node": "22.x"
   }
