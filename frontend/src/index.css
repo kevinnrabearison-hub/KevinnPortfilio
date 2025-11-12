@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  font-family: "poppins-black";
+  src: url("/font/Poppins-Black.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    margin: 0 5px;
+  }
+  
+  .switch > span {
+    position: absolute;
+    top: 14px;
+    pointer-events: none;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .06);
+    width: 50%;
+    text-align: center;
+  }
+  
+  .check-toggle {
+    position: absolute;
+    margin-left: -9999px;
+    visibility: hidden;
+  }
+  
+  .check-toggle + label {
+    display: block;
+    position: relative;
+    width: 97px;
+    height: 35px;
+    background-color: #F36F25;
+    border-radius: 60px;
+  }
+  
+  .check-toggle + label:before,
+  .check-toggle + label:after {
+    content: "";
+    position: absolute;
+  }
+  
+  .check-toggle + label:after {
+    top: 4px;
+    left: 4px;
+    bottom: 4px;
+    width: 48px;
+    background-color: #fff;
+    border-radius: 52px;
+    transition: margin 0.2s;
+  }
+  
+  input.check-toggle-round-flat:checked + label:after {
+    margin-left: 44px;
+  }
+  .ccc {
+    font-size: 3.4rem;
+    line-height: 120%;
+    font-family: "poppins-black";
+  }
+
+  img, svg, video, canvas, audio, iframe, embed, object {
+    display: block;
+    vertical-align: middle;
+}
+
+
+
+
+
+
+  /* animation */
+
+.text-shadow {
+  text-shadow: 0 0 7px rgba(255,255,255,.3), 0 0 3px rgba(255,255,255,.3);
+}
+
+.animation > div > div {
+  padding: 0.25rem 0.75rem;
+  margin-bottom: 2.81rem;
+  display: inline-block;
+}
+
+.animation div:first-child {
+  animation: text-animation 8s infinite;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.wave-hand {
+  display: inline-block;
+  animation: wave 2s infinite;
+  transform-origin: 70% 70%;
+}
+
+
+@keyframes text-animation {
+  0% {margin-top: 0;}
+  10% {margin-top: 0;}
+  20% {margin-top: -5.62rem;}
+  30% {margin-top: -5.62rem;}
+  40% {margin-top: -11.24rem;}
+  60% {margin-top: -11.24rem;}
+  70% {margin-top: -5.62rem;}
+  80% {margin-top: -5.62rem;}
+  90% {margin-top: 0;}
+  100% {margin-top: 0;}
+}
+
+/* === 🪄 Responsive et ajustements de l'animation accueil === */
+
+/* 🔹 Réduction automatique de la taille des textes et espacements sur petits écrans */
+@media (max-width: 768px) {
+  .ccc {
+    font-size: 2rem;
+    line-height: 120%;
+  }
+
+  .animation > div > div {
+    margin-bottom: 2rem;
+  }
+
+  @keyframes text-animation {
+    0% {margin-top: 0;}
+    10% {margin-top: 0;}
+    20% {margin-top: -3.5rem;}
+    30% {margin-top: -3.5rem;}
+    40% {margin-top: -7rem;}
+    60% {margin-top: -7rem;}
+    70% {margin-top: -3.5rem;}
+    80% {margin-top: -3.5rem;}
+    90% {margin-top: 0;}
+    100% {margin-top: 0;}
+  }
+
+  /* 👋 Adoucir un peu le mouvement de la main sur petit écran */
+  .wave-hand {
+    animation: wave 2.5s infinite ease-in-out;
+  }
+}
+
+/* 🔹 Encore plus petit (smartphone < 480px) */
+@media (max-width: 480px) {
+  .ccc {
+    font-size: 1.6rem;
+  }
+
+  .animation > div > div {
+    margin-bottom: 1.5rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .scroll-down-container svg {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+}
+/* 🌐 Responsive pour la présentation du texte principal */
+
+/* 🧩 Mobile (jusqu’à 640px) */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 1.4rem !important;
+    padding: 0.75rem !important;
+    line-height: 110% !important;
+  }
+
+  .animation {
+    height: 48px !important;
+  }
+
+  .animation > div > div {
+    font-size: 0.95rem !important;
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  .ccc {
+    font-size: 1.6rem !important;
+  }
+}
+
+/* 💻 Tablette (641px à 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  h1 {
+    font-size: 2rem !important;
+    padding: 1.5rem !important;
+    line-height: 115% !important;
+  }
+
+  .animation {
+    height: 60px !important;
+  }
+
+  .animation > div > div {
+    font-size: 1.3rem !important;
+    padding: 0.4rem 0.8rem !important;
+  }
+
+  .ccc {
+    font-size: 2.2rem !important;
+  }
+}
+
+
+
+
+  
