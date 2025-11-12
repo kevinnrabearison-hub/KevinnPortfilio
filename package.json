@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "npm ci --prefix frontend && npm run build --prefix frontend",
+    "install": "npm install --prefix frontend && npm install --prefix backend",
+    "build": "cd frontend && npm run build",
     "start": "NODE_ENV=production node backend/server.js"
   },
   "engines": {
