@@ -77,7 +77,7 @@ export default function Acceuil() {
           >
             <div className="absolute inset-0 flex justify-center items-center [backface-visibility:hidden] rounded-full border-4 border-blue-600 shadow-lg">
               <img
-                src="/kevin.jpg"
+                src="/1764860470955.jpg"
                 alt="Profil"
                 className="rounded-full w-full h-full object-cover"
               />

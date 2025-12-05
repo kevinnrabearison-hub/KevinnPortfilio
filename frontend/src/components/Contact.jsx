@@ -41,7 +41,7 @@ const Contact = () => {
 
   return (
     <motion.section
-      className="relative flex flex-col items-center justify-center min-h-screen px-4 py-10 bg-[#1e1e1e] text-white font-mono overflow-hidden"
+      className="relative flex flex-col items-center justify-center min-h-screen px-4  bg-[#1e1e1e] text-white font-mono overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -128,7 +128,7 @@ const Contact = () => {
           className={`w-full py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all ${
             isLoading
               ? "bg-[#005a9e] cursor-not-allowed opacity-80"
-              : "bg-gradient-to-r from-[#007acc] via-[#0a84ff] to-[#6a5acd] hover:from-[#0b93ff] hover:to-[#7b68ee]"
+              : "bg-blue-400 hover:from-[#0b93ff] hover:to-[#7b68ee]"
           }`}
         >
           {isLoading ? (
