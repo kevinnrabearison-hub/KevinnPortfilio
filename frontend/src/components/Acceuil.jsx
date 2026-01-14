@@ -77,14 +77,14 @@ export default function Acceuil() {
           >
             <div className="absolute inset-0 flex justify-center items-center [backface-visibility:hidden] rounded-full border-4 border-blue-600 shadow-lg">
               <img
-                src="/1764860470955.jpg"
+                src="/pdp2.jpg"
                 alt="Profil"
                 className="rounded-full w-full h-full object-cover"
               />
             </div>
             <div className="absolute inset-0 flex justify-center items-center [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-full border-4 border-blue-600 overflow-hidden">
               <img
-                src="/AMA-DC_June.jpg"
+                src="/bas.jpg"
                 alt="Avatar"
                 className="w-full h-full object-cover"
               />
