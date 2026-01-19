@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Code2, Monitor, Server, Database, Cpu, Layers } from "lucide-react";
 
+const MotionDiv = motion.div;
+const MotionH1 = motion.h1;
+
 const categories = [
   {
     title: (
@@ -73,19 +76,19 @@ export default function Competence() {
         </div>
 
         <div className="flex-1" ref={contentRef}>
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="mb-12"
           >
-            <motion.h1
+            <MotionH1
   initial={{ opacity: 0, y: 30 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.8 }}
   className="flex items-center justify-center gap-3 text-3xl font-bold text-blue-400 mb-8 text-center"
 >
-  <motion.div
+  <MotionDiv
     animate={{
       scale: [1, 1.15, 1],
       rotate: [0, 5, -5, 0],
@@ -102,10 +105,10 @@ export default function Competence() {
     }}
   >
     <Code2 size={36} className="text-blue-400" />
-  </motion.div>
+  </MotionDiv>
 
   Mes Compétences
-</motion.h1>
+</MotionH1>
     
             <p className="text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
               Je suis un{" "}
@@ -121,12 +124,12 @@ export default function Competence() {
               projets concrets avec des outils fiables, des designs soignés et
               un workflow optimisé.
             </p>
-          </motion.div>
+          </MotionDiv>
 
           {/* Catégories */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {categories.map((cat, i) => (
-              <motion.div
+              <MotionDiv
                 key={i}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -149,7 +152,7 @@ export default function Competence() {
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
         </div>

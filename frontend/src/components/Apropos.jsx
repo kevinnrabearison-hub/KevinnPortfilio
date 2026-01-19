@@ -2,26 +2,31 @@ import { motion } from "framer-motion";
 import { Lightbulb, Globe2, Code2, Mail, Phone } from "lucide-react";
 import insiLogo from "../../public/Logo INSI.png";
 
+const MotionDiv = motion.div;
+const MotionH1 = motion.h1;
+const MotionP = motion.p;
+const MotionBlockquote = motion.blockquote;
+
 const Apropos = () => {
   return (
     <section className="relative bg-[#1e1e1e] text-white font-mono min-h-screen px-6 flex justify-center items-center">
       <div className="max-w-4xl text-center">
         {/* Ligne supérieure */}
-        <motion.div
+        <MotionDiv
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
           transition={{ duration: 1.2, delay: 0.5 }}
           className="h-[2px] mb-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"
-        ></motion.div>
+        ></MotionDiv>
 
         {/* Titre */}
-        <motion.h1
+        <MotionH1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="flex items-center justify-center gap-3 text-4xl font-bold mb-6 text-blue-400"
         >
-          <motion.div
+          <MotionDiv
             animate={{
               scale: [1, 1.15, 1],
               filter: [
@@ -37,12 +42,12 @@ const Apropos = () => {
             }}
           >
             <Lightbulb size={36} className="text-yellow-400" />
-          </motion.div>
+          </MotionDiv>
           À propos de moi
-        </motion.h1>
+        </MotionH1>
 
         {/* Texte principal */}
-        <motion.p
+        <MotionP
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 0.2 }}
@@ -85,10 +90,10 @@ const Apropos = () => {
             d’innover et de laisser une empreinte dans le monde numérique
             <Globe2 size={36} className="text-blue-400 inline" />
           </span>
-        </motion.p>
+        </MotionP>
 
         {/* Citation */}
-        <motion.blockquote
+        <MotionBlockquote
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 0.4 }}
@@ -96,10 +101,10 @@ const Apropos = () => {
         >
           “Le code n’est pas seulement une suite d’instructions, c’est une façon
           de donner vie à une idée.”
-        </motion.blockquote>
+        </MotionBlockquote>
 
         {/* --- 🧾 Section contact perso --- */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
@@ -119,15 +124,15 @@ const Apropos = () => {
             <Phone size={20} className="text-green-400" />
             <span>034 98 534 09</span>
           </div>
-        </motion.div>
+        </MotionDiv>
 
         {/* Ligne inférieure */}
-        <motion.div
+        <MotionDiv
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
           transition={{ duration: 1.2, delay: 1 }}
           className="h-[2px] mt-8 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"
-        ></motion.div>
+        ></MotionDiv>
       </div>
     </section>
   );

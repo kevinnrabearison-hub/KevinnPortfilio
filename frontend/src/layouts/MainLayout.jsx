@@ -29,6 +29,9 @@ const componentsMap = {
   "Apropos.jsx": Apropos,
 };
 
+const MotionDiv = motion.div;
+const MotionButton = motion.button;
+
 const MainLayout = () => {
   const { activeTab, openTab } = useTabs();
   const ActiveComponent = componentsMap[activeTab] || Acceuil;
@@ -42,50 +45,45 @@ const MainLayout = () => {
   ];
 
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col">
-      <header className="fixed top-0 left-0 right-0 z-30 bg-[#1e1e1e] border-b border-gray-700">
+    <div className="bg-vscode-editor text-vscode-foreground min-h-screen flex flex-col">
+      <header className="fixed top-0 left-0 right-0 z-30 bg-vscode-titlebar border-b border-vscode-border">
         <Entete />
       </header>
 
-      <div className="flex flex-1 pt-12 pb-6 overflow-hidden">
-        <div className="hidden md:block w-[250px] bg-[#1a1a1a] border-r border-gray-700">
+      <div className="flex flex-1 pt-12 pb-14 md:pb-6 overflow-hidden">
+        <div className="hidden md:flex flex-shrink-0">
           <Sidebar />
+          <IndexClique />
         </div>
 
-        <div className="flex flex-1 overflow-hidden">
-          <div className="hidden md:block w-[20px] bg-[#252525] border-r border-gray-700 z-20">
-            <IndexClique />
+        <main className="flex-1 overflow-y-auto bg-vscode-editor relative z-10 scroll-smooth">
+          <div className="sticky top-0 bg-vscode-tabbar z-20 border-b border-vscode-border hidden sm:block">
+            <Tabs />
           </div>
 
-          <main className="flex-1 overflow-y-auto  bg-background relative z-10 scroll-smooth">
-            <div className="sticky top-0 bg-[#111] z-20 border-b border-gray-800 hidden sm:block">
-              <Tabs />
-            </div>
-
-            <div className="p-4 md:p-6">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                >
-                  <ActiveComponent />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </main>
-        </div>
+          <div className="p-4 md:p-6">
+            <AnimatePresence mode="wait">
+              <MotionDiv
+                key={activeTab}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+              >
+                <ActiveComponent />
+              </MotionDiv>
+            </AnimatePresence>
+          </div>
+        </main>
       </div>
 
-      <footer className="bg-[#1e1e1e] border-t border-gray-700">
+      <footer className="hidden md:block fixed bottom-0 left-0 right-0 z-30 bg-vscode-statusbar">
         <StatusBar />
       </footer>
 
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#111]/80 backdrop-blur-md border-t border-gray-700 flex justify-around items-center py-2 z-50">
         {mobileTabs.map((tab) => (
-          <motion.button
+          <MotionButton
             key={tab.id}
             onClick={() => openTab(tab.id)}
             className={`flex flex-col items-center text-xs ${
@@ -95,7 +93,7 @@ const MainLayout = () => {
             }`}
             whileTap={{ scale: 0.9 }}
           >
-            <motion.div
+            <MotionDiv
               animate={{
                 scale: activeTab === tab.id ? [1, 1.2, 1] : 1,
                 color: activeTab === tab.id ? "#3B82F6" : "#9CA3AF",
@@ -104,9 +102,9 @@ const MainLayout = () => {
               className="text-xl"
             >
               {tab.icon}
-            </motion.div>
+            </MotionDiv>
             <span className="text-[0.7rem] mt-1">{tab.label}</span>
-          </motion.button>
+          </MotionButton>
         ))}
       </div>
     </div>

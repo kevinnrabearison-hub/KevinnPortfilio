@@ -11,6 +11,11 @@ import {
   Loader2,
 } from "lucide-react";
 
+const MotionSection = motion.section;
+const MotionDiv = motion.div;
+const MotionH1 = motion.h1;
+const MotionButton = motion.button;
+
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [notification, setNotification] = useState(null);
@@ -40,25 +45,25 @@ const Contact = () => {
   };
 
   return (
-    <motion.section
+    <MotionSection
       className="relative flex flex-col items-center justify-center min-h-screen px-4  bg-[#1e1e1e] text-white font-mono overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <motion.div
+      <MotionDiv
         initial={{ width: 0 }}
         animate={{ width: "100%" }}
         transition={{ duration: 1.2 }}
         className="h-[2px] mb-6 bg-[#007ACC]  rounded-full" 
       />
 
-      <motion.h1
+      <MotionH1
         className="flex items-center justify-center gap-3 text-4xl font-bold mb-8 text-blue-400"
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
       >
-        <motion.div
+        <MotionDiv
           animate={{
             scale: [1, 1.15, 1],
             filter: [
@@ -70,9 +75,9 @@ const Contact = () => {
           transition={{ duration: 2, repeat: Infinity }}
         >
           <Send size={34} className="text-blue-400" />
-        </motion.div>
+        </MotionDiv>
         Me Contacter
-      </motion.h1>
+      </MotionH1>
 
       <form
         onSubmit={handleSubmit}
@@ -120,7 +125,7 @@ const Contact = () => {
           ></textarea>
         </div>
 
-        <motion.button
+        <MotionButton
           type="submit"
           disabled={isLoading}
           whileHover={!isLoading ? { scale: 1.05 } : {}}
@@ -142,12 +147,12 @@ const Contact = () => {
               <span>Envoyer</span>
             </>
           )}
-        </motion.button>
+        </MotionButton>
       </form>
 
       <AnimatePresence>
         {notification && (
-          <motion.div
+          <MotionDiv
             key="notif"
             initial={{ opacity: 0, x: 300 }}
             animate={{ opacity: 1, x: 0 }}
@@ -166,13 +171,13 @@ const Contact = () => {
               <XCircle size={22} className="text-white" />
             )}
             <p className="text-sm font-medium text-white">{notification.text}</p>
-          </motion.div>
+          </MotionDiv>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {isLoading && (
-          <motion.div
+          <MotionDiv
             key="overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.5 }}
@@ -182,7 +187,7 @@ const Contact = () => {
           />
         )}
       </AnimatePresence>
-    </motion.section>
+    </MotionSection>
   );
 };
 

@@ -3,9 +3,9 @@ import { FaTimesCircle, FaExclamationTriangle, FaBroadcastTower, FaBell } from "
 
 const StatusBar = () => {
   return (
-    <div className="fixed bottom-0 left-0 w-full h-6 bg-[#007acc] text-white text-xs flex items-center justify-between px-3 z-50 border-t-2 border-gray-700">
+    <div className="w-full h-6 bg-vscode-statusbar text-white text-xs flex items-center justify-between px-3 border-t border-vscode-border">
       <div className="flex items-center space-x-3">
-        <div className="bg-[#094771] px-2 py-[1px] rounded-sm cursor-pointer">🢐</div>
+        <div className="bg-vscode-statusbarHover px-2 py-[1px] rounded-sm cursor-pointer">🢐</div>
         <div className="flex items-center space-x-1">
           <FaTimesCircle className="text-red-400" />
           <span>0</span>

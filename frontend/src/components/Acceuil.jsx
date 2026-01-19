@@ -12,6 +12,10 @@ import {
 } from "react-icons/si";
 import { useTabs } from "../context/TabsContext";
 
+const MotionDiv = motion.div;
+const MotionA = motion.a;
+const MotionButton = motion.button;
+
 const categories = [
   {
     title: "Web",
@@ -66,7 +70,7 @@ export default function Acceuil() {
           className="relative mx-auto w-48 h-48"
           style={{ perspective: "1000px" }}
         >
-          <motion.div
+          <MotionDiv
             initial={{ rotateY: 0, scale: 1 }}
             animate={{
               rotateY: [0, 180, 360],
@@ -89,7 +93,7 @@ export default function Acceuil() {
                 className="w-full h-full object-cover"
               />
             </div>
-          </motion.div>
+          </MotionDiv>
         </div>
 
         <h1 className="flex flex-col items-center justify-center p-6 text-[2.6rem] leading-[120%] text-white font-[Poppins-Black]">
@@ -130,7 +134,7 @@ export default function Acceuil() {
         <h2 className="text-2xl font-bold mb-10 text-center">Mes Compétences</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {categories.map((cat, i) => (
-            <motion.div
+            <MotionDiv
               key={cat.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -146,7 +150,7 @@ export default function Acceuil() {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </MotionDiv>
           ))}
         </div>
       </section>
@@ -179,7 +183,7 @@ export default function Acceuil() {
     return (
       <div className="grid md:grid-cols-2 gap-8">
         {projets.map((projet, i) => (
-          <motion.div
+          <MotionDiv
             key={i}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -204,44 +208,43 @@ export default function Acceuil() {
 
               {projet.github && (
                 <div className="flex justify-center mt-4">
-  <motion.a
-    href={projet.github}
-    target="_blank"
-    rel="noopener noreferrer"
-    whileHover={{
-      scale: 1.07,
-      boxShadow: "0 0 25px rgba(59,130,246,0.6)",
-      backdropFilter: "blur(12px)",
-    }}
-    transition={{ type: "spring", stiffness: 200, damping: 12 }}
-    className="relative flex items-center gap-2 px-5 py-2 rounded-xl 
-               bg-gradient-to-r from-[#1e1e1e]/80 to-[#252525]/80 
-               border border-blue-500/40 text-gray-200 text-sm 
-               backdrop-blur-md hover:text-white overflow-hidden group"
-  >
-    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent 
-                     opacity-0 group-hover:opacity-100 blur-md transition-all duration-700"></span>
+                  <MotionA
+                    href={projet.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{
+                      scale: 1.07,
+                      boxShadow: "0 0 25px rgba(59,130,246,0.6)",
+                      backdropFilter: "blur(12px)",
+                    }}
+                    transition={{ type: "spring", stiffness: 200, damping: 12 }}
+                    className="relative flex items-center gap-2 px-5 py-2 rounded-xl 
+                             bg-gradient-to-r from-[#1e1e1e]/80 to-[#252525]/80 
+                             border border-blue-500/40 text-gray-200 text-sm 
+                             backdrop-blur-md hover:text-white overflow-hidden group"
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent 
+                                     opacity-0 group-hover:opacity-100 blur-md transition-all duration-700"></span>
 
-    <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-40 blur-lg"></span>
+                    <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-40 blur-lg"></span>
 
-    <Github
-      size={18}
-      className="relative z-10 text-blue-400 group-hover:text-blue-300 transition-colors"
-    />
-    <span className="relative z-10 font-medium">Voir sur GitHub</span>
-  </motion.a>
-</div>
-
+                    <Github
+                      size={18}
+                      className="relative z-10 text-blue-400 group-hover:text-blue-300 transition-colors"
+                    />
+                    <span className="relative z-10 font-medium">Voir sur GitHub</span>
+                  </MotionA>
+                </div>
               )}
             </div>
-          </motion.div>
+          </MotionDiv>
         ))}
       </div>
     );
   })()}
 
   <div className="flex justify-center mt-12">
-  <motion.button
+  <MotionButton
     onClick={() => openTab("Projet.jsx")}
     whileHover={{
       scale: 1.07,
@@ -261,7 +264,7 @@ export default function Acceuil() {
 
     <FolderOpen size={20} className="relative z-10 text-blue-200 group-hover:text-white transition-colors" />
     <span className="relative z-10 font-semibold">Voir tous mes projets →</span>
-  </motion.button>
+  </MotionButton>
 </div>
 </section>
 
@@ -277,7 +280,7 @@ export default function Acceuil() {
       Une idée de projet ? Besoin d’un développeur ? Parlons-en ensemble !
     </p>
 
-    <motion.button
+    <MotionButton
       onClick={() => openTab("Contact.jsx")}
       whileHover={{
         scale: 1.08,
@@ -297,7 +300,7 @@ export default function Acceuil() {
 
       <Send size={20} className="relative z-10 text-green-200 group-hover:text-white transition-colors" />
       <span className="relative z-10">Me contacter →</span>
-    </motion.button>
+    </MotionButton>
   </div>
 </section>
     </div>

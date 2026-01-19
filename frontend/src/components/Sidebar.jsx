@@ -34,19 +34,20 @@ const Sidebar = () => {
         setActive(id);
         if (file) openTab(file); 
       }}
-      className={`relative flex items-center justify-center h-12 w-full cursor-pointer hover:text-white
+      className={`relative flex items-center justify-center h-12 w-full cursor-pointer transition-colors
+        hover:text-white hover:bg-vscode-hover
         ${active === id ? "text-white" : "text-gray-400"}`}
       title={tooltip}
     >
       {active === id && (
-        <div className="absolute left-0 top-0 h-full w-1 bg-blue-500 rounded-r" />
+        <div className="absolute left-0 top-0 h-full w-1 bg-vscode-statusbar rounded-r" />
       )}
       <div className="text-2xl">{icon}</div>
     </div>
   );
 
   return (
-    <aside className="fixed left-0 top-13 h-[calc(100vh-4rem)] w-14 bg-[#1e1e1e] flex flex-col justify-between py-2 border-r border-gray-700 z-40">
+    <aside className="w-14 h-full bg-vscode-activitybar flex flex-col justify-between py-2 border-r border-vscode-border">
       <nav className="flex flex-col space-y-2">
         {menuItems.map((item) => (
           <Item key={item.id} {...item} />

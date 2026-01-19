@@ -13,7 +13,7 @@ import {
 
 const Entete = () => {
   return (
-    <header className="flex items-center justify-between bg-background h-12 px-2 text-white border-b border-gray-700 w-full overflow-x-auto">
+    <header className="flex items-center justify-between bg-vscode-titlebar h-12 px-2 text-white border-b border-vscode-border w-full overflow-x-auto">
       <div className="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm">
         <img src="/logo/vscode.svg" alt="Logo VSCode" className="w-5 h-5" />
         <span className="cursor-pointer hover:underline hidden sm:inline">File</span>
@@ -27,12 +27,12 @@ const Entete = () => {
         <input
           type="text"
           placeholder="🔍 Portfolio(vscode)"
-          className="w-full px-3 py-1 rounded-md bg-[#2c2c2c] text-white placeholder-gray-400 text-sm text-center outline-none focus:border-blue-500 border border-gray-700"
+          className="w-full px-3 py-1.5 rounded-md bg-vscode-hover text-white placeholder-gray-400 text-sm text-center outline-none focus:border-blue-500 border border-vscode-border"
         />
       </div>
 
       <div className="flex items-center space-x-2 sm:space-x-4">
-        <div className="hidden md:flex items-center space-x-2 sm:space-x-3 text-text">
+        <div className="hidden md:flex items-center space-x-2 sm:space-x-3 text-vscode-foreground">
           <FaThLarge className="cursor-pointer hover:bg-gray-500 p-1 rounded" />
           <FaColumns className="cursor-pointer hover:bg-gray-500 p-1 rounded" />
           <FaGripLines className="cursor-pointer hover:bg-gray-500 p-1 rounded" />

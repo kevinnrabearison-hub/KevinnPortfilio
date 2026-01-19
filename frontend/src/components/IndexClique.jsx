@@ -37,16 +37,16 @@ const IndexClique = () => {
   };
 
   return (
-    <div className="fixed left-14 top-13 h-[calc(100vh-4rem)] w-56 bg-background flex flex-col justify-between py-2 border-r border-gray-700 z-40 overflow-hidden">
+    <aside className="w-56 h-full bg-vscode-sidebar flex flex-col justify-between py-2 border-r border-vscode-border overflow-hidden">
       <div>
         {/* Titre */}
-        <div className="text-text bg-background flex justify-between items-center px-3">
+        <div className="text-vscode-foreground bg-vscode-sidebar flex justify-between items-center px-3">
           <h1 className="text-sm font-semibold">Explorer</h1>
           <h1 className="text-lg">...</h1>
         </div>
 
         {/* Dossier */}
-        <div className="px-3 py-2 text-text">
+        <div className="px-3 py-2 text-vscode-foreground">
           <div className="py-2 flex items-center justify-between gap-2">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -75,7 +75,7 @@ const IndexClique = () => {
                 <li
                   key={file}
                   onClick={() => handleFileClick(file)}
-                  className={`flex items-center justify-between hover:text-white cursor-pointer px-1 py-0.5 rounded transition-all ${
+                  className={`flex items-center justify-between cursor-pointer px-1 py-0.5 rounded transition-colors hover:text-white hover:bg-vscode-hover ${
                     file === "MonCV.json" ? "text-green-400" : ""
                   }`}
                 >
@@ -99,17 +99,17 @@ const IndexClique = () => {
       </div>
 
       {/* Bas du menu */}
-      <div className="border-t border-gray-700 text-gray-400">
-        <div className="flex items-center gap-2 px-4 py-1 text-sm hover:bg-[#2a2a2a] cursor-pointer">
+      <div className="border-t border-vscode-border text-gray-400">
+        <div className="flex items-center gap-2 px-4 py-1 text-sm hover:bg-vscode-hover cursor-pointer">
           <VscSymbolInterface className="text-lg" />
           <span>OUTLINE</span>
         </div>
-        <div className="flex items-center border-t border-gray-600 gap-2 px-4 py-1 text-sm hover:bg-[#2a2a2a] cursor-pointer">
+        <div className="flex items-center border-t border-vscode-border gap-2 px-4 py-1 text-sm hover:bg-vscode-hover cursor-pointer">
           <VscHistory className="text-lg" />
           <span>TIMELINE</span>
         </div>
       </div>
-    </div>
+    </aside>
   );
 };
 

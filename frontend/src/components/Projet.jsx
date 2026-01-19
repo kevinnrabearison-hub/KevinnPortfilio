@@ -12,6 +12,11 @@ import {
   Smartphone,
   FolderOpen,
 } from "lucide-react"; 
+
+const MotionDiv = motion.div;
+const MotionH1 = motion.h1;
+const MotionA = motion.a;
+
 const projets = [
   {
     icon: <Laptop className="text-[#1e1e1e]" size={22} />,
@@ -118,13 +123,13 @@ export default function Projet() {
         </div>
 
         <div className="flex-1" ref={contentRef}>
-          <motion.h1
+          <MotionH1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="flex items-center justify-center gap-3 text-3xl font-bold text-blue-400 mb-10 text-center"
           >
-            <motion.div
+            <MotionDiv
               animate={{
                 scale: [1, 1.15, 1],
                 rotate: [0, 8, -8, 0],
@@ -141,14 +146,14 @@ export default function Projet() {
               }}
             >
               <FolderOpen size={34} className="text-blue-400" />
-            </motion.div>
+            </MotionDiv>
             Mes Projets
-          </motion.h1>
+          </MotionH1>
 
           {/* 🧱 Liste des projets */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {projets.map((proj, i) => (
-              <motion.div
+              <MotionDiv
                 key={proj.title}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -158,7 +163,7 @@ export default function Projet() {
               >
                 {/* Icône principale */}
                 <div className="flex justify-center mb-4">
-                  <motion.div
+                  <MotionDiv
                     animate={{
                       scale: [1, 1.1, 1],
                       filter: [
@@ -175,7 +180,7 @@ export default function Projet() {
                     className={`w-16 h-16 rounded-full bg-gradient-to-r ${proj.color} flex items-center justify-center shadow-md`}
                   >
                     {proj.icon}
-                  </motion.div>
+                  </MotionDiv>
                 </div>
 
                 {/* Détails projet */}
@@ -201,7 +206,7 @@ export default function Projet() {
 
                 {/* 🔗 Bouton GitHub */}
                 <div className="flex justify-center mt-2">
-                  <motion.a
+                  <MotionA
                     href={proj.github}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -228,9 +233,9 @@ export default function Projet() {
                     <span className="relative z-10 font-medium">
                       Voir sur GitHub
                     </span>
-                  </motion.a>
+                  </MotionA>
                 </div>
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
         </div>
