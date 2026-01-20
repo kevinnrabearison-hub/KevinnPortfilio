@@ -3,14 +3,14 @@ import { FaTimesCircle, FaExclamationTriangle, FaBroadcastTower, FaBell } from "
 
 const StatusBar = () => {
   return (
-    <div className="w-full h-6 bg-vscode-statusbar text-white text-xs flex items-center justify-between px-3 border-t border-vscode-border">
-      <div className="flex items-center space-x-3">
-        <div className="bg-vscode-statusbarHover px-2 py-[1px] rounded-sm cursor-pointer">🢐</div>
-        <div className="flex items-center space-x-1">
+    <div className="w-full h-6 bg-vscode-statusbar text-white text-xs flex items-center justify-between px-2 border-t border-vscode-border">
+      <div className="flex items-center">
+        <div className="px-2 py-[1px] rounded-sm cursor-pointer hover:bg-vscode-statusbarHover">🢐</div>
+        <div className="flex items-center space-x-1 px-2 py-[1px] rounded-sm hover:bg-vscode-statusbarHover cursor-pointer">
           <FaTimesCircle className="text-red-400" />
           <span>0</span>
         </div>
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center space-x-1 px-2 py-[1px] rounded-sm hover:bg-vscode-statusbarHover cursor-pointer">
           <FaExclamationTriangle className="text-yellow-300" />
           <span>0</span>
         </div>
@@ -24,13 +24,15 @@ const StatusBar = () => {
         <span className="flex items-center space-x-1">{`{ }`} JavaScript JSX</span>
       </div>
 
-      <div className="flex items-center space-x-3">
-        <span className="flex items-center space-x-1">
+      <div className="flex items-center">
+        <span className="flex items-center space-x-1 px-2 py-[1px] rounded-sm hover:bg-vscode-statusbarHover cursor-pointer">
           <FaBroadcastTower />
           <span>Go Live</span>
         </span>
-        <span>Prettier</span>
-        <FaBell />
+        <span className="px-2 py-[1px] rounded-sm hover:bg-vscode-statusbarHover cursor-pointer">Prettier</span>
+        <span className="px-2 py-[1px] rounded-sm hover:bg-vscode-statusbarHover cursor-pointer">
+          <FaBell />
+        </span>
       </div>
     </div>
   );

@@ -65,7 +65,7 @@ export default function Competence() {
   }, []);
 
   return (
-    <section className="relative bg-[#1e1e1e] text-white font-mono min-h-screen px-6 py-12">
+    <section className="relative bg-vscode-editor text-vscode-foreground font-mono min-h-screen px-6 py-12">
       <div className="max-w-6xl mx-auto flex">
         <div className="text-gray-600 text-right pr-6 select-none">
           {Array.from({ length: lineCount }).map((_, i) => (
@@ -135,7 +135,7 @@ export default function Competence() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: i * 0.15 }}
                 viewport={{ once: true }}
-                className="bg-[#252525] rounded-xl border border-gray-700 p-6 shadow-lg hover:border-blue-500 transition-colors"
+                className="bg-vscode-sidebar rounded-xl border border-vscode-border p-6 shadow-lg hover:border-vscode-statusbar/60 transition-colors"
               >
                 <h3
                   className={`text-lg font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r ${cat.color}`}
@@ -146,7 +146,7 @@ export default function Competence() {
                   {cat.skills.map((skill, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-[#1e1e1e] border border-gray-700 rounded-lg text-sm hover:bg-blue-600/30 hover:text-blue-300 transition-all"
+                      className="px-3 py-1 bg-vscode-editor border border-vscode-border rounded-lg text-sm hover:bg-vscode-hover hover:text-blue-300 transition-all"
                     >
                       {skill}
                     </span>

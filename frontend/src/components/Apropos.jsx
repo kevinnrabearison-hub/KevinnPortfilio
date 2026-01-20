@@ -9,7 +9,7 @@ const MotionBlockquote = motion.blockquote;
 
 const Apropos = () => {
   return (
-    <section className="relative bg-[#1e1e1e] text-white font-mono min-h-screen px-6 flex justify-center items-center">
+    <section className="relative bg-vscode-editor text-vscode-foreground font-mono min-h-screen px-6 flex justify-center items-center">
       <div className="max-w-4xl text-center">
         {/* Ligne supérieure */}
         <MotionDiv
@@ -108,7 +108,7 @@ const Apropos = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6 bg-[#252526] border border-[#333] p-4 rounded-xl shadow-lg max-w-md mx-auto"
+          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6 bg-vscode-sidebar border border-vscode-border p-4 rounded-xl shadow-lg max-w-md mx-auto"
         >
           <div className="flex items-center gap-3 text-gray-300 hover:text-blue-400 transition">
             <Mail size={20} className="text-blue-400" />

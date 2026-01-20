@@ -46,7 +46,7 @@ const Contact = () => {
 
   return (
     <MotionSection
-      className="relative flex flex-col items-center justify-center min-h-screen px-4  bg-[#1e1e1e] text-white font-mono overflow-hidden"
+      className="relative flex flex-col items-center justify-center min-h-screen px-4 bg-vscode-editor text-white font-mono overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -55,7 +55,7 @@ const Contact = () => {
         initial={{ width: 0 }}
         animate={{ width: "100%" }}
         transition={{ duration: 1.2 }}
-        className="h-[2px] mb-6 bg-[#007ACC]  rounded-full" 
+        className="h-[2px] mb-6 bg-vscode-statusbar rounded-full" 
       />
 
       <MotionH1
@@ -81,7 +81,7 @@ const Contact = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-[#252526] w-full max-w-lg p-8 rounded-2xl shadow-lg border border-[#333] space-y-5 relative z-10"
+        className="bg-vscode-sidebar w-full max-w-lg p-8 rounded-2xl shadow-lg border border-vscode-border space-y-5 relative z-10"
       >
         <div className="relative">
           <User className="absolute left-3 top-3 text-[#9cdcfe]" size={20} />
@@ -93,7 +93,7 @@ const Contact = () => {
             onChange={handleChange}
             required
             disabled={isLoading}
-            className="w-full pl-10 pr-3 py-3 bg-[#1e1e1e]/80 text-white rounded-lg border border-[#333] focus:outline-none focus:ring-2 focus:ring-[#569cd6] disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full pl-10 pr-3 py-3 bg-vscode-editor/80 text-white rounded-lg border border-vscode-border focus:outline-none focus:ring-2 focus:ring-vscode-statusbar disabled:opacity-60 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -107,7 +107,7 @@ const Contact = () => {
             onChange={handleChange}
             required
             disabled={isLoading}
-            className="w-full pl-10 pr-3 py-3 bg-[#1e1e1e]/80 text-white rounded-lg border border-[#333] focus:outline-none focus:ring-2 focus:ring-[#569cd6] disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full pl-10 pr-3 py-3 bg-vscode-editor/80 text-white rounded-lg border border-vscode-border focus:outline-none focus:ring-2 focus:ring-vscode-statusbar disabled:opacity-60 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -121,7 +121,7 @@ const Contact = () => {
             onChange={handleChange}
             required
             disabled={isLoading}
-            className="w-full pl-10 pr-3 py-3 bg-[#1e1e1e]/80 text-white rounded-lg border border-[#333] focus:outline-none focus:ring-2 focus:ring-[#569cd6] resize-none disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full pl-10 pr-3 py-3 bg-vscode-editor/80 text-white rounded-lg border border-vscode-border focus:outline-none focus:ring-2 focus:ring-vscode-statusbar resize-none disabled:opacity-60 disabled:cursor-not-allowed"
           ></textarea>
         </div>
 
@@ -132,8 +132,8 @@ const Contact = () => {
           whileTap={!isLoading ? { scale: 0.97 } : {}}
           className={`w-full py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all ${
             isLoading
-              ? "bg-[#005a9e] cursor-not-allowed opacity-80"
-              : "bg-blue-400 hover:from-[#0b93ff] hover:to-[#7b68ee]"
+              ? "bg-vscode-statusbarHover cursor-not-allowed opacity-80"
+              : "bg-vscode-statusbar hover:bg-vscode-statusbarHover"
           }`}
         >
           {isLoading ? (
@@ -158,12 +158,8 @@ const Contact = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 300 }}
             transition={{ duration: 0.4 }}
-            className={`fixed top-24 right-6 z-[99999] flex items-center gap-3 px-5 py-3 rounded-xl shadow-2xl backdrop-blur-lg border 
-              ${
-                notification.type === "success"
-                  ? "#007ACC"
-                  : "#e74c3c"
-              }`}
+            className={`fixed top-24 right-6 z-[99999] flex items-center gap-3 px-5 py-3 rounded-xl shadow-2xl backdrop-blur-lg border border-vscode-border
+              ${notification.type === "success" ? "bg-vscode-statusbar" : "bg-red-600"}`}
           >
             {notification.type === "success" ? (
               <CheckCircle size={22} className="text-white" />

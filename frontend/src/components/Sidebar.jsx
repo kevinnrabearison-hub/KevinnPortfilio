@@ -35,8 +35,8 @@ const Sidebar = () => {
         if (file) openTab(file); 
       }}
       className={`relative flex items-center justify-center h-12 w-full cursor-pointer transition-colors
-        hover:text-white hover:bg-vscode-hover
-        ${active === id ? "text-white" : "text-gray-400"}`}
+        hover:text-white hover:bg-vscode-hover/80
+        ${active === id ? "text-white bg-vscode-hover/40" : "text-gray-400"}`}
       title={tooltip}
     >
       {active === id && (
@@ -47,7 +47,7 @@ const Sidebar = () => {
   );
 
   return (
-    <aside className="w-14 h-full bg-vscode-activitybar flex flex-col justify-between py-2 border-r border-vscode-border">
+    <aside className="w-14 h-full bg-vscode-activitybar flex flex-col justify-between py-2 border-r border-vscode-border shadow-[inset_-1px_0_0_rgba(0,0,0,0.25)]">
       <nav className="flex flex-col space-y-2">
         {menuItems.map((item) => (
           <Item key={item.id} {...item} />

@@ -3,6 +3,44 @@
 @tailwind utilities;
 
 
+:root {
+  color-scheme: dark;
+}
+
+::selection {
+  background: rgba(0, 122, 204, 0.35);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(0, 122, 204, 0.85);
+  outline-offset: 2px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #424242 #1e1e1e;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3c3c3c;
+  border-radius: 10px;
+  border: 2px solid #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
+}
+
+
 @font-face {
   font-family: "poppins-black";
   src: url("/font/Poppins-Black.ttf") format("truetype");

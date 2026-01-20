@@ -33,14 +33,14 @@ const Entete = () => {
 
       <div className="flex items-center space-x-2 sm:space-x-4">
         <div className="hidden md:flex items-center space-x-2 sm:space-x-3 text-vscode-foreground">
-          <FaThLarge className="cursor-pointer hover:bg-gray-500 p-1 rounded" />
-          <FaColumns className="cursor-pointer hover:bg-gray-500 p-1 rounded" />
-          <FaGripLines className="cursor-pointer hover:bg-gray-500 p-1 rounded" />
-          <FaBorderAll className="cursor-pointer hover:bg-gray-500 p-1 rounded" />
+          <FaThLarge className="cursor-pointer hover:bg-vscode-hover p-1 rounded" />
+          <FaColumns className="cursor-pointer hover:bg-vscode-hover p-1 rounded" />
+          <FaGripLines className="cursor-pointer hover:bg-vscode-hover p-1 rounded" />
+          <FaBorderAll className="cursor-pointer hover:bg-vscode-hover p-1 rounded" />
         </div>
         <div className="flex items-center space-x-1 sm:space-x-2 text-lg sm:text-2xl">
-          <VscChromeMinimize className="hover:bg-gray-600 p-1 rounded cursor-pointer" />
-          <VscChromeMaximize className="hover:bg-gray-600 p-1 rounded cursor-pointer" />
+          <VscChromeMinimize className="hover:bg-vscode-hover p-1 rounded cursor-pointer" />
+          <VscChromeMaximize className="hover:bg-vscode-hover p-1 rounded cursor-pointer" />
           <VscChromeClose className="hover:bg-red-600 p-1 rounded cursor-pointer" />
         </div>
       </div>

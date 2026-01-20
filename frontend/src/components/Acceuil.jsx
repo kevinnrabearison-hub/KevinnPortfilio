@@ -64,7 +64,7 @@ export default function Acceuil() {
   const { openTab } = useTabs();
 
   return (
-    <div className="bg-[#1e1e1e] min-h-screen text-white overflow-hidden">
+    <div className="bg-vscode-editor min-h-screen text-vscode-foreground overflow-hidden">
       <div className="p-10 text-center">
         <div
           className="relative mx-auto w-48 h-48"
@@ -130,7 +130,7 @@ export default function Acceuil() {
         </div>
       </div>
 
-      <section className="px-6 py-12 bg-[#252525] text-white">
+      <section className="px-6 py-12 bg-vscode-sidebar text-white border-y border-vscode-border">
         <h2 className="text-2xl font-bold mb-10 text-center">Mes Compétences</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {categories.map((cat, i) => (
@@ -139,7 +139,7 @@ export default function Acceuil() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.2 }}
-              className="bg-[#2d2d2d] rounded-2xl p-6 shadow-lg text-center"
+              className="bg-vscode-tabInactive/60 rounded-2xl p-6 shadow-lg text-center border border-vscode-border hover:border-vscode-statusbar/60 transition-colors"
             >
               <div className="flex justify-center mb-4 text-4xl">{cat.icon}</div>
               <h3 className="text-lg font-semibold mb-6">{cat.title}</h3>
@@ -155,7 +155,7 @@ export default function Acceuil() {
         </div>
       </section>
 
-<section className="px-6 py-16 bg-gradient-to-b from-[#1e1e1e] to-[#252525]">
+<section className="px-6 py-16 bg-gradient-to-b from-vscode-editor to-vscode-sidebar">
   <h2 className="text-3xl font-extrabold mb-12 text-center text-white">
     Mes Projets Récents
   </h2>
@@ -190,7 +190,7 @@ export default function Acceuil() {
             transition={{ duration: 0.6, delay: i * 0.2 }}
             className={`relative bg-gradient-to-br ${projet.color} p-[2px] rounded-2xl shadow-lg hover:scale-[1.03] transition-transform duration-300`}
           >
-            <div className="bg-[#1e1e1e] rounded-2xl p-6 h-full flex flex-col justify-between">
+            <div className="bg-vscode-editor rounded-2xl p-6 h-full flex flex-col justify-between border border-vscode-border/40">
               <h3 className="text-2xl font-bold mb-2 text-white">{projet.title}</h3>
 
               <p className="text-gray-300 text-sm mb-4">{projet.description}</p>
@@ -199,7 +199,7 @@ export default function Acceuil() {
                 {projet.stack.map((tech, idx) => (
                   <span
                     key={idx}
-                    className="text-xs bg-[#2d2d2d] text-gray-300 px-2 py-1 rounded-md"
+                    className="text-xs bg-vscode-tabInactive text-gray-300 px-2 py-1 rounded-md border border-vscode-border/60"
                   >
                     {tech}
                   </span>
@@ -219,9 +219,8 @@ export default function Acceuil() {
                     }}
                     transition={{ type: "spring", stiffness: 200, damping: 12 }}
                     className="relative flex items-center gap-2 px-5 py-2 rounded-xl 
-                             bg-gradient-to-r from-[#1e1e1e]/80 to-[#252525]/80 
-                             border border-blue-500/40 text-gray-200 text-sm 
-                             backdrop-blur-md hover:text-white overflow-hidden group"
+                             bg-vscode-hover/60 border border-blue-500/40 text-gray-200 text-sm 
+                             backdrop-blur-md hover:bg-vscode-hover hover:text-white overflow-hidden group"
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent 
                                      opacity-0 group-hover:opacity-100 blur-md transition-all duration-700"></span>
@@ -269,8 +268,8 @@ export default function Acceuil() {
 </section>
 
 
-      <section className="px-6 py-16 bg-[#1e1e1e] text-center border-t border-gray-800 relative overflow-hidden">
-  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#2a2a2a]/30 to-[#1e1e1e] opacity-60 blur-3xl"></div>
+      <section className="px-6 py-16 bg-vscode-editor text-center border-t border-vscode-border relative overflow-hidden">
+  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-vscode-hover/40 to-vscode-editor opacity-60 blur-3xl"></div>
 
   <div className="relative z-10">
     <h2 className="text-3xl font-bold text-white mb-4 tracking-wide">

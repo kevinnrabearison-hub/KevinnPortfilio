@@ -13,7 +13,7 @@ import { useTabs } from "../context/TabsContext";
 
 const IndexClique = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const { openTab } = useTabs();
+  const { openTab, activeTab } = useTabs();
 
   const files = [
     "Accueil.jsx",
@@ -41,8 +41,10 @@ const IndexClique = () => {
       <div>
         {/* Titre */}
         <div className="text-vscode-foreground bg-vscode-sidebar flex justify-between items-center px-3">
-          <h1 className="text-sm font-semibold">Explorer</h1>
-          <h1 className="text-lg">...</h1>
+          <h1 className="text-[11px] tracking-widest uppercase text-gray-300">Explorer</h1>
+          <button className="px-2 py-1 rounded hover:bg-vscode-hover/80 text-gray-300" type="button" aria-label="Explorer menu">
+            ...
+          </button>
         </div>
 
         {/* Dossier */}
@@ -57,26 +59,33 @@ const IndexClique = () => {
                   isOpen ? "rotate-90" : "-rotate-90"
                 }`}
               />
-              <span className="text-sm">Portfolio</span>
+              <span className="text-sm font-medium">Portfolio</span>
             </button>
 
-            <div className="flex gap-2 text-gray-400 text-lg">
-              <VscNewFile className="cursor-pointer hover:text-white" title="Nouveau fichier" />
-              <VscNewFolder className="cursor-pointer hover:text-white" title="Nouveau dossier" />
-              <VscRefresh className="cursor-pointer hover:text-white" title="Rafraîchir" />
-              <VscCollapseAll className="cursor-pointer hover:text-white" title="Réduire" />
+            <div className="flex gap-1 text-gray-400 text-lg">
+              <VscNewFile className="cursor-pointer hover:text-white hover:bg-vscode-hover/80 p-1 rounded" title="Nouveau fichier" />
+              <VscNewFolder className="cursor-pointer hover:text-white hover:bg-vscode-hover/80 p-1 rounded" title="Nouveau dossier" />
+              <VscRefresh className="cursor-pointer hover:text-white hover:bg-vscode-hover/80 p-1 rounded" title="Rafraîchir" />
+              <VscCollapseAll className="cursor-pointer hover:text-white hover:bg-vscode-hover/80 p-1 rounded" title="Réduire" />
             </div>
           </div>
 
           {/* Liste des fichiers */}
           {isOpen && (
-            <ul className="mt-4 space-y-1 text-sm text-gray-400 pl-6">
+            <ul className="mt-4 space-y-0.5 text-sm text-gray-400 pl-2 pr-1 max-h-[calc(100vh-16rem)] overflow-y-auto">
               {files.map((file) => (
+                (() => {
+                  const isActive = activeTab === file;
+                  return (
                 <li
                   key={file}
                   onClick={() => handleFileClick(file)}
-                  className={`flex items-center justify-between cursor-pointer px-1 py-0.5 rounded transition-colors hover:text-white hover:bg-vscode-hover ${
+                  className={`group flex items-center justify-between cursor-pointer px-2 py-1 rounded transition-colors hover:text-white hover:bg-vscode-hover ${
                     file === "MonCV.json" ? "text-green-400" : ""
+                  } ${
+                    isActive
+                      ? "bg-vscode-hover/80 text-white shadow-[inset_2px_0_0_0_rgba(0,122,204,0.95)]"
+                      : ""
                   }`}
                 >
                   <div className="flex items-center gap-2">
@@ -92,6 +101,8 @@ const IndexClique = () => {
                     <span>{file}</span>
                   </div>
                 </li>
+                  );
+                })()
               ))}
             </ul>
           )}

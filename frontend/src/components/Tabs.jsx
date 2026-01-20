@@ -12,10 +12,10 @@ const Tabs = () => {
           <div
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`group flex items-center gap-2 px-4 h-9 text-sm cursor-pointer border-r border-vscode-border whitespace-nowrap select-none
-              ${tab === activeTab ? "bg-vscode-tabActive text-white" : "bg-vscode-tabbar text-gray-400 hover:text-white hover:bg-vscode-hover"}`}
+            className={`group flex items-center gap-2 px-4 h-9 text-sm cursor-pointer border-r border-vscode-border whitespace-nowrap select-none rounded-t-md -mb-px transition-colors
+              ${tab === activeTab ? "bg-vscode-tabActive text-white border-t-2 border-vscode-statusbar" : "bg-vscode-tabbar text-gray-400 hover:text-white hover:bg-vscode-hover border-t-2 border-transparent"}`}
           >
-            <img src="/logo/jsx-atom.svg" alt="jsx" className="w-4 h-4 mr-2" />
+            <img src="/logo/jsx-atom.svg" alt="jsx" className="w-4 h-4" />
             {tab}
             <FaTimes
               className="ml-1 text-xs text-gray-400 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity"

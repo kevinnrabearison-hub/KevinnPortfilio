@@ -112,7 +112,7 @@ export default function Projet() {
   }, []);
 
   return (
-    <section className="relative bg-[#1e1e1e] text-white font-mono min-h-screen px-6 py-12">
+    <section className="relative bg-vscode-editor text-vscode-foreground font-mono min-h-screen px-6 py-12">
       <div className="max-w-6xl mx-auto flex">
         <div className="text-gray-600 text-right pr-6 select-none">
           {Array.from({ length: lineCount }).map((_, i) => (
@@ -159,7 +159,7 @@ export default function Projet() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: i * 0.15 }}
                 viewport={{ once: true }}
-                className="bg-[#252525] rounded-xl border border-gray-700 p-6 shadow-lg hover:border-blue-500 hover:scale-[1.02] transition-all"
+                className="bg-vscode-sidebar rounded-xl border border-vscode-border p-6 shadow-lg hover:border-vscode-statusbar/60 hover:scale-[1.02] transition-all"
               >
                 {/* Icône principale */}
                 <div className="flex justify-center mb-4">
@@ -197,7 +197,7 @@ export default function Projet() {
                   {proj.stack.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-[#1e1e1e] border border-gray-700 rounded-lg text-xs hover:bg-blue-600/30 hover:text-blue-300 transition-all"
+                      className="px-3 py-1 bg-vscode-editor border border-vscode-border rounded-lg text-xs hover:bg-vscode-hover hover:text-blue-300 transition-all"
                     >
                       {tech}
                     </span>
@@ -217,9 +217,9 @@ export default function Projet() {
                     }}
                     transition={{ type: "spring", stiffness: 200, damping: 12 }}
                     className="relative flex items-center gap-2 px-5 py-2 rounded-xl 
-                               bg-gradient-to-r from-[#1e1e1e]/80 to-[#252525]/80 
+                               bg-vscode-hover/60 
                                border border-blue-500/40 text-gray-200 text-sm 
-                               backdrop-blur-md hover:text-white overflow-hidden group"
+                               backdrop-blur-md hover:bg-vscode-hover hover:text-white overflow-hidden group"
                   >
                     {/* Éclat animé */}
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent 
