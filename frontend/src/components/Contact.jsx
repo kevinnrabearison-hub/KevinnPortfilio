@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence} from "framer-motion";
 import {
   Mail,
   User,
@@ -43,6 +43,7 @@ const Contact = () => {
       setTimeout(() => setNotification(null), 4500);
     }
   };
+
 
   return (
     <MotionSection
@@ -112,7 +113,7 @@ const Contact = () => {
         </div>
 
         <div className="relative">
-          <MessageSquare className="absolute left-3 top-3 text-[#9cdcfe]" size={20} />
+          <MessageSquare className="absolute left-3 top-3 text-[#9cdcff]" size={20} />
           <textarea
             name="message"
             placeholder="Votre message..."
