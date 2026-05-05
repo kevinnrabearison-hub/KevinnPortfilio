@@ -8,7 +8,7 @@ import {
   VscHistory,
   VscSymbolInterface,
 } from "react-icons/vsc";
-import { FiDownload } from "react-icons/fi"; // 🆕 Icône de téléchargement
+import { FiDownload } from "react-icons/fi"; 
 import { useTabs } from "../context/TabsContext";
 
 const IndexClique = () => {
@@ -28,9 +28,11 @@ const IndexClique = () => {
   const handleFileClick = (file) => {
     if (file === "MonCV.json") {
       const link = document.createElement("a");
-      link.href = "/CV.json"; 
-      link.download = "MonCV.json";
+      link.href = "/CV KEVINN.pdf"; 
+      link.download = "CV KEVINN.pdf";
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     } else {
       openTab(file);
     }
