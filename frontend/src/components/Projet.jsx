@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Github,
   Laptop,
@@ -11,240 +11,285 @@ import {
   Users,
   Smartphone,
   FolderOpen,
-} from "lucide-react"; 
+  ExternalLink,
+  Code,
+  X,
+  Sparkles,
+  Layers
+} from "lucide-react";
 
 const MotionDiv = motion.div;
-const MotionH1 = motion.h1;
 const MotionA = motion.a;
 
-const projets = [
+const projetsList = [
   {
-    icon: <Laptop className="text-[#1e1e1e]" size={22} />,
+    id: "vsc-portfolio",
+    category: "React",
+    icon: <Laptop className="text-sky-400" size={24} />,
     title: "Portfolio VS Code",
     description:
-      "Un portfolio moderne inspiré de Visual Studio Code, développé avec React, TailwindCSS et Framer Motion.",
-    stack: ["React", "TailwindCSS", "Framer Motion", "ExpressJS"],
-    color: "from-blue-500 to-cyan-400",
-    github: "",
+      "Un portfolio immersif et ultra-moderne conçu sous la forme d'un éditeur Visual Studio Code complet (Tabs, Terminal interactif, Command Palette Ctrl+K).",
+    stack: ["React 19", "TailwindCSS", "Framer Motion", "Vite"],
+    color: "from-blue-600 to-cyan-500",
+    borderColor: "border-blue-500/40",
+    github: "https://github.com/kevinnrabearison-hub/PortfolioVSC",
+    details: "Développé en React avec Vite, ce portfolio inclut une gestion avancée des onglets, un terminal interactif bash, une palette de commandes rapide et un design glassmorphism soigné.",
   },
   {
-    icon: <Handshake className="text-[#1e1e1e]" size={22} />,
-    title: "Bénévolat App (React Native – L2)",
+    id: "benevolat-app",
+    category: "Mobile",
+    icon: <Handshake className="text-pink-400" size={24} />,
+    title: "Bénévolat App (React Native)",
     description:
-      "Application mobile permettant de connecter des bénévoles et des associations.",
-    stack: ["React Native", "Expo", "Firebase"],
-    color: "from-green-400 to-emerald-500",
+      "Application mobile intuitive permettant d'associer des bénévoles avec des ONG et associations caritatives pour des événements locaux.",
+    stack: ["React Native", "Expo", "Firebase", "AsyncStorage"],
+    color: "from-purple-600 to-pink-500",
+    borderColor: "border-purple-500/40",
     github: "https://github.com/kevinnrabearison-hub/BenevolatApp",
+    details: "Conçu dans le cadre du cursus L2. Inclus l'authentification Firebase, la géolocalisation de missions de bénévolat et un système de messagerie directe.",
   },
   {
-    icon: <ClipboardList className="text-[#1e1e1e]" size={22} />,
-    title: "Task Manager – CI/CD (MEVN)",
+    id: "task-manager-cicd",
+    category: "Full Stack",
+    icon: <ClipboardList className="text-emerald-400" size={24} />,
+    title: "Task Manager — Pipeline CI/CD",
     description:
-      "Application de gestion de tâches intégrant un pipeline CI/CD complet.",
-    stack: ["MongoDB", "Express", "Vue.js", "Node.js", "Docker"],
-    color: "from-orange-400 to-red-500",
+      "Plateforme Web de gestion de tâches intégrant un pipeline d'intégration et déploiement continu complet avec Docker et tests automatisés.",
+    stack: ["MongoDB", "Express", "Vue.js", "Node.js", "Docker", "CI/CD"],
+    color: "from-emerald-600 to-teal-500",
+    borderColor: "border-emerald-500/40",
     github: "https://github.com/kevinnrabearison-hub/TaskManager-CICD",
+    details: "Architecture MEVN complète containerisée via Docker Compose. Intègre des tests unitaires automatisés et un déploiement continu automatisé.",
   },
   {
-    icon: <Vote className="text-[#1e1e1e]" size={22} />,
-    title: "Vote Électronique (Web & Mobile)",
+    id: "vote-electronique",
+    category: "Full Stack",
+    icon: <Vote className="text-amber-400" size={24} />,
+    title: "Plateforme de Vote Électronique",
     description:
-      "Projet de fin d’année – plateforme de vote sécurisée pour web et mobile.",
+      "Système de vote sécurisé hybride (Web & Mobile) assurant la transparence et l'intégrité des données d'élections académiques.",
     stack: ["React", "React Native", "Django", "PostgreSQL"],
-    color: "from-purple-500 to-pink-500",
+    color: "from-amber-500 to-orange-500",
+    borderColor: "border-amber-500/40",
     github: "https://github.com/kevinnrabearison-hub/VoteElectronique",
+    details: "Projet majeur de fin d'année. Intègre le chiffrement des bulletins, un contrôle d'accès biométrique/OTP et un tableau de bord analytique en temps réel.",
   },
   {
-    icon: <BarChart className="text-[#1e1e1e]" size={22} />,
-    title: "Dashboard React",
+    id: "dashboard-react",
+    category: "React",
+    icon: <BarChart className="text-indigo-400" size={24} />,
+    title: "Dashboard Analytique React",
     description:
-      "Un tableau de bord interactif et moderne développé en React avec des animations fluides et une visualisation de données.",
+      "Tableau de bord interactif avec visualisations graphiques avancées et filtrage dynamique de données financières et d'activité.",
     stack: ["React", "TailwindCSS", "Recharts", "Framer Motion"],
-    color: "from-indigo-500 to-sky-400",
+    color: "from-indigo-600 to-sky-500",
+    borderColor: "border-indigo-500/40",
     github: "https://github.com/kevinnrabearison-hub/Dash",
+    details: "Intègre des graphiques dynamiques réactifs avec Recharts, un mode sombre/clair et un filtrage de métriques en temps réel.",
   },
   {
-    icon: <Globe className="text-[#1e1e1e]" size={22} />,
-    title: "Portfolio React (en cours)",
+    id: "django-usermanagement",
+    category: "Backend",
+    icon: <Users className="text-green-400" size={24} />,
+    title: "Gestion des Utilisateurs Django",
     description:
-      "Mon nouveau portfolio en React, toujours en développement.",
-    stack: ["React", "TailwindCSS"],
-    color: "from-cyan-400 to-blue-500",
-    github: "https://github.com/kevinnrabearison-hub/Portfolio-React",
-  },
-  {
-    icon: <Users className="text-[#1e1e1e]" size={22} />,
-    title: "Gestion des utilisateurs (Django)",
-    description:
-      "Application web Django permettant la gestion et l’authentification des utilisateurs.",
-    stack: ["Django", "SQLite", "Bootstrap"],
-    color: "from-yellow-400 to-orange-400",
+      "Application web de gestion d'utilisateurs, de rôles et de permissions d'accès sécurisées développée en Django Python.",
+    stack: ["Django", "SQLite / PostgreSQL", "Bootstrap 5"],
+    color: "from-green-600 to-emerald-500",
+    borderColor: "border-green-500/40",
     github: "https://github.com/kevinnrabearison-hub/Django-UserManagement",
+    details: "Implémentation d'un système d'authentification complet avec réinitialisation de mot de passe par mail et gestion des droits d'administration.",
   },
   {
-    icon: <Smartphone className="text-[#1e1e1e]" size={22} />,
-    title: "Examen React Native",
+    id: "exam-react-native",
+    category: "Mobile",
+    icon: <Smartphone className="text-cyan-400" size={24} />,
+    title: "Examen Mobile React Native",
     description:
-      "Projet universitaire mobile avec persistance de données et navigation avancée.",
+      "Projet d'évaluation mobile universitaire axé sur la persistance offline de données et la navigation multi-écrans fluide.",
     stack: ["React Native", "Expo", "AsyncStorage"],
-    color: "from-teal-400 to-green-400",
+    color: "from-cyan-600 to-blue-500",
+    borderColor: "border-cyan-500/40",
     github: "https://github.com/kevinnrabearison-hub/ExamReactNative",
+    details: "Application mobile démontrant une gestion optimale de la persistance locale de données et la fluidité des transitions de navigation React Navigation.",
   },
 ];
 
 export default function Projet() {
-  const [lineCount, setLineCount] = useState(0);
-  const contentRef = useRef(null);
+  const [selectedFilter, setSelectedFilter] = useState("Tous");
+  const [activeModalProject, setActiveModalProject] = useState(null);
 
-  useEffect(() => {
-    const calcLines = () => {
-      if (contentRef.current) {
-        const height =
-          contentRef.current.scrollHeight + window.innerHeight * 0.3;
-        const lineHeight = 32;
-        setLineCount(Math.ceil(height / lineHeight));
-      }
-    };
+  const categories = ["Tous", "React", "Mobile", "Backend", "Full Stack"];
 
-    calcLines();
-    window.addEventListener("resize", calcLines);
-    return () => window.removeEventListener("resize", calcLines);
-  }, []);
+  const filteredProjets =
+    selectedFilter === "Tous"
+      ? projetsList
+      : projetsList.filter((p) => p.category === selectedFilter);
 
   return (
-    <section className="relative bg-vscode-editor text-vscode-foreground font-mono min-h-screen px-6 py-12">
-      <div className="max-w-6xl mx-auto flex">
-        <div className="text-gray-600 text-right pr-6 select-none">
-          {Array.from({ length: lineCount }).map((_, i) => (
-            <p key={i} className="leading-8 text-sm">
-              {String(i + 1).padStart(2, "0")}
+    <section className="bg-vscode-editor text-vscode-foreground min-h-screen px-4 sm:px-8 py-8 font-sans">
+      <div className="max-w-6xl mx-auto space-y-8">
+        {/* Section Title */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-vscode-border">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+              <FolderOpen size={28} className="text-blue-400" />
+              <span>Galerie des Projets</span>
+            </h1>
+            <p className="text-gray-400 text-sm mt-1">
+              Applications web, mobiles et architectures backend développées.
             </p>
+          </div>
+
+          <div className="text-xs font-mono text-sky-400 bg-vscode-sidebar border border-vscode-border px-3 py-1.5 rounded-lg">
+            {filteredProjets.length} Projets affichés
+          </div>
+        </div>
+
+        {/* Category Filters */}
+        <div className="flex flex-wrap gap-2">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedFilter(cat)}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all border ${
+                selectedFilter === cat
+                  ? "bg-blue-600 border-blue-500 text-white shadow-md shadow-blue-500/20"
+                  : "bg-vscode-sidebar border-vscode-border text-gray-400 hover:text-white hover:border-gray-500"
+              }`}
+            >
+              {cat}
+            </button>
           ))}
         </div>
 
-        <div className="flex-1" ref={contentRef}>
-          <MotionH1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center justify-center gap-3 text-3xl font-bold text-blue-400 mb-10 text-center"
-          >
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProjets.map((proj, i) => (
             <MotionDiv
-              animate={{
-                scale: [1, 1.15, 1],
-                rotate: [0, 8, -8, 0],
-                filter: [
-                  "drop-shadow(0 0 0px rgba(59,130,246,0.2))",
-                  "drop-shadow(0 0 12px rgba(59,130,246,0.8))",
-                  "drop-shadow(0 0 0px rgba(59,130,246,0.2))",
-                ],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              key={proj.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.08 }}
+              className={`glass-card rounded-xl p-6 border ${proj.borderColor} space-y-4 hover:scale-[1.02] transition-all duration-300 shadow-lg flex flex-col justify-between group`}
             >
-              <FolderOpen size={34} className="text-blue-400" />
-            </MotionDiv>
-            Mes Projets
-          </MotionH1>
-
-          {/* 🧱 Liste des projets */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {projets.map((proj, i) => (
-              <MotionDiv
-                key={proj.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.15 }}
-                viewport={{ once: true }}
-                className="bg-vscode-sidebar rounded-xl border border-vscode-border p-6 shadow-lg hover:border-vscode-statusbar/60 hover:scale-[1.02] transition-all"
-              >
-                {/* Icône principale */}
-                <div className="flex justify-center mb-4">
-                  <MotionDiv
-                    animate={{
-                      scale: [1, 1.1, 1],
-                      filter: [
-                        "drop-shadow(0 0 0px rgba(255,255,255,0.1))",
-                        "drop-shadow(0 0 10px rgba(59,130,246,0.6))",
-                        "drop-shadow(0 0 0px rgba(255,255,255,0.1))",
-                      ],
-                    }}
-                    transition={{
-                      duration: 2.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    className={`w-16 h-16 rounded-full bg-gradient-to-r ${proj.color} flex items-center justify-center shadow-md`}
-                  >
+              <div>
+                {/* Header Icon & Category Badge */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`p-3 rounded-xl bg-gradient-to-br ${proj.color} shadow-md`}>
                     {proj.icon}
-                  </MotionDiv>
+                  </div>
+                  <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-vscode-editor border border-vscode-border text-gray-300">
+                    {proj.category}
+                  </span>
                 </div>
 
-                {/* Détails projet */}
-                <h3 className="text-lg font-semibold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 text-center">
+                {/* Title & Description */}
+                <h3 className="text-lg font-bold text-white group-hover:text-sky-300 transition-colors">
                   {proj.title}
                 </h3>
-
-                <p className="text-gray-300 text-sm mb-4 text-center leading-relaxed">
+                <p className="text-gray-300 text-xs leading-relaxed mt-2 line-clamp-3">
                   {proj.description}
                 </p>
 
-                {/* Stack */}
-                <div className="flex flex-wrap justify-center gap-2 mb-4">
-                  {proj.stack.map((tech, idx) => (
+                {/* Stack Badges */}
+                <div className="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-vscode-border/50">
+                  {proj.stack.map((tech) => (
                     <span
-                      key={idx}
-                      className="px-3 py-1 bg-vscode-editor border border-vscode-border rounded-lg text-xs hover:bg-vscode-hover hover:text-blue-300 transition-all"
+                      key={tech}
+                      className="px-2 py-0.5 rounded bg-vscode-editor border border-vscode-border/70 text-[10px] font-mono text-gray-300"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
+              </div>
 
-                {/* 🔗 Bouton GitHub */}
-                <div className="flex justify-center mt-2">
-                  <MotionA
+              {/* Card Action Buttons */}
+              <div className="flex items-center justify-between pt-4 border-t border-vscode-border/40 mt-4">
+                <button
+                  onClick={() => setActiveModalProject(proj)}
+                  className="text-xs text-sky-400 hover:text-sky-300 font-semibold underline flex items-center gap-1"
+                >
+                  <Sparkles size={13} />
+                  <span>Détails & Code</span>
+                </button>
+
+                {proj.github && (
+                  <a
                     href={proj.github}
                     target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{
-                      scale: 1.07,
-                      boxShadow: "0 0 25px rgba(59,130,246,0.6)",
-                      backdropFilter: "blur(12px)",
-                    }}
-                    transition={{ type: "spring", stiffness: 200, damping: 12 }}
-                    className="relative flex items-center gap-2 px-5 py-2 rounded-xl 
-                               bg-vscode-hover/60 
-                               border border-blue-500/40 text-gray-200 text-sm 
-                               backdrop-blur-md hover:bg-vscode-hover hover:text-white overflow-hidden group"
+                    rel="noreferrer"
+                    className="flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-vscode-hover border border-vscode-border text-xs text-gray-200 hover:text-white hover:border-blue-500/50 transition-all"
                   >
-                    {/* Éclat animé */}
-                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent 
-                                     opacity-0 group-hover:opacity-100 blur-md transition-all duration-700"></span>
-                    <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-40 blur-lg"></span>
-
-                    <Github
-                      size={18}
-                      className="relative z-10 text-blue-400 group-hover:text-blue-300 transition-colors"
-                    />
-                    <span className="relative z-10 font-medium">
-                      Voir sur GitHub
-                    </span>
-                  </MotionA>
-                </div>
-              </MotionDiv>
-            ))}
-          </div>
-        </div>
-
-        {/* 🌈 Barre droite style VS Code */}
-        <div className="hidden md:flex flex-col items-center w-8 ml-6 select-none">
-          <div className="flex-1 w-[2px] bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full"></div>
+                    <Github size={14} />
+                    <span>GitHub</span>
+                  </a>
+                )}
+              </div>
+            </MotionDiv>
+          ))}
         </div>
       </div>
+
+      {/* Project Inspector Modal */}
+      <AnimatePresence>
+        {activeModalProject && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+            <MotionDiv
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="w-full max-w-lg glass-panel rounded-2xl p-6 border border-vscode-border shadow-2xl relative space-y-4"
+            >
+              <button
+                onClick={() => setActiveModalProject(null)}
+                className="absolute top-4 right-4 p-1 rounded-lg text-gray-400 hover:text-white hover:bg-vscode-hover"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="flex items-center space-x-3">
+                <div className={`p-3 rounded-xl bg-gradient-to-br ${activeModalProject.color}`}>
+                  {activeModalProject.icon}
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">{activeModalProject.title}</h3>
+                  <span className="text-xs font-mono text-sky-400">{activeModalProject.category}</span>
+                </div>
+              </div>
+
+              <p className="text-gray-200 text-sm leading-relaxed">{activeModalProject.details}</p>
+
+              <div className="space-y-2 pt-2">
+                <div className="text-xs font-mono text-gray-400">Stack Technique :</div>
+                <div className="flex flex-wrap gap-2">
+                  {activeModalProject.stack.map((t) => (
+                    <span key={t} className="px-2.5 py-1 bg-vscode-editor rounded-lg border border-vscode-border text-xs font-mono text-gray-200">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {activeModalProject.github && (
+                <div className="pt-4 flex justify-end">
+                  <a
+                    href={activeModalProject.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center space-x-2 shadow-lg"
+                  >
+                    <Github size={16} />
+                    <span>Ouvrir sur GitHub</span>
+                    <ExternalLink size={14} />
+                  </a>
+                </div>
+              )}
+            </MotionDiv>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaHome,
@@ -12,7 +13,6 @@ import Entete from "../components/Entete";
 import IndexClique from "../components/IndexClique";
 import Sidebar from "../components/Sidebar";
 import StatusBar from "../components/StatusBar";
-
 import Contact from "../components/Contact";
 import Projet from "../components/Projet";
 import Competence from "../components/Competence";
@@ -20,6 +20,8 @@ import Apropos from "../components/Apropos";
 
 import { useTabs } from "../context/TabsContext";
 import Tabs from "../components/Tabs";
+import Terminal from "../components/Terminal";
+import CommandPalette from "../components/CommandPalette";
 
 const componentsMap = {
   "Accueil.jsx": Acceuil,
@@ -34,41 +36,69 @@ const MotionButton = motion.button;
 
 const MainLayout = () => {
   const { activeTab, openTab } = useTabs();
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+
   const ActiveComponent = componentsMap[activeTab] || Acceuil;
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Toggle Terminal with Ctrl+` or Ctrl+T
+      if ((e.ctrlKey || e.metaKey) && (e.key === "`" || e.key.toLowerCase() === "t")) {
+        e.preventDefault();
+        setIsTerminalOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const mobileTabs = [
     { id: "Accueil.jsx", icon: <FaHome />, label: "Accueil" },
     { id: "Projet.jsx", icon: <FaCode />, label: "Projets" },
-    { id: "Competence.jsx", icon: <FaCogs />, label: "Compétences" },
+    { id: "Competence.jsx", icon: <FaCogs />, label: "Skills" },
     { id: "Apropos.jsx", icon: <FaUser />, label: "À propos" },
     { id: "Contact.jsx", icon: <FaEnvelope />, label: "Contact" },
   ];
 
   return (
-    <div className="bg-vscode-editor text-vscode-foreground h-screen overflow-hidden flex flex-col">
-      <header className="fixed top-0 left-0 right-0 z-30 bg-vscode-titlebar border-b border-vscode-border">
-        <Entete />
+    <div className="bg-vscode-editor text-vscode-foreground h-screen overflow-hidden flex flex-col font-sans select-none">
+      {/* Header Bar */}
+      <header className="fixed top-0 left-0 right-0 z-40">
+        <Entete
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          onToggleTerminal={() => setIsTerminalOpen((prev) => !prev)}
+        />
       </header>
 
-      <div className="flex flex-1 pt-12 pb-14 md:pb-6 overflow-hidden min-h-0">
+      {/* Main Workspace Body */}
+      <div className="flex flex-1 pt-9 pb-6 md:pb-6 overflow-hidden min-h-0">
+        {/* Desktop Left Activitybar & Explorer */}
         <div className="hidden md:flex flex-shrink-0 h-full">
-          <Sidebar />
+          <Sidebar
+            onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+            onToggleTerminal={() => setIsTerminalOpen((prev) => !prev)}
+          />
           <IndexClique />
         </div>
 
-        <main className="flex-1 min-h-0 overflow-y-auto bg-vscode-editor relative z-10 scroll-smooth">
-          <div className="sticky top-0 bg-vscode-tabbar z-20 border-b border-vscode-border hidden sm:block">
+        {/* Editor Main Canvas */}
+        <main className="flex-1 min-h-0 flex flex-col overflow-hidden bg-vscode-editor relative z-10">
+          {/* Top Tabs & Breadcrumbs Bar */}
+          <div className="sticky top-0 z-20 hidden sm:block">
             <Tabs />
           </div>
 
-          <div className="p-4 md:p-6">
+          {/* Tab Content Viewport */}
+          <div className="flex-1 overflow-y-auto scroll-smooth">
             <AnimatePresence mode="wait">
               <MotionDiv
                 key={activeTab}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="h-full"
               >
                 <ActiveComponent />
               </MotionDiv>
@@ -77,37 +107,42 @@ const MainLayout = () => {
         </main>
       </div>
 
-      <footer className="hidden md:block fixed bottom-0 left-0 right-0 z-30 bg-vscode-statusbar">
-        <StatusBar />
+      {/* Interactive Bottom Terminal Drawer */}
+      <Terminal
+        isOpen={isTerminalOpen}
+        onClose={() => setIsTerminalOpen(false)}
+      />
+
+      {/* Quick Search & Command Palette Modal */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={setIsCommandPaletteOpen}
+        onOpenTerminal={() => setIsTerminalOpen(true)}
+      />
+
+      {/* Desktop Fixed Status Bar */}
+      <footer className="hidden md:block fixed bottom-0 left-0 right-0 z-30">
+        <StatusBar
+          onToggleTerminal={() => setIsTerminalOpen((prev) => !prev)}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        />
       </footer>
 
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-vscode-tabbar/80 backdrop-blur-md border-t border-vscode-border flex justify-around items-center py-2 z-50">
+      {/* Mobile Bottom Quick Tabs Bar */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-vscode-tabbar/90 backdrop-blur-md border-t border-vscode-border flex justify-around items-center py-1.5 z-50">
         {mobileTabs.map((tab) => (
           <MotionButton
             key={tab.id}
             onClick={() => openTab(tab.id)}
-            className={`flex flex-col items-center text-xs px-3 py-1 rounded-lg transition-colors
-              ${
-                activeTab === tab.id
-                  ? "text-blue-400 bg-vscode-hover/50"
-                  : "text-gray-400 hover:text-white hover:bg-vscode-hover/30"
-              }`}
+            className={`flex flex-col items-center text-[10px] px-3 py-1 rounded-lg transition-colors ${
+              activeTab === tab.id
+                ? "text-sky-400 font-semibold bg-vscode-hover/60"
+                : "text-gray-400 hover:text-white"
+            }`}
             whileTap={{ scale: 0.9 }}
           >
-            <MotionDiv
-              animate={{
-                scale: activeTab === tab.id ? [1, 1.2, 1] : 1,
-                color: activeTab === tab.id ? "#3B82F6" : "#9CA3AF",
-              }}
-              transition={{ duration: 0.4 }}
-              className="text-xl"
-            >
-              {tab.icon}
-            </MotionDiv>
-            <span className="text-[0.7rem] mt-1">{tab.label}</span>
-            {activeTab === tab.id && (
-              <span className="mt-1 h-[2px] w-6 rounded-full bg-vscode-statusbar shadow-[0_0_12px_rgba(0,122,204,0.55)]" />
-            )}
+            <div className="text-lg">{tab.icon}</div>
+            <span className="mt-0.5">{tab.label}</span>
           </MotionButton>
         ))}
       </div>

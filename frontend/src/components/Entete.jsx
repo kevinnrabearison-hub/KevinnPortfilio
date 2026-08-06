@@ -1,48 +1,81 @@
 import React from 'react';
 import {
-  FaThLarge,
-  FaColumns,
-  FaGripLines,
-  FaBorderAll,
-} from 'react-icons/fa';
-import {
-  VscChromeMinimize,
-  VscChromeMaximize,
-  VscChromeClose,
+  VscLayoutSidebarLeft,
+  VscLayoutPanel,
+  VscLayoutSidebarRight,
+  VscSearch,
+  VscBell,
 } from 'react-icons/vsc';
 
-const Entete = () => {
+const Entete = ({ onOpenCommandPalette, onToggleTerminal }) => {
   return (
-    <header className="flex items-center justify-between bg-vscode-titlebar h-12 px-2 text-white border-b border-vscode-border w-full overflow-x-auto">
-      <div className="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm">
-        <img src="/logo/vscode.svg" alt="Logo VSCode" className="w-5 h-5" />
-        <span className="cursor-pointer hover:underline hidden sm:inline">File</span>
-        <span className="cursor-pointer hover:underline hidden sm:inline">Edit</span>
-        <span className="cursor-pointer hover:underline hidden sm:inline">Selection</span>
-        <span className="cursor-pointer hover:underline hidden sm:inline">View</span>
-        <span className="cursor-pointer hover:underline hidden sm:inline">…</span>
+    <header className="flex items-center justify-between bg-vscode-titlebar h-9 px-3 text-gray-300 border-b border-vscode-border w-full select-none text-xs font-sans z-50">
+      {/* Left: Window Dots & VS Code Menus */}
+      <div className="flex items-center space-x-3">
+        {/* macOS style Window controls */}
+        <div className="flex items-center space-x-1.5 mr-2">
+          <div className="w-3 h-3 rounded-full bg-[#ff5f56] hover:brightness-110 cursor-pointer transition-all border border-black/20" title="Fermer" />
+          <div className="w-3 h-3 rounded-full bg-[#ffbd2e] hover:brightness-110 cursor-pointer transition-all border border-black/20" title="Réduire" />
+          <div className="w-3 h-3 rounded-full bg-[#27c93f] hover:brightness-110 cursor-pointer transition-all border border-black/20" title="Agrandir" />
+        </div>
+
+        <img src="/logo/vscode.svg" alt="VSCode Logo" className="w-4 h-4 hover:rotate-12 transition-transform" />
+
+        <nav className="hidden md:flex items-center space-x-1 text-gray-300 font-medium">
+          <button className="px-2 py-0.5 rounded hover:bg-vscode-hover hover:text-white transition-colors">Fichier</button>
+          <button className="px-2 py-0.5 rounded hover:bg-vscode-hover hover:text-white transition-colors">Édition</button>
+          <button className="px-2 py-0.5 rounded hover:bg-vscode-hover hover:text-white transition-colors">Sélection</button>
+          <button className="px-2 py-0.5 rounded hover:bg-vscode-hover hover:text-white transition-colors">Affichage</button>
+          <button className="px-2 py-0.5 rounded hover:bg-vscode-hover hover:text-white transition-colors" onClick={onToggleTerminal}>Terminal</button>
+          <button className="px-2 py-0.5 rounded hover:bg-vscode-hover hover:text-white transition-colors" onClick={() => onOpenCommandPalette(true)}>Aide</button>
+        </nav>
       </div>
 
-      <div className="flex-grow max-w-[200px] sm:max-w-md mx-2 sm:mx-4">
-        <input
-          type="text"
-          placeholder="🔍 Portfolio(vscode)"
-          className="w-full px-3 py-1.5 rounded-md bg-vscode-hover text-white placeholder-gray-400 text-sm text-center outline-none focus:border-blue-500 border border-vscode-border"
-        />
+      {/* Center: Command Palette Trigger Input */}
+      <div className="flex-1 max-w-lg mx-4">
+        <button
+          onClick={() => onOpenCommandPalette(true)}
+          className="w-full flex items-center justify-between px-3 py-1 rounded-md bg-vscode-hover/70 hover:bg-vscode-hover text-gray-400 hover:text-gray-200 border border-vscode-border/70 transition-all text-xs group"
+        >
+          <div className="flex items-center space-x-2 truncate">
+            <VscSearch className="text-blue-400 group-hover:scale-110 transition-transform" />
+            <span className="truncate">Kevinn Portfolio — Command Palette (Recherche)</span>
+          </div>
+          <kbd className="hidden sm:inline-block px-1.5 py-0.2 bg-vscode-editor/80 border border-vscode-border rounded text-[10px] text-gray-400 font-mono">
+            Ctrl + K
+          </kbd>
+        </button>
       </div>
 
-      <div className="flex items-center space-x-2 sm:space-x-4">
-        <div className="hidden md:flex items-center space-x-2 sm:space-x-3 text-vscode-foreground">
-          <FaThLarge className="cursor-pointer hover:bg-vscode-hover p-1 rounded" />
-          <FaColumns className="cursor-pointer hover:bg-vscode-hover p-1 rounded" />
-          <FaGripLines className="cursor-pointer hover:bg-vscode-hover p-1 rounded" />
-          <FaBorderAll className="cursor-pointer hover:bg-vscode-hover p-1 rounded" />
-        </div>
-        <div className="flex items-center space-x-1 sm:space-x-2 text-lg sm:text-2xl">
-          <VscChromeMinimize className="hover:bg-vscode-hover p-1 rounded cursor-pointer" />
-          <VscChromeMaximize className="hover:bg-vscode-hover p-1 rounded cursor-pointer" />
-          <VscChromeClose className="hover:bg-red-600 p-1 rounded cursor-pointer" />
-        </div>
+      {/* Right: Layout Controls & Notifications */}
+      <div className="flex items-center space-x-2 text-gray-400">
+        <button
+          onClick={onToggleTerminal}
+          className="p-1 rounded hover:bg-vscode-hover hover:text-white transition-colors"
+          title="Basculer le terminal"
+        >
+          <VscLayoutPanel size={15} />
+        </button>
+        <button
+          className="p-1 rounded hover:bg-vscode-hover hover:text-white transition-colors hidden sm:block"
+          title="Disposition du volet"
+        >
+          <VscLayoutSidebarLeft size={15} />
+        </button>
+        <button
+          className="p-1 rounded hover:bg-vscode-hover hover:text-white transition-colors hidden sm:block"
+          title="Disposition secondaire"
+        >
+          <VscLayoutSidebarRight size={15} />
+        </button>
+        <button
+          onClick={() => onOpenCommandPalette(true)}
+          className="p-1 rounded hover:bg-vscode-hover hover:text-white transition-colors relative"
+          title="Notifications"
+        >
+          <VscBell size={15} />
+          <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+        </button>
       </div>
     </header>
   );

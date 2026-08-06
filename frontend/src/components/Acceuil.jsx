@@ -1,307 +1,377 @@
-
-import { motion } from "framer-motion";
-import { Github,  FolderOpen, Send} from "lucide-react";
-
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Github,
+  FolderOpen,
+  Send,
+  Download,
+  Terminal,
+  Code2,
+  Sparkles,
+  CheckCircle2,
+  Award,
+  Layers,
+  ArrowRight
+} from "lucide-react";
 import {
   FaHtml5, FaCss3Alt, FaReact, FaVuejs, FaPhp, FaSymfony,
   FaDocker, FaGithub, FaMobileAlt, FaServer, FaTools
 } from "react-icons/fa";
 import {
   SiFlutter, SiDjango, SiExpress, SiDotnet, SiTailwindcss,
-  SiBootstrap, SiGitlab
+  SiBootstrap, SiGitlab, SiTypescript, SiPostgresql, SiMongodb
 } from "react-icons/si";
+import { downloadAndOpenCV } from "../utils/downloadCv";
 import { useTabs } from "../context/TabsContext";
 
 const MotionDiv = motion.div;
 const MotionA = motion.a;
 const MotionButton = motion.button;
 
+const roles = [
+  "Développeur Web Full Stack",
+  "Développeur Mobile (React Native)",
+  "Licence en Génie Logiciel @ INSI",
+  "Concepteur d'Applications Innovantes"
+];
+
 const categories = [
   {
-    title: "Web",
-    icon: "💻",
+    title: "Développement Web",
+    desc: "Interfaces réactives & Single Page Applications",
+    gradient: "from-sky-500/20 to-blue-600/10",
+    border: "border-sky-500/30",
+    icon: <Code2 className="text-sky-400" size={24} />,
     items: [
-      <FaHtml5 className="text-orange-500" />,
-      <FaCss3Alt className="text-blue-500" />,
-      <FaReact className="text-sky-400" />,
-      <FaVuejs className="text-green-500" />,
+      { name: "React", icon: <FaReact className="text-sky-400" /> },
+      { name: "Vue.js", icon: <FaVuejs className="text-emerald-500" /> },
+      { name: "TypeScript", icon: <SiTypescript className="text-blue-400" /> },
+      { name: "HTML5", icon: <FaHtml5 className="text-orange-500" /> },
+      { name: "CSS3", icon: <FaCss3Alt className="text-blue-500" /> },
     ],
   },
   {
-    title: "Mobile",
-    icon: <FaMobileAlt className="text-pink-400" />,
-    items: [<SiFlutter className="text-sky-500" />, <FaReact className="text-sky-400" />],
-  },
-  {
-    title: "Backend",
-    icon: <FaServer className="text-yellow-400" />,
+    title: "Mobile & Cross-Platform",
+    desc: "Applications hybrides performantes iOS & Android",
+    gradient: "from-purple-500/20 to-pink-600/10",
+    border: "border-purple-500/30",
+    icon: <FaMobileAlt className="text-pink-400" size={24} />,
     items: [
-      <SiDjango className="text-green-600" />,
-      <SiExpress className="text-gray-400" />,
-      <SiDotnet className="text-purple-600" />,
-      <FaSymfony className="text-black" />,
-      <FaPhp className="text-indigo-500" />,
+      { name: "React Native", icon: <FaReact className="text-sky-400" /> },
+      { name: "Flutter", icon: <SiFlutter className="text-cyan-400" /> },
     ],
   },
   {
-    title: "Framework CSS",
-    icon: <SiTailwindcss className="text-cyan-400" />,
-    items: [<SiBootstrap className="text-violet-600" />, <SiTailwindcss className="text-cyan-400" />],
+    title: "Backend & APIs",
+    desc: "Architectures RESTful, bases de données & logique serveur",
+    gradient: "from-emerald-500/20 to-teal-600/10",
+    border: "border-emerald-500/30",
+    icon: <FaServer className="text-emerald-400" size={24} />,
+    items: [
+      { name: "Express.js", icon: <SiExpress className="text-gray-300" /> },
+      { name: "Django", icon: <SiDjango className="text-emerald-600" /> },
+      { name: "Symfony", icon: <FaSymfony className="text-white" /> },
+      { name: "PHP", icon: <FaPhp className="text-indigo-400" /> },
+      { name: ".NET", icon: <SiDotnet className="text-purple-400" /> },
+    ],
   },
   {
-    title: "Outils",
-    icon: <FaTools className="text-gray-300" />,
+    title: "UI / Styling & Design",
+    desc: "Systèmes de design modernes et responsifs",
+    gradient: "from-cyan-500/20 to-blue-500/10",
+    border: "border-cyan-500/30",
+    icon: <SiTailwindcss className="text-cyan-400" size={24} />,
     items: [
-      <FaGithub className="text-white" />,
-      <SiGitlab className="text-orange-500" />,
-      <FaDocker className="text-blue-400" />,
+      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-cyan-400" /> },
+      { name: "Bootstrap", icon: <SiBootstrap className="text-purple-500" /> },
+    ],
+  },
+  {
+    title: "Bases de données & DevOps",
+    desc: "Gestion de données et déploiement conteneurisé",
+    gradient: "from-amber-500/20 to-orange-600/10",
+    border: "border-amber-500/30",
+    icon: <FaTools className="text-amber-400" size={24} />,
+    items: [
+      { name: "PostgreSQL", icon: <SiPostgresql className="text-blue-400" /> },
+      { name: "MongoDB", icon: <SiMongodb className="text-green-500" /> },
+      { name: "Docker", icon: <FaDocker className="text-sky-400" /> },
+      { name: "GitHub", icon: <FaGithub className="text-white" /> },
+      { name: "GitLab", icon: <SiGitlab className="text-orange-500" /> },
     ],
   },
 ];
 
-
 export default function Acceuil() {
   const { openTab } = useTabs();
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const downloadCV = () => {
+    downloadAndOpenCV();
+  };
 
   return (
-    <div className="bg-vscode-editor min-h-screen text-vscode-foreground overflow-hidden">
-      <div className="p-10 text-center">
-        <div
-          className="relative mx-auto w-48 h-48"
-          style={{ perspective: "1000px" }}
-        >
-          <MotionDiv
-            initial={{ rotateY: 0, scale: 1 }}
-            animate={{
-              rotateY: [0, 180, 360],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{ duration: 4, ease: "easeInOut", repeat: 0 }}
-            className="relative w-full h-full [transform-style:preserve-3d]"
-          >
-            <div className="absolute inset-0 flex justify-center items-center [backface-visibility:hidden] rounded-full border-4 border-blue-600 shadow-lg">
-              <img
-                src="/pdp2.jpg"
-                alt="Profil"
-                className="rounded-full w-full h-full object-cover"
-              />
-            </div>
-            <div className="absolute inset-0 flex justify-center items-center [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-full border-4 border-blue-600 overflow-hidden">
-              <img
-                src="/bas.jpg"
-                alt="Avatar"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </MotionDiv>
-        </div>
+    <div className="bg-vscode-editor min-h-screen text-vscode-foreground font-sans selection:bg-blue-600/30">
+      {/* Background Ambient Glows */}
+      <div className="relative overflow-hidden pt-6 pb-16 px-4 sm:px-8">
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/15 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-600/15 blur-[100px] rounded-full pointer-events-none" />
 
-        <h1 className="flex flex-col items-center justify-center p-6 text-[2.6rem] leading-[120%] text-white font-[Poppins-Black]">
-          <p className="ccc text-shadow">
-            <span className="wave-hand">👋</span> Bonjour, je suis
-          </p>
+        {/* Hero Card Container */}
+        <div className="max-w-5xl mx-auto glass-card rounded-2xl p-8 sm:p-12 relative z-10 shadow-2xl border border-vscode-border">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
+            {/* Left Column: Text & Hero Info */}
+            <div className="flex-1 text-center lg:text-left space-y-6">
+              {/* Title & Name */}
+              <div className="space-y-2">
+                <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                  Bonjour, je suis{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-purple-400">
+                    Kevinn Rabearison
+                  </span>{" "}
+                  <span className="wave-hand text-3xl">👋</span>
+                </h1>
 
-          <section className="animation mt-2 overflow-hidden h-[72px]">
-            <div className="first">
-              <div className="px-2 py-1 inline-block text-white font-[Poppins-Black]">
-                Rabearison Fy Tahina Kevinn
+                {/* Animated Role Switcher */}
+                <div className="h-9 flex items-center justify-center lg:justify-start">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={roleIndex}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -15 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-lg sm:text-xl font-mono text-sky-400 font-semibold flex items-center gap-2"
+                    >
+                      <Terminal size={18} className="text-blue-500" />
+                      <span>{roles[roleIndex]}</span>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Bio Subtitle */}
+              <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+                Étudiant en <strong className="text-white">Licence Informatique à l'INSI</strong> (Génie Logiciel). Passionné par le développement d'interfaces modernes, d'architectures robustes et d'expériences utilisateur mémorables.
+              </p>
+
+              {/* CTAs Action Buttons */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                <MotionButton
+                  onClick={() => openTab("Projet.jsx")}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-sky-500 text-white font-semibold text-sm flex items-center gap-2 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
+                >
+                  <FolderOpen size={18} />
+                  <span>Explorer mes Projets</span>
+                </MotionButton>
+
+                <MotionButton
+                  onClick={downloadCV}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-6 py-3 rounded-xl bg-vscode-hover border border-vscode-border text-gray-200 font-semibold text-sm flex items-center gap-2 hover:border-emerald-500/50 hover:text-emerald-400 transition-all"
+                >
+                  <Download size={18} className="text-emerald-400" />
+                  <span>Télécharger mon CV (PDF)</span>
+                </MotionButton>
+
+                <MotionButton
+                  onClick={() => openTab("Contact.jsx")}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-6 py-3 rounded-xl bg-vscode-hover/80 border border-vscode-border text-gray-300 font-semibold text-sm flex items-center gap-2 hover:text-white transition-all"
+                >
+                  <Send size={18} className="text-purple-400" />
+                  <span>Me contacter</span>
+                </MotionButton>
               </div>
             </div>
-            <div className="second">
-              <div className="bg-[#CD921E] py-3 inline-block text-white rounded-md">
-                Développeur Web
-              </div>
-            </div>
-            <div className="third">
-              <div className="bg-[#c10528] px-3 inline-block text-white rounded-md">
-                Licence en cours
-              </div>
-            </div>
-          </section>
-        </h1>
 
-        <div className="font-[Poppins-Black] text-center">
-          <p className="text-2xl font-semibold text-white animate-fade-up">
-            🎓 Étudiant à INSI, licence en cours.
-          </p>
-          <p className="mt-2 text-lg text-gray-300 animate-fade-up animation-delay-500">
-            Passionné par le web, je transforme chaque défi en opportunité.
-          </p>
+            {/* Right Column: 3D Holographic Avatar Card */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-lg opacity-50 group-hover:opacity-80 transition duration-500" />
+              <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full overflow-hidden border-4 border-blue-500/80 shadow-2xl bg-vscode-sidebar">
+                <img
+                  src="/pdp2.jpg"
+                  alt="Rabearison Fy Tahina Kevinn"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Metrics Bar */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 pt-8 border-t border-vscode-border/60">
+            <div className="p-4 rounded-xl bg-vscode-editor/60 border border-vscode-border/50 text-center">
+              <div className="text-2xl font-bold text-sky-400 font-mono">Licence GL</div>
+              <div className="text-xs text-gray-400 mt-1">INSI Madagascar</div>
+            </div>
+            <div className="p-4 rounded-xl bg-vscode-editor/60 border border-vscode-border/50 text-center">
+              <div className="text-2xl font-bold text-emerald-400 font-mono">8+</div>
+              <div className="text-xs text-gray-400 mt-1">Projets Réalisés</div>
+            </div>
+            <div className="p-4 rounded-xl bg-vscode-editor/60 border border-vscode-border/50 text-center">
+              <div className="text-2xl font-bold text-purple-400 font-mono">Full Stack</div>
+              <div className="text-xs text-gray-400 mt-1">Web & Mobile</div>
+            </div>
+            <div className="p-4 rounded-xl bg-vscode-editor/60 border border-vscode-border/50 text-center">
+              <div className="text-2xl font-bold text-amber-400 font-mono">CI / CD</div>
+              <div className="text-xs text-gray-400 mt-1">Docker & Pipelines</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <section className="px-6 py-12 bg-vscode-sidebar text-white border-y border-vscode-border">
-        <h2 className="text-2xl font-bold mb-10 text-center">Mes Compétences</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Tech Stack Categories Grid */}
+      <section className="px-4 sm:px-8 py-12 max-w-6xl mx-auto space-y-8">
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center justify-center gap-2">
+            <Sparkles className="text-yellow-400" size={24} />
+            <span>Technologies & Compétences Clés</span>
+          </h2>
+          <p className="text-gray-400 text-sm max-w-xl mx-auto">
+            Mon écosystème de développement principal pour créer des projets complets et scalables.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((cat, i) => (
             <MotionDiv
               key={cat.title}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
-              className="bg-vscode-tabInactive/60 rounded-2xl p-6 shadow-lg text-center border border-vscode-border hover:border-vscode-statusbar/60 transition-colors"
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className={`bg-vscode-sidebar/90 rounded-xl p-6 border ${cat.border} hover:border-blue-500/60 transition-all duration-300 shadow-lg flex flex-col justify-between group`}
             >
-              <div className="flex justify-center mb-4 text-4xl">{cat.icon}</div>
-              <h3 className="text-lg font-semibold mb-6">{cat.title}</h3>
-              <div className="flex flex-wrap justify-center gap-4">
-                {cat.items.map((icon, idx) => (
-                  <div key={idx} className="text-4xl hover:scale-110 transition-transform duration-300">
-                    {icon}
+              <div>
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="p-2.5 rounded-lg bg-vscode-editor border border-vscode-border group-hover:scale-110 transition-transform">
+                    {cat.icon}
                   </div>
-                ))}
+                  <div>
+                    <h3 className="text-base font-bold text-white group-hover:text-sky-300 transition-colors">
+                      {cat.title}
+                    </h3>
+                    <span className="text-xs text-gray-400">{cat.desc}</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-vscode-border/50">
+                  {cat.items.map((tech) => (
+                    <div
+                      key={tech.name}
+                      className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-vscode-editor border border-vscode-border/70 text-xs font-medium text-gray-200 hover:border-sky-500/50 hover:text-white transition-all"
+                    >
+                      <span className="text-base">{tech.icon}</span>
+                      <span>{tech.name}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </MotionDiv>
           ))}
         </div>
       </section>
 
-<section className="px-6 py-16 bg-gradient-to-b from-vscode-editor to-vscode-sidebar">
-  <h2 className="text-3xl font-extrabold mb-12 text-center text-white">
-    Mes Projets Récents
-  </h2>
+      {/* Featured Projects Highlights */}
+      <section className="px-4 sm:px-8 py-12 max-w-6xl mx-auto border-t border-vscode-border/60">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Projets à la une</h2>
+            <p className="text-gray-400 text-sm">Découvrez une sélection de mes réalisations récentes</p>
+          </div>
 
-  {(() => {
-    const projets = [
-      {
-        title: "💻 Portfolio VS Code",
-        description:
-          "Un portfolio moderne inspiré de Visual Studio Code, développé avec React, TailwindCSS et Framer Motion.",
-        stack: ["React", "TailwindCSS", "Framer Motion"],
-        color: "from-blue-500 to-cyan-400",
-        github: "https://github.com/kevinnrabearison-hub/PortfolioVSC",
-      },
-      {
-        title: "📱 BenevolatApp",
-        description:
-          "Application mobile pour connecter bénévoles et associations, construite avec React Native et Expo.",
-        stack: ["React Native", "Expo", "Firebase"],
-        color: "from-purple-500 to-pink-400",
-        github: "https://github.com/kevinnrabearison-hub/BenevolatApp",
-      },
-    ];
-
-    return (
-      <div className="grid md:grid-cols-2 gap-8">
-        {projets.map((projet, i) => (
-          <MotionDiv
-            key={i}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: i * 0.2 }}
-            className={`relative bg-gradient-to-br ${projet.color} p-[2px] rounded-2xl shadow-lg hover:scale-[1.03] transition-transform duration-300`}
+          <MotionButton
+            onClick={() => openTab("Projet.jsx")}
+            className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-vscode-hover text-sky-400 hover:text-white border border-vscode-border text-xs font-semibold transition-all"
           >
-            <div className="bg-vscode-editor rounded-2xl p-6 h-full flex flex-col justify-between border border-vscode-border/40">
-              <h3 className="text-2xl font-bold mb-2 text-white">{projet.title}</h3>
+            <span>Voir tous les projets</span>
+            <ArrowRight size={14} />
+          </MotionButton>
+        </div>
 
-              <p className="text-gray-300 text-sm mb-4">{projet.description}</p>
-
-              <div className="flex flex-wrap gap-2 mb-4">
-                {projet.stack.map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="text-xs bg-vscode-tabInactive text-gray-300 px-2 py-1 rounded-md border border-vscode-border/60"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {projet.github && (
-                <div className="flex justify-center mt-4">
-                  <MotionA
-                    href={projet.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{
-                      scale: 1.07,
-                      boxShadow: "0 0 25px rgba(59,130,246,0.6)",
-                      backdropFilter: "blur(12px)",
-                    }}
-                    transition={{ type: "spring", stiffness: 200, damping: 12 }}
-                    className="relative flex items-center gap-2 px-5 py-2 rounded-xl 
-                             bg-vscode-hover/60 border border-blue-500/40 text-gray-200 text-sm 
-                             backdrop-blur-md hover:bg-vscode-hover hover:text-white overflow-hidden group"
-                  >
-                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent 
-                                     opacity-0 group-hover:opacity-100 blur-md transition-all duration-700"></span>
-
-                    <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-40 blur-lg"></span>
-
-                    <Github
-                      size={18}
-                      className="relative z-10 text-blue-400 group-hover:text-blue-300 transition-colors"
-                    />
-                    <span className="relative z-10 font-medium">Voir sur GitHub</span>
-                  </MotionA>
-                </div>
-              )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="glass-card rounded-xl p-6 border border-vscode-border hover:border-blue-500/50 transition-all space-y-4">
+            <div className="flex justify-between items-start">
+              <h3 className="text-xl font-bold text-white">💻 Portfolio VS Code</h3>
+              <span className="text-xs font-mono bg-blue-950 text-blue-400 border border-blue-800 px-2 py-0.5 rounded">React + Vite</span>
             </div>
-          </MotionDiv>
-        ))}
-      </div>
-    );
-  })()}
+            <p className="text-gray-300 text-sm">
+              Portfolio interactif et immersif sous forme d'environnement de développement VS Code, avec onglets, terminal interactif et command palette.
+            </p>
+            <div className="flex flex-wrap gap-2 text-xs font-mono text-gray-400">
+              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">React 19</span>
+              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">TailwindCSS</span>
+              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">Framer Motion</span>
+            </div>
+            <div className="pt-2">
+              <a
+                href="https://github.com/kevinnrabearison-hub/PortfolioVSC"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center space-x-2 text-xs font-semibold text-sky-400 hover:underline"
+              >
+                <Github size={14} />
+                <span>Voir le dépôt GitHub →</span>
+              </a>
+            </div>
+          </div>
 
-  <div className="flex justify-center mt-12">
-  <MotionButton
-    onClick={() => openTab("Projet.jsx")}
-    whileHover={{
-      scale: 1.07,
-      boxShadow: "0 0 25px rgba(59,130,246,0.6)",
-      backdropFilter: "blur(12px)",
-    }}
-    transition={{ type: "spring", stiffness: 200, damping: 12 }}
-    className="relative flex items-center gap-2 px-6 py-3 rounded-xl 
-               bg-gradient-to-r from-blue-600/90 to-blue-500/80
-               border border-blue-400/40 text-white font-medium 
-               backdrop-blur-md overflow-hidden group shadow-md"
-  >
-    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/40 to-transparent 
-                     opacity-0 group-hover:opacity-100 blur-md transition-all duration-700"></span>
+          <div className="glass-card rounded-xl p-6 border border-vscode-border hover:border-purple-500/50 transition-all space-y-4">
+            <div className="flex justify-between items-start">
+              <h3 className="text-xl font-bold text-white">📱 BenevolatApp</h3>
+              <span className="text-xs font-mono bg-purple-950 text-purple-400 border border-purple-800 px-2 py-0.5 rounded">Mobile React Native</span>
+            </div>
+            <p className="text-gray-300 text-sm">
+              Application mobile connectant bénévoles et associations pour la gestion de missions humanitaires et solidaires.
+            </p>
+            <div className="flex flex-wrap gap-2 text-xs font-mono text-gray-400">
+              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">React Native</span>
+              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">Expo</span>
+              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">Firebase</span>
+            </div>
+            <div className="pt-2">
+              <a
+                href="https://github.com/kevinnrabearison-hub/BenevolatApp"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center space-x-2 text-xs font-semibold text-purple-400 hover:underline"
+              >
+                <Github size={14} />
+                <span>Voir le dépôt GitHub →</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400/20 to-cyan-400/20 opacity-40 blur-lg"></span>
-
-    <FolderOpen size={20} className="relative z-10 text-blue-200 group-hover:text-white transition-colors" />
-    <span className="relative z-10 font-semibold">Voir tous mes projets →</span>
-  </MotionButton>
-</div>
-</section>
-
-
-      <section className="px-6 py-16 bg-vscode-editor text-center border-t border-vscode-border relative overflow-hidden">
-  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-vscode-hover/40 to-vscode-editor opacity-60 blur-3xl"></div>
-
-  <div className="relative z-10">
-    <h2 className="text-3xl font-bold text-white mb-4 tracking-wide">
-      Restons en contact
-    </h2>
-    <p className="text-gray-300 mb-8 text-lg">
-      Une idée de projet ? Besoin d’un développeur ? Parlons-en ensemble !
-    </p>
-
-    <MotionButton
-      onClick={() => openTab("Contact.jsx")}
-      whileHover={{
-        scale: 1.08,
-        boxShadow: "0 0 25px rgba(34,197,94,0.6)",
-        backdropFilter: "blur(12px)",
-      }}
-      transition={{ type: "spring", stiffness: 220, damping: 14 }}
-      className="relative flex items-center gap-2 mx-auto px-6 py-3 rounded-xl 
-                 bg-gradient-to-r from-green-600/90 to-emerald-500/80
-                 border border-green-400/40 text-white font-semibold
-                 backdrop-blur-md overflow-hidden group shadow-md"
-    >
-      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/30 to-transparent 
-                       opacity-0 group-hover:opacity-100 blur-md transition-all duration-700"></span>
-
-      <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-green-400/20 to-emerald-400/20 opacity-40 blur-lg"></span>
-
-      <Send size={20} className="relative z-10 text-green-200 group-hover:text-white transition-colors" />
-      <span className="relative z-10">Me contacter →</span>
-    </MotionButton>
-  </div>
-</section>
+      {/* Call to Contact Banner */}
+      <section className="px-4 sm:px-8 py-12 max-w-4xl mx-auto text-center">
+        <div className="glass-card rounded-2xl p-8 border border-vscode-border space-y-4">
+          <h2 className="text-2xl font-bold text-white">Envie de collaborer sur un projet ?</h2>
+          <p className="text-gray-300 text-sm max-w-md mx-auto">
+            Je suis disponible pour des missions de développement web, mobile ou des opportunités professionnelles.
+          </p>
+          <MotionButton
+            onClick={() => openTab("Contact.jsx")}
+            whileHover={{ scale: 1.05 }}
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg"
+          >
+            <Send size={16} />
+            <span>Envoyer un message</span>
+          </MotionButton>
+        </div>
+      </section>
     </div>
   );
 }
