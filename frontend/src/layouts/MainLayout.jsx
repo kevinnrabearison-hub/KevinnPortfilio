@@ -22,6 +22,8 @@ import { useTabs } from "../context/TabsContext";
 import Tabs from "../components/Tabs";
 import Terminal from "../components/Terminal";
 import CommandPalette from "../components/CommandPalette";
+import ChatWidget from "../components/ChatWidget";
+
 
 const componentsMap = {
   "Accueil.jsx": Acceuil,
@@ -146,8 +148,12 @@ const MainLayout = () => {
           </MotionButton>
         ))}
       </div>
+
+      {/* Floating Visitor Chat Widget */}
+      <ChatWidget />
     </div>
   );
 };
 
 export default MainLayout;
+

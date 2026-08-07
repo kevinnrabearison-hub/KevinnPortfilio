@@ -23,6 +23,9 @@ frontend/.vite/
 dist/
 build/
 
+# --- Backend local persistence ---
+backend/data.json
+
 # --- IDE / OS ---
 .vscode/
 .idea/

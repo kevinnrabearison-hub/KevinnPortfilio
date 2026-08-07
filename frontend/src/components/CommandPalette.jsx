@@ -89,6 +89,8 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal }) {
     },
   ];
 
+
+
   const filteredActions = actions.filter(
     (item) =>
       item.title.toLowerCase().includes(query.toLowerCase()) ||

@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 
 const StatusBar = ({ onToggleTerminal, onOpenCommandPalette }) => {
+
   return (
     <footer className="w-full h-6 bg-vscode-statusbar text-white text-[11px] font-mono flex items-center justify-between px-3 border-t border-vscode-border select-none z-30">
       {/* Left Items */}
@@ -88,3 +89,4 @@ const StatusBar = ({ onToggleTerminal, onOpenCommandPalette }) => {
 };
 
 export default StatusBar;
+
