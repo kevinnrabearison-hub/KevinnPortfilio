@@ -254,8 +254,9 @@ app.get("/", (req, res) => {
 
 const boot = async () => {
   await initDb();
-  server.listen(port, () => {
-    console.log(`Backend démarré sur http://localhost:${port}`);
+
+  server.listen(port, "0.0.0.0", () => {
+    console.log(`Backend démarré sur le port ${port}`);
     console.log(`Frontend autorisé : ${frontendUrl}`);
   });
 };
