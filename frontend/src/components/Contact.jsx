@@ -15,6 +15,8 @@ import {
   Clock
 } from "lucide-react";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 const MotionSection = motion.section;
 const MotionDiv = motion.div;
 const MotionButton = motion.button;
@@ -39,7 +41,7 @@ export default function Contact() {
     addLog(`POST /api/contact Payload: { name: "${formData.name}", email: "${formData.email}" }`, "info");
 
     try {
-      await axios.post("http://localhost:5000/api/contact", formData);
+      await axios.post(`${BACKEND_URL}/api/contact`, formData);
       addLog("HTTP 200 OK - Message transmis avec succès !", "success");
       setNotification({ type: "success", text: "Message envoyé avec succès 🎉" });
       setFormData({ name: "", email: "", message: "" });

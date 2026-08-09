@@ -5,6 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 import {
   initDb,
   getOrCreateVisitor,
@@ -245,6 +246,47 @@ app.get("/api/chat/history/:sessionId", async (req, res) => {
   } catch (error) {
     console.error("GET /api/chat/history error:", error);
     return res.status(500).json({ success: false, error: "Erreur interne" });
+  }
+});
+
+app.post("/api/contact", async (req, res) => {
+  try {
+    const { name, email, message } = req.body || {};
+    if (!name || !email || !message) {
+      return res.status(400).json({ success: false, error: "Tous les champs sont requis" });
+    }
+
+    const mailOptions = {
+      from: `${name} <${email}>`,
+      to: process.env.EMAIL_USER || process.env.ADMIN_EMAIL || "",
+      subject: `Nouveau message de contact de ${name}`,
+      text: `Nom: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      html: `<p><strong>Nom:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong><br/>${message.replace(/\n/g, "<br/>")}</p>`,
+    };
+
+    if (!mailOptions.to) {
+      console.warn("API contact: SMTP non configuré, message reçu localement.");
+      return res.json({ success: true, message: "Message reçu, mais l’e-mail n’a pas été envoyé car la configuration SMTP est manquante." });
+    }
+
+    if (!process.env.EMAIL_PASS) {
+      console.warn("API contact: EMAIL_PASS manquant, message reçu localement.");
+      return res.json({ success: true, message: "Message reçu, mais l’e-mail n’a pas été envoyé car la configuration SMTP est incomplète." });
+    }
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail(mailOptions);
+    return res.json({ success: true, message: "Message envoyé avec succès." });
+  } catch (error) {
+    console.error("POST /api/contact error:", error);
+    return res.status(500).json({ success: false, error: "Impossible d'envoyer le message" });
   }
 });
 

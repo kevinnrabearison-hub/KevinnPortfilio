@@ -3,9 +3,8 @@ import { io } from "socket.io-client";
 
 const ChatContext = createContext();
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (
-  window.location.hostname === "localhost" ? "http://localhost:5000" : window.location.origin
-);
+const BACKEND_URL =
+  import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 export const ChatProvider = ({ children }) => {
   // Visitor Session Identification
