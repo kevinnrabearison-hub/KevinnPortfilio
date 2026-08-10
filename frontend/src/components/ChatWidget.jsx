@@ -21,6 +21,10 @@ export default function ChatWidget() {
   const [isEditingPseudo, setIsEditingPseudo] = useState(false);
   const [tempPseudo, setTempPseudo] = useState(pseudo);
   const messagesEndRef = useRef(null);
+  // floating button position and dragging refs
+  const [btnPos, setBtnPos] = useState(null); // { x, y }
+  const draggingRef = useRef(false);
+  const dragOriginRef = useRef({ startX: 0, startY: 0, initX: 0, initY: 0, pointerType: null });
 
   // Auto scroll to bottom
   const scrollToBottom = () => {
@@ -32,6 +36,109 @@ export default function ChatWidget() {
       scrollToBottom();
     }
   }, [messages, isOpen, isAdminTyping]);
+
+  // load saved button position
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("chatFloatingBtnPos");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed.x === "number" && typeof parsed.y === "number") {
+          setBtnPos(parsed);
+        }
+      }
+    } catch (e) {
+      /* ignore */
+    }
+  }, []);
+
+  // global move / end handlers for mouse and touch while dragging
+  useEffect(() => {
+    const onMouseMove = (e) => {
+      if (!draggingRef.current) return;
+      const dx = e.clientX - dragOriginRef.current.startX;
+      const dy = e.clientY - dragOriginRef.current.startY;
+      const newX = dragOriginRef.current.initX + dx;
+      const newY = dragOriginRef.current.initY + dy;
+      setBtnPos(clampPosition(newX, newY));
+    };
+
+    const onMouseUp = (e) => {
+      if (!draggingRef.current) return;
+      draggingRef.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      try {
+        localStorage.setItem("chatFloatingBtnPos", JSON.stringify(btnPos || { x: 0, y: 0 }));
+      } catch (err) {}
+    };
+
+    const onTouchMove = (e) => {
+      if (!draggingRef.current) return;
+      const t = e.touches[0];
+      const dx = t.clientX - dragOriginRef.current.startX;
+      const dy = t.clientY - dragOriginRef.current.startY;
+      const newX = dragOriginRef.current.initX + dx;
+      const newY = dragOriginRef.current.initY + dy;
+      setBtnPos(clampPosition(newX, newY));
+      e.preventDefault();
+    };
+
+    const onTouchEnd = () => {
+      if (!draggingRef.current) return;
+      draggingRef.current = false;
+      try {
+        localStorage.setItem("chatFloatingBtnPos", JSON.stringify(btnPos || { x: 0, y: 0 }));
+      } catch (err) {}
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [btnPos]);
+
+  const clampPosition = (x, y) => {
+    const padding = 8;
+    const maxX = window.innerWidth - 80 - padding; // button width approx 80
+    const maxY = window.innerHeight - 56 - padding; // button height approx 56
+    return { x: Math.max(padding, Math.min(maxX, x)), y: Math.max(padding, Math.min(maxY, y)) };
+  };
+
+  const startDragWithMouse = (e) => {
+    // start only on right-click (button === 2)
+    if (e.button !== 2) return;
+    e.preventDefault();
+    draggingRef.current = true;
+    dragOriginRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      initX: btnPos ? btnPos.x : window.innerWidth - 24 - 120,
+      initY: btnPos ? btnPos.y : window.innerHeight - 24 - 56,
+      pointerType: "mouse",
+    };
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  };
+
+  const startDragWithTouch = (e) => {
+    const t = e.touches[0];
+    draggingRef.current = true;
+    dragOriginRef.current = {
+      startX: t.clientX,
+      startY: t.clientY,
+      initX: btnPos ? btnPos.x : window.innerWidth - 24 - 120,
+      initY: btnPos ? btnPos.y : window.innerHeight - 24 - 56,
+      pointerType: "touch",
+    };
+  };
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -58,30 +165,42 @@ export default function ChatWidget() {
     <div className="fixed bottom-6 right-6 z-50 font-sans">
       {/* --- FLOATING CHAT BUTTON --- */}
       {!isOpen && (
-        <button
-          onClick={toggleChat}
-          className="relative group flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 border border-white/20 backdrop-blur-md"
-          title="Discuter en direct avec Kevinn"
+        <div
+          style={
+            btnPos
+              ? { position: "fixed", left: btnPos.x, top: btnPos.y, zIndex: 60 }
+              : { position: "fixed", right: 24, bottom: 24, zIndex: 60 }
+          }
         >
-          <div className="relative">
-            <MessageSquare className="w-6 h-6 text-white" />
-            <span
-              className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-slate-900 ${
-                isAdminOnline ? "bg-emerald-400 animate-pulse" : "bg-slate-400"
-              }`}
-            />
-          </div>
-          <span className="font-medium text-sm hidden sm:inline-block">
-            {isAdminOnline ? "Chat Direct (En Ligne)" : "Laisser un Message"}
-          </span>
-
-          {/* Unread badge */}
-          {unreadCount > 0 && (
-            <span className="absolute -top-2 -right-2 bg-rose-500 text-white font-bold text-xs w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-900 animate-bounce shadow-lg">
-              {unreadCount}
+          <button
+            onClick={toggleChat}
+            onContextMenu={(e) => e.preventDefault()}
+            onMouseDown={startDragWithMouse}
+            onTouchStart={startDragWithTouch}
+            className="relative group flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 border border-white/20 backdrop-blur-md cursor-pointer"
+            title="Discuter en direct avec Kevinn (Drag right-click or touch to move)"
+          >
+            <div className="relative">
+              {/* replace MessageSquare with a more realistic chat icon */}
+              <svg viewBox="0 0 24 24" width="24" height="24" className="text-white"><path fill="currentColor" d="M2 3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7l-5 4V3z"></path></svg>
+              <span
+                className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-slate-900 ${
+                  isAdminOnline ? "bg-emerald-400 animate-pulse" : "bg-slate-400"
+                }`}
+              />
+            </div>
+            <span className="font-medium text-sm hidden sm:inline-block">
+              {isAdminOnline ? "Chat Direct (En Ligne)" : "Laisser un Message"}
             </span>
-          )}
-        </button>
+
+            {/* Unread badge */}
+            {unreadCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-rose-500 text-white font-bold text-xs w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-900 animate-bounce shadow-lg">
+                {unreadCount}
+              </span>
+            )}
+          </button>
+        </div>
       )}
 
       {/* --- EXPANDABLE CHAT WINDOW --- */}

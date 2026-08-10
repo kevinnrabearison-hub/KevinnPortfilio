@@ -59,11 +59,11 @@ export default function Apropos() {
           </div>
 
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Rabearison Fy Tahina Kevinn
+            Créer des mondes numériques magnifiques
           </h1>
 
           <p className="text-gray-300 text-sm max-w-2xl mx-auto leading-relaxed">
-            Développeur Web & Mobile passionné par les technologies modernes et l'ingénierie logicielle.
+            Je suis Kevinn Rabearison — développeur full-stack et technologue créatif, passionné par les expériences numériques qui se distinguent par leur clarté, leur élégance et leur performance.
           </p>
         </div>
 
@@ -97,11 +97,11 @@ export default function Apropos() {
               <span className="inline-flex items-center space-x-1 font-semibold text-yellow-400 bg-yellow-950/40 px-2 py-0.5 rounded border border-yellow-800/50">
                 <span>INSI</span>
                 <img src={insiLogo} alt="INSI Logo" className="w-4 h-4 rounded-full object-contain" />
-              </span>.
+              </span>, je transforme les idées en interfaces nettes et les architectures en systèmes fiables.
             </p>
 
             <p>
-              Ma philosophie de développement repose sur trois piliers : <strong className="text-sky-300">Simplicité</strong>, <strong className="text-emerald-300">Performance</strong> et <strong className="text-purple-300">Élégance du code</strong>. J'aime concevoir des architectures modulaires et des interfaces fluides.
+              Chaque projet est une opportunité de livrer une expérience mémorable : du code optimisé, des transitions soignées et un parcours utilisateur maîtrisé — toujours avec un style proche d'un éditeur moderne.
             </p>
 
             <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">

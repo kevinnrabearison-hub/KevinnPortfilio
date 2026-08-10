@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   VscTriangleDown,
   VscNewFile,
@@ -32,6 +32,45 @@ const IndexClique = () => {
   const [isOpen, setIsOpen] = useState(true);
   const { openTab, activeTab } = useTabs();
 
+  // resize state for the sidebar (drag right edge)
+  const [width, setWidth] = useState(240); // px (w-60 ≈ 240px)
+  const MIN_WIDTH = 48; // collapsed / icon-only minimum
+  const MAX_WIDTH = 420; // reasonable maximum width
+  const isResizingRef = useRef(false);
+  const startXRef = useRef(0);
+  const startWidthRef = useRef(0);
+
+  useEffect(() => {
+    const onMouseMove = (e) => {
+      if (!isResizingRef.current) return;
+      const dx = e.clientX - startXRef.current;
+      const newW = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, startWidthRef.current + dx));
+      setWidth(newW);
+    };
+
+    const onMouseUp = () => {
+      if (isResizingRef.current) {
+        isResizingRef.current = false;
+        document.body.style.cursor = "";
+      }
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+  }, []);
+
+  const handleResizerDown = (e) => {
+    isResizingRef.current = true;
+    startXRef.current = e.clientX;
+    startWidthRef.current = width;
+    document.body.style.cursor = "col-resize";
+    e.preventDefault();
+  };
+
   const files = [
     { name: "Accueil.jsx", label: "Accueil.jsx", tag: "JSX" },
     { name: "Competence.jsx", label: "Competence.jsx", tag: "JSX" },
@@ -50,7 +89,10 @@ const IndexClique = () => {
   };
 
   return (
-    <aside className="w-60 h-full bg-vscode-sidebar flex flex-col justify-between py-2 border-r border-vscode-border select-none overflow-hidden font-sans text-xs">
+    <aside
+      className="h-full bg-vscode-sidebar flex flex-col justify-between py-2 border-r border-vscode-border select-none overflow-hidden font-sans text-xs relative"
+      style={{ width: `${width}px` }}
+    >
       <div>
         {/* Sidebar Header Title */}
         <div className="text-gray-400 bg-vscode-sidebar flex justify-between items-center px-3 py-1 font-semibold tracking-wider text-[11px] uppercase border-b border-vscode-border/40">
@@ -127,6 +169,12 @@ const IndexClique = () => {
           <span>TIMELINE</span>
         </div>
       </div>
+      {/* resizer: small hit area on right edge to change cursor and start drag */}
+      <div
+        onMouseDown={handleResizerDown}
+        className="absolute top-0 right-0 h-full w-1 -mr-1 z-50 hover:bg-vscode-hover/30 cursor-col-resize"
+        title="Redimensionner la barre (glisser la bordure droite)"
+      />
     </aside>
   );
 };

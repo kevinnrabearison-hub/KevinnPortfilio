@@ -11,11 +11,12 @@ import {
   CheckCircle2,
   Award,
   Layers,
-  ArrowRight
+  ArrowRight,
+  Zap
 } from "lucide-react";
 import {
   FaHtml5, FaCss3Alt, FaReact, FaVuejs, FaPhp, FaSymfony,
-  FaDocker, FaGithub, FaMobileAlt, FaServer, FaTools
+  FaDocker, FaGithub, FaMobileAlt, FaServer, FaTools, FaCode, FaFigma
 } from "react-icons/fa";
 import {
   SiFlutter, SiDjango, SiExpress, SiDotnet, SiTailwindcss,
@@ -23,16 +24,21 @@ import {
 } from "react-icons/si";
 import { downloadAndOpenCV } from "../utils/downloadCv";
 import { useTabs } from "../context/TabsContext";
+import "./Acceuil.css";
 
 const MotionDiv = motion.div;
 const MotionA = motion.a;
 const MotionButton = motion.button;
 
 const roles = [
-  "Développeur Web Full Stack",
-  "Développeur Mobile (React Native)",
+
   "Licence en Génie Logiciel @ INSI",
   "Concepteur d'Applications Innovantes"
+];
+
+const badges = [
+  { className: "badge-top-right", title: "FullStack", label: "React • Backend", icon: <FaCode className="badge-icon" /> },
+  { className: "badge-bottom-left", title: "Automation", label: "Workflows • API", icon: <Zap className="badge-icon" /> },
 ];
 
 const categories = [
@@ -43,7 +49,7 @@ const categories = [
     border: "border-sky-500/30",
     icon: <Code2 className="text-sky-400" size={24} />,
     items: [
-      { name: "React", icon: <FaReact className="text-sky-400" /> },
+      { name: "React", icon: <FaReact className="text-sky-200" /> },
       { name: "Vue.js", icon: <FaVuejs className="text-emerald-500" /> },
       { name: "TypeScript", icon: <SiTypescript className="text-blue-400" /> },
       { name: "HTML5", icon: <FaHtml5 className="text-orange-500" /> },
@@ -118,29 +124,33 @@ export default function Acceuil() {
   };
 
   return (
-    <div className="bg-vscode-editor min-h-screen text-vscode-foreground font-sans selection:bg-blue-600/30">
+    <div className="bg-vscode-editor min-h-screen text-vscode-foreground font-display selection:bg-blue-600/30">
       {/* Background Ambient Glows */}
-      <div className="relative overflow-hidden pt-6 pb-16 px-4 sm:px-8">
+      <div className="relative overflow-hidden px-4 sm:px-8">
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/15 blur-[120px] rounded-full pointer-events-none" />
         <div className="absolute top-40 right-10 w-72 h-72 bg-purple-600/15 blur-[100px] rounded-full pointer-events-none" />
 
         {/* Hero Card Container */}
-        <div className="max-w-5xl mx-auto glass-card rounded-2xl p-8 sm:p-12 relative z-10 shadow-2xl border border-vscode-border">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
+        <div className="max-w-5xl  glass-card  p-6 sm:p-10 relative z-10 shadow-2xl overflow-hidden">
+          <div className="acceuil-bg" />
+          <div className="acceuil-grid-lines" />
+          <div className="acceuil-scanlines" />
+          <div className="acceuil-noise" />
+
+          <div className="relative flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-10">
             {/* Left Column: Text & Hero Info */}
-            <div className="flex-1 text-center lg:text-left space-y-6">
-              {/* Title & Name */}
-              <div className="space-y-2">
-                <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-                  Bonjour, je suis{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-purple-400">
+            <div className="flex-1 text-center lg:text-left space-y-6 relative z-10">
+
+
+              <div className="space-y-4">
+                <h1 className="hero-heading text-white font-extrabold font-display">
+                  Bonjour, je suis
+                  <span className="hero-name hero-name-gradient block mt-4">
                     Kevinn Rabearison
-                  </span>{" "}
-                  <span className="wave-hand text-3xl">👋</span>
+                  </span>
                 </h1>
 
-                {/* Animated Role Switcher */}
-                <div className="h-9 flex items-center justify-center lg:justify-start">
+                <div className="h-10 flex items-center justify-center lg:justify-start">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={roleIndex}
@@ -148,7 +158,7 @@ export default function Acceuil() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -15 }}
                       transition={{ duration: 0.3 }}
-                      className="text-lg sm:text-xl font-mono text-sky-400 font-semibold flex items-center gap-2"
+                      className="text-base sm:text-lg font-mono text-sky-400 font-semibold flex items-center gap-2"
                     >
                       <Terminal size={18} className="text-blue-500" />
                       <span>{roles[roleIndex]}</span>
@@ -158,12 +168,14 @@ export default function Acceuil() {
               </div>
 
               {/* Bio Subtitle */}
-              <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
-                Étudiant en <strong className="text-white">Licence Informatique à l'INSI</strong> (Génie Logiciel). Passionné par le développement d'interfaces modernes, d'architectures robustes et d'expériences utilisateur mémorables.
+              <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl font-mono relative z-10">
+                Je conçois des expériences numériques à l’intersection du <strong className="text-white">code, design</strong> et de l’<strong className="text-sky-300">innovation</strong>. Je crée des interfaces modernes, rapides et engageantes.
               </p>
 
+
+
               {/* CTAs Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 relative z-10">
                 <MotionButton
                   onClick={() => openTab("Projet.jsx")}
                   whileHover={{ scale: 1.04 }}
@@ -196,15 +208,29 @@ export default function Acceuil() {
               </div>
             </div>
 
-            {/* Right Column: 3D Holographic Avatar Card */}
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-lg opacity-50 group-hover:opacity-80 transition duration-500" />
-              <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full overflow-hidden border-4 border-blue-500/80 shadow-2xl bg-vscode-sidebar">
-                <img
-                  src="/pdp2.jpg"
-                  alt="Rabearison Fy Tahina Kevinn"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+            {/* Right Column: Hero Image with floating badges */}
+            <div className="hero-image-wrapper relative z-10">
+              <div className="hero-image-container">
+                <div className="profile-image-glow" />
+                <div className="profile-image-frame">
+                  <div className="profile-image">
+                    <img
+                      src="/pdp2.jpg"
+                      alt="Rabearison Fy Tahina Kevinn"
+                      className="profile-photo"
+                    />
+                  </div>
+                </div>
+
+                {badges.map((badge) => (
+                  <div className={`floating-badge ${badge.className ?? badge.title.replace(/\s+/g, "-").toLowerCase()}`} key={badge.title}>
+                    {badge.icon}
+                    <div className="badge-content">
+                      <span className="badge-title">{badge.title}</span>
+                      <span className="badge-libs">{badge.label}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

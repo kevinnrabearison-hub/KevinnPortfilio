@@ -68,10 +68,10 @@ export default function Contact() {
         <div className="text-center space-y-2 pb-6 border-b border-vscode-border">
           <h1 className="text-3xl font-extrabold text-white flex items-center justify-center gap-3">
             <Send className="text-blue-400" size={28} />
-            <span>Me Contacter</span>
+            <span>Construisons ensemble</span>
           </h1>
           <p className="text-gray-400 text-sm max-w-md mx-auto">
-            Une idée de projet ? Une proposition d'opportunité ? N'hésitez pas à me laisser un message.
+            Que vous ayez un projet en tête, un produit à lancer ou une idée à explorer, je suis prêt à en discuter.
           </p>
         </div>
 

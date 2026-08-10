@@ -4,7 +4,10 @@
 
 :root {
   color-scheme: dark;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Syne', sans-serif;
+  --font-serif: 'Fraunces', serif;
+  --font-mono: 'DM Mono', monospace;
+  font-family: var(--font-display);
 }
 
 body {
@@ -21,6 +24,18 @@ body {
 :focus-visible {
   outline: 2px solid rgba(0, 122, 204, 0.85);
   outline-offset: 1px;
+}
+
+.font-display {
+  font-family: var(--font-display) !important;
+}
+
+.font-serif {
+  font-family: var(--font-serif) !important;
+}
+
+.font-mono {
+  font-family: var(--font-mono) !important;
 }
 
 /* Custom Scrollbars */
