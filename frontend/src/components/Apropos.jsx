@@ -21,24 +21,24 @@ const MotionDiv = motion.div;
 
 const timelineEvents = [
   {
-    year: "2024 - Présent",
-    title: "Licence en Informatique (Génie Logiciel)",
-    institution: "INSI (Institut Supérieur d'Informatique)",
-    desc: "Approfondissement des concepts avancés de Génie Logiciel, architecture système, bases de données relationnelles & NoSQL, et pipelines CI/CD.",
+    year: "2023 - Présent",
+    title: "L3 INSI GL",
+    institution: "Institut Supérieur d'Informatique (INSI)",
+    desc: "Licence en Informatique, spécialité Génie Logiciel, avec approfondissement sur les bases de la programmation, l’architecture logicielle et les outils de développement moderne.",
     icon: <GraduationCap className="text-sky-400" size={18} />,
   },
   {
-    year: "2023 - 2024",
-    title: "Projets Web & Mobiles Hybrides",
-    institution: "Réalisations Universitaires & Autodidacte",
-    desc: "Développement d'applications complètes avec React Native (BenevolatApp), Django, Symfony, Node.js et conteneurisation Docker.",
+    year: "2022 - 2023",
+    title: "Notion Web chez HOPES Formation",
+    institution: "HOPES Formation - Andavamamba",
+    desc: "Formation certifiée en HTML, CSS, JavaScript, avec un apprentissage pratique du développement front-end et des bases du web design.",
     icon: <Code2 className="text-purple-400" size={18} />,
   },
   {
-    year: "Début du Parcours",
-    title: "Passionné par la Programmation Web",
-    institution: "Autodidacte & Cursus INSI",
-    desc: "Découverte et maîtrise des fondamentaux du Web (HTML5, CSS3, JS ES6+), puis spécialisation dans l'écosystème JavaScript / Python.",
+    year: "Avant 2023",
+    title: "Web Design & Bureautique chez IS Info Andranomena",
+    institution: "IS Info Andranomena",
+    desc: "Découverte du web design, Photoshop, Illustrator, et de la bureautique, avec une première immersion dans le monde du design numérique et des outils de création.",
     icon: <Sparkles className="text-amber-400" size={18} />,
   },
 ];
@@ -53,17 +53,15 @@ export default function Apropos() {
       <div className="max-w-4xl mx-auto space-y-10">
         {/* Header Title */}
         <div className="text-center space-y-3 pb-6 border-b border-vscode-border">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/40 text-sky-400 text-xs font-mono">
-            <Lightbulb size={15} className="text-yellow-400 animate-pulse" />
-            <span>À propos de l'auteur</span>
+          <div className="inline-flex items-center space-x-2 px-3 py-1    text-sky-400 text-2xl font-mono">
+            <h1 className="font-bold">&lt;À propos /&gt;</h1>
+            
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Créer des mondes numériques magnifiques
-          </h1>
+         
 
-          <p className="text-gray-300 text-sm max-w-2xl mx-auto leading-relaxed">
-            Je suis Kevinn Rabearison — développeur full-stack et technologue créatif, passionné par les expériences numériques qui se distinguent par leur clarté, leur élégance et leur performance.
+          <p className="text-gray-300 text-sm max-w-2xl mx-auto leading-relaxed italic">
+            Je suis Kevinn Rabearison, développeur full-stack et créatif digital, passionné par la conception d’expériences web élégantes, performantes et utiles. J’aime transformer des idées en solutions concrètes et donner vie à des projets qui marquent leurs utilisateurs.
           </p>
         </div>
 

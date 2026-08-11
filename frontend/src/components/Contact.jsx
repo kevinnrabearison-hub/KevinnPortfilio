@@ -67,8 +67,7 @@ export default function Contact() {
         {/* Header Title */}
         <div className="text-center space-y-2 pb-6 border-b border-vscode-border">
           <h1 className="text-3xl font-extrabold text-white flex items-center justify-center gap-3">
-            <Send className="text-blue-400" size={28} />
-            <span>Construisons ensemble</span>
+            <span className="font-mono text-sky-300 tracking-wide">&lt;Construisons ensemble /&gt;</span>
           </h1>
           <p className="text-gray-400 text-sm max-w-md mx-auto">
             Que vous ayez un projet en tête, un produit à lancer ou une idée à explorer, je suis prêt à en discuter.
@@ -79,7 +78,7 @@ export default function Contact() {
           {/* Contact Details & Direct Cards */}
           <div className="space-y-4">
             <div className="glass-card rounded-xl p-6 border border-vscode-border space-y-4">
-              <h3 className="text-lg font-bold text-white mb-2">Informations Directes</h3>
+              <h3 className="text-lg font-bold text-white mb-2 font-mono text-sky-300">&lt;Contact /&gt;</h3>
 
               <div className="flex items-center space-x-3 text-sm text-gray-300">
                 <div className="p-2.5 rounded-lg bg-blue-950/60 text-blue-400 border border-blue-800/50">
@@ -119,7 +118,7 @@ export default function Contact() {
               <div className="glass-panel rounded-xl p-4 border border-vscode-border font-mono text-xs text-gray-300 space-y-2">
                 <div className="flex items-center space-x-2 text-sky-400 font-semibold text-[11px] pb-2 border-b border-vscode-border/50">
                   <TerminalIcon size={14} />
-                  <span>HTTP Console Output</span>
+                  <span className="font-mono">&lt;console /&gt;</span>
                 </div>
                 <div className="max-h-36 overflow-y-auto space-y-1 text-[11px]">
                   {terminalLogs.map((log, i) => (
@@ -141,7 +140,7 @@ export default function Contact() {
             className="glass-card rounded-xl p-6 sm:p-8 border border-vscode-border space-y-4 shadow-xl"
           >
             <div className="space-y-1">
-              <label className="text-xs font-mono text-gray-300">Votre Nom :</label>
+              <label className="text-xs font-mono text-gray-300">&lt;nom /&gt;</label>
               <div className="relative">
                 <User className="absolute left-3 top-3 text-gray-400" size={18} />
                 <input
@@ -158,7 +157,7 @@ export default function Contact() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-mono text-gray-300">Votre Adresse Email :</label>
+              <label className="text-xs font-mono text-gray-300">&lt;email /&gt;</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
                 <input
@@ -175,7 +174,7 @@ export default function Contact() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-mono text-gray-300">Votre Message :</label>
+              <label className="text-xs font-mono text-gray-300">&lt;message /&gt;</label>
               <div className="relative">
                 <MessageSquare className="absolute left-3 top-3 text-gray-400" size={18} />
                 <textarea
@@ -210,7 +209,7 @@ export default function Contact() {
               ) : (
                 <>
                   <Send size={18} />
-                  <span>Envoyer le Message</span>
+                  <span className="font-mono">&lt;envoyer /&gt;</span>
                 </>
               )}
             </MotionButton>

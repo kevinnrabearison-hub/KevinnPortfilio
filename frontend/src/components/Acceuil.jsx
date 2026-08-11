@@ -236,23 +236,14 @@ export default function Acceuil() {
           </div>
 
           {/* Quick Metrics Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 pt-8 border-t border-vscode-border/60">
-            <div className="p-4 rounded-xl bg-vscode-editor/60 border border-vscode-border/50 text-center">
-              <div className="text-2xl font-bold text-sky-400 font-mono">Licence GL</div>
-              <div className="text-xs text-gray-400 mt-1">INSI Madagascar</div>
-            </div>
-            <div className="p-4 rounded-xl bg-vscode-editor/60 border border-vscode-border/50 text-center">
-              <div className="text-2xl font-bold text-emerald-400 font-mono">8+</div>
-              <div className="text-xs text-gray-400 mt-1">Projets Réalisés</div>
-            </div>
-            <div className="p-4 rounded-xl bg-vscode-editor/60 border border-vscode-border/50 text-center">
-              <div className="text-2xl font-bold text-purple-400 font-mono">Full Stack</div>
-              <div className="text-xs text-gray-400 mt-1">Web & Mobile</div>
-            </div>
-            <div className="p-4 rounded-xl bg-vscode-editor/60 border border-vscode-border/50 text-center">
-              <div className="text-2xl font-bold text-amber-400 font-mono">CI / CD</div>
-              <div className="text-xs text-gray-400 mt-1">Docker & Pipelines</div>
-            </div>
+          <div className="mt-10 pt-8 border-t border-vscode-border/60 text-center space-y-2">
+            <div className="text-xl sm:text-2xl font-bold text-sky-400 font-mono">Licence en Génie Logiciel</div>
+            <div className="text-xs uppercase tracking-[0.2em] text-gray-400">INSI Madagascar</div>
+            <div className="text-xl sm:text-2xl font-bold text-emerald-400 font-mono">8+ projets réalisés</div>
+            <div className="text-xl sm:text-2xl font-bold text-purple-400 font-mono">Full Stack</div>
+            <div className="text-xs uppercase tracking-[0.2em] text-gray-400">Web & Mobile</div>
+            <div className="text-xl sm:text-2xl font-bold text-amber-400 font-mono">CI / CD</div>
+            <div className="text-xs uppercase tracking-[0.2em] text-gray-400">Docker &amp; Pipelines</div>
           </div>
         </div>
       </div>
@@ -330,7 +321,7 @@ export default function Acceuil() {
           <div className="glass-card rounded-xl p-6 border border-vscode-border hover:border-blue-500/50 transition-all space-y-4">
             <div className="flex justify-between items-start">
               <h3 className="text-xl font-bold text-white">💻 Portfolio VS Code</h3>
-              <span className="text-xs font-mono bg-blue-950 text-blue-400 border border-blue-800 px-2 py-0.5 rounded">React + Vite</span>
+  
             </div>
             <p className="text-gray-300 text-sm">
               Portfolio interactif et immersif sous forme d'environnement de développement VS Code, avec onglets, terminal interactif et command palette.
@@ -356,7 +347,7 @@ export default function Acceuil() {
           <div className="glass-card rounded-xl p-6 border border-vscode-border hover:border-purple-500/50 transition-all space-y-4">
             <div className="flex justify-between items-start">
               <h3 className="text-xl font-bold text-white">📱 BenevolatApp</h3>
-              <span className="text-xs font-mono bg-purple-950 text-purple-400 border border-purple-800 px-2 py-0.5 rounded">Mobile React Native</span>
+              
             </div>
             <p className="text-gray-300 text-sm">
               Application mobile connectant bénévoles et associations pour la gestion de missions humanitaires et solidaires.
