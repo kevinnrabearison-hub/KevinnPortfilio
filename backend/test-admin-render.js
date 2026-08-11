@@ -1,6 +1,10 @@
-const BACKEND_URL = "https://portfolio-backend-bwcd.onrender.com";
+const BACKEND_URL = process.env.BACKEND_URL || "https://portfolio-backend-bwcd.onrender.com";
+const password = process.env.ADMIN_PASSWORD || "";
 
-const password = "laokasyvary15";
+if (!password) {
+  console.error("❌ ADMIN_PASSWORD est absent. Définis-le dans ton environnement avant d’exécuter ce test.");
+  process.exit(1);
+}
 
 console.log("🔐 Test connexion admin...");
 
