@@ -23,6 +23,10 @@ import Tabs from "../components/Tabs";
 import Terminal from "../components/Terminal";
 import CommandPalette from "../components/CommandPalette";
 import ChatWidget from "../components/ChatWidget";
+import ThemeSettings from "../components/ThemeSettings";
+
+const BACKEND_URL =
+  import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 
 const componentsMap = {
@@ -40,6 +44,8 @@ const MainLayout = () => {
   const { activeTab, openTab } = useTabs();
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [visitorCount, setVisitorCount] = useState(null);
 
   const ActiveComponent = componentsMap[activeTab] || Acceuil;
 
@@ -53,6 +59,28 @@ const MainLayout = () => {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadVisitorCount = async () => {
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/visitors/count`);
+        const data = await response.json();
+        if (isMounted && data.success) setVisitorCount(data.count);
+      } catch (error) {
+        console.error("Erreur compteur visiteurs:", error);
+      }
+    };
+
+    loadVisitorCount();
+    const intervalId = window.setInterval(loadVisitorCount, 30000);
+
+    return () => {
+      isMounted = false;
+      window.clearInterval(intervalId);
+    };
   }, []);
 
   const mobileTabs = [
@@ -80,6 +108,7 @@ const MainLayout = () => {
           <Sidebar
             onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
             onToggleTerminal={() => setIsTerminalOpen((prev) => !prev)}
+            onOpenSettings={() => setIsSettingsOpen(true)}
           />
           <IndexClique />
         </div>
@@ -122,11 +151,17 @@ const MainLayout = () => {
         onOpenTerminal={() => setIsTerminalOpen(true)}
       />
 
+      <ThemeSettings
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
+
       {/* Desktop Fixed Status Bar */}
       <footer className="hidden md:block fixed bottom-0 left-0 right-0 z-30">
         <StatusBar
           onToggleTerminal={() => setIsTerminalOpen((prev) => !prev)}
           onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          visitorCount={visitorCount}
         />
       </footer>
 

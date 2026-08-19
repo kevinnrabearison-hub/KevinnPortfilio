@@ -6,9 +6,10 @@ import {
   FaBell,
   FaGitAlt,
   FaTerminal,
+  FaEye,
 } from "react-icons/fa";
 
-const StatusBar = ({ onToggleTerminal, onOpenCommandPalette }) => {
+const StatusBar = ({ onToggleTerminal, onOpenCommandPalette, visitorCount }) => {
 
   return (
     <footer className="w-full h-6 bg-vscode-statusbar text-white text-[11px] font-mono flex items-center justify-between px-3 border-t border-vscode-border select-none z-30">
@@ -74,6 +75,14 @@ const StatusBar = ({ onToggleTerminal, onOpenCommandPalette }) => {
 
         <span className="px-1.5 py-0.5 rounded hover:bg-vscode-statusbarHover transition-colors cursor-pointer hidden sm:inline">
           ✓ Prettier
+        </span>
+
+        <span
+          className="flex items-center gap-1 px-1.5 py-0.5 text-cyan-100"
+          title="Visiteurs uniques du portfolio"
+        >
+          <FaEye className="text-cyan-300 text-xs" />
+          <span>{visitorCount ?? "-"} visiteurs</span>
         </span>
 
         <button

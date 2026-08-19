@@ -55,13 +55,13 @@ const Tabs = () => {
       </div>
 
       {/* Breadcrumb Trail (Fil d'Ariane) */}
-      <div className="flex items-center px-4 py-1 bg-vscode-editor/80 border-t border-vscode-border/50 text-[11px] font-mono text-gray-400 space-x-1.5 overflow-x-auto">
-        <span className="hover:text-gray-200 cursor-pointer">portfolio</span>
-        <VscChevronRight className="text-gray-600 text-[10px]" />
-        <span className="hover:text-gray-200 cursor-pointer">src</span>
-        <VscChevronRight className="text-gray-600 text-[10px]" />
-        <span className="hover:text-gray-200 cursor-pointer">components</span>
-        <VscChevronRight className="text-gray-600 text-[10px]" />
+      <div className="flex items-center px-4 py-1 bg-vscode-editor/80 border-t border-vscode-border/50 text-[11px] font-mono text-white space-x-1.5 overflow-x-auto">
+        <span className="hover:text-white cursor-pointer">portfolio</span>
+        <VscChevronRight className="text-white text-[10px]" />
+        <span className="hover:text-white cursor-pointer">src</span>
+        <VscChevronRight className="text-white text-[10px]" />
+        <span className="hover:text-white cursor-pointer">components</span>
+        <VscChevronRight className="text-white text-[10px]" />
         <div className="flex items-center space-x-1 text-sky-400 font-semibold">
           <VscFileCode size={13} />
           <span>{activeTab}</span>

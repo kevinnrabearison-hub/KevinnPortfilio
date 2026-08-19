@@ -5,12 +5,14 @@ import AdminPage from './pages/AdminPage';
 import { TabsProvider } from './context/TabsContext';
 import { ChatProvider } from './context/ChatContext';
 import PushNotificationPrompt from './components/PushNotificationPrompt';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
   return (
     <BrowserRouter>
-      <ChatProvider>
-        <Routes>
+      <ThemeProvider>
+        <ChatProvider>
+          <Routes>
           {/* Portfolio principal pour les visiteurs */}
           <Route
             path="/"
@@ -25,8 +27,9 @@ function App() {
           />
           {/* Page Admin séparée, accessible uniquement via /admin */}
           <Route path="/admin" element={<AdminPage />} />
-        </Routes>
-      </ChatProvider>
+          </Routes>
+        </ChatProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { X, Terminal as TerminalIcon, Maximize2, Minimize2, Trash2, CheckCircle2 } from "lucide-react";
 import { useTabs } from "../context/TabsContext";
+import { useTheme } from "../context/ThemeContext";
 import { downloadAndOpenCV } from "../utils/downloadCv";
 
 export default function Terminal({ isOpen, onClose }) {
@@ -13,6 +14,7 @@ export default function Terminal({ isOpen, onClose }) {
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
   const { openTab } = useTabs();
+  const { theme, setTheme, themes } = useTheme();
 
   useEffect(() => {
     if (isOpen) {
@@ -34,6 +36,7 @@ export default function Terminal({ isOpen, onClose }) {
     const newHistory = [...history, { type: "cmd", text: `kevinn@portfolio:~$ ${cmd}` }];
 
     const lowerCmd = cmd.toLowerCase();
+    const [commandName, ...commandArguments] = lowerCmd.split(/\s+/);
 
     if (lowerCmd === "help") {
       newHistory.push({
@@ -45,10 +48,41 @@ export default function Terminal({ isOpen, onClose }) {
   - projects  : Afficher la liste des projets
   - contact   : Informations de contact rapides
   - cv        : Télécharger le CV (PDF)
+  - theme     : Lister les thèmes disponibles
+  - theme ID  : Appliquer un thème (ex: theme monokai)
   - clear     : Effacer la console
   - date      : Afficher l'heure locale`,
       });
-    } else if (lowerCmd === "about") {
+    } else if (commandName === "theme") {
+      const requestedTheme = commandArguments.join(" ");
+
+      if (!requestedTheme || requestedTheme === "list" || requestedTheme === "help") {
+        newHistory.push({
+          type: "output",
+          text: `Thèmes disponibles :\n${Object.entries(themes)
+            .map(([themeId, option]) => `  - ${themeId.padEnd(14)} ${option.label}${theme === themeId ? "  (actif)" : ""}`)
+            .join("\n")}\n\nUsage : theme <id>`,
+        });
+      } else {
+        const matchingTheme = Object.entries(themes).find(
+          ([themeId, option]) =>
+            themeId === requestedTheme || option.label.toLowerCase() === requestedTheme
+        );
+
+        if (matchingTheme) {
+          setTheme(matchingTheme[0]);
+          newHistory.push({
+            type: "success",
+            text: `Thème activé : ${matchingTheme[1].label}`,
+          });
+        } else {
+          newHistory.push({
+            type: "error",
+            text: `Thème inconnu : '${requestedTheme}'. Tapez 'theme' pour voir la liste.`,
+          });
+        }
+      }
+    } else if (commandName === "about") {
       newHistory.push({
         type: "output",
         text: `Rabearison Fy Tahina Kevinn - Étudiant en Licence (INSI), parcours Génie Logiciel (GL).

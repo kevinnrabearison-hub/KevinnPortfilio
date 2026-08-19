@@ -10,9 +10,160 @@
   font-family: var(--font-display);
 }
 
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="monokai"] {
+  color-scheme: dark;
+}
+
+:root[data-theme="github"] {
+  --theme-foreground: #24292f;
+  --theme-titlebar: #eaeef2;
+  --theme-activitybar: #f6f8fa;
+  --theme-sidebar: #f6f8fa;
+  --theme-editor: #ffffff;
+  --theme-tabbar: #eaeef2;
+  --theme-border: #d0d7de;
+  --theme-hover: #ddf4ff;
+  --theme-statusbar: #0969da;
+  --theme-statusbar-hover: #0550ae;
+}
+
+:root[data-theme="solarized"] {
+  --theme-foreground: #839496;
+  --theme-titlebar: #073642;
+  --theme-activitybar: #002b36;
+  --theme-sidebar: #073642;
+  --theme-editor: #002b36;
+  --theme-tabbar: #073642;
+  --theme-border: #586e75;
+  --theme-hover: #234e59;
+  --theme-statusbar: #b58900;
+  --theme-statusbar-hover: #cb9b00;
+}
+
+:root[data-theme="highContrast"] {
+  --theme-foreground: #ffffff;
+  --theme-titlebar: #000000;
+  --theme-activitybar: #000000;
+  --theme-sidebar: #000000;
+  --theme-editor: #000000;
+  --theme-tabbar: #000000;
+  --theme-border: #ffffff;
+  --theme-hover: #303030;
+  --theme-statusbar: #000000;
+  --theme-statusbar-hover: #333333;
+}
+
+/* Runtime theme tokens for the VS Code shell. */
+:root {
+  --theme-foreground: #cccccc;
+  --theme-titlebar: #1e1e1e;
+  --theme-activitybar: #181818;
+  --theme-sidebar: #252526;
+  --theme-editor: #1e1e1e;
+  --theme-tabbar: #2d2d2d;
+  --theme-border: #333333;
+  --theme-hover: #2a2d2e;
+  --theme-statusbar: #007acc;
+  --theme-statusbar-hover: #1f8ad2;
+}
+
+:root[data-theme="light"] {
+  --theme-foreground: #3b3b3b;
+  --theme-titlebar: #dddddd;
+  --theme-activitybar: #e7e7e7;
+  --theme-sidebar: #f3f3f3;
+  --theme-editor: #ffffff;
+  --theme-tabbar: #ececec;
+  --theme-border: #c8c8c8;
+  --theme-hover: #d6ebff;
+  --theme-statusbar: #007acc;
+  --theme-statusbar-hover: #005a9e;
+}
+
+:root[data-theme="monokai"] {
+  --theme-foreground: #f8f8f2;
+  --theme-titlebar: #1f201b;
+  --theme-activitybar: #191a16;
+  --theme-sidebar: #272822;
+  --theme-editor: #272822;
+  --theme-tabbar: #34352f;
+  --theme-border: #49483e;
+  --theme-hover: #3e3d32;
+  --theme-statusbar: #a6e22e;
+  --theme-statusbar-hover: #c6ef53;
+}
+
+body,
+.bg-vscode-editor { background-color: var(--theme-editor) !important; color: var(--theme-foreground); }
+.bg-vscode-titlebar { background-color: var(--theme-titlebar) !important; }
+.bg-vscode-activitybar { background-color: var(--theme-activitybar) !important; }
+.bg-vscode-sidebar { background-color: var(--theme-sidebar) !important; }
+.bg-vscode-tabbar { background-color: var(--theme-tabbar) !important; }
+.bg-vscode-statusbar { background-color: var(--theme-statusbar) !important; }
+.hover\:bg-vscode-hover:hover, .bg-vscode-hover { background-color: var(--theme-hover) !important; }
+.border-vscode-border { border-color: var(--theme-border) !important; }
+.text-vscode-foreground { color: var(--theme-foreground) !important; }
+
+:root[data-theme="light"] .text-gray-300,
+:root[data-theme="light"] .text-gray-400,
+:root[data-theme="light"] .text-gray-200 { color: #4b5563 !important; }
+:root[data-theme="light"] .text-white { color: #1f2937 !important; }
+:root[data-theme="light"] .bg-slate-900,
+:root[data-theme="light"] .bg-slate-950 { background-color: #f8fafc !important; color: #1f2937 !important; }
+:root[data-theme="light"] .bg-slate-800 { background-color: #e5e7eb !important; color: #1f2937 !important; }
+:root[data-theme="light"] .border-slate-700,
+:root[data-theme="light"] .border-slate-800 { border-color: #cbd5e1 !important; }
+
+:root[data-theme="github"] .text-gray-300,
+:root[data-theme="github"] .text-gray-400,
+:root[data-theme="github"] .text-gray-200,
+:root[data-theme="github"] .text-white { color: #24292f !important; }
+:root[data-theme="github"] .bg-slate-900,
+:root[data-theme="github"] .bg-slate-950 { background-color: #ffffff !important; color: #24292f !important; }
+:root[data-theme="github"] .bg-slate-800 { background-color: #f6f8fa !important; color: #24292f !important; }
+:root[data-theme="solarized"] .text-gray-300,
+:root[data-theme="solarized"] .text-gray-400,
+:root[data-theme="solarized"] .text-gray-200 { color: #93a1a1 !important; }
+:root[data-theme="highContrast"] .text-gray-300,
+:root[data-theme="highContrast"] .text-gray-400,
+:root[data-theme="highContrast"] .text-gray-200 { color: #ffffff !important; }
+
+/* Light+ keeps the editor hierarchy while replacing dark-only component colors. */
+:root[data-theme="light"] .bg-vscode-terminal { background-color: #ffffff !important; }
+:root[data-theme="light"] .bg-vscode-tabActive { background-color: #ffffff !important; color: #1f2937 !important; }
+:root[data-theme="light"] .bg-vscode-tabInactive { background-color: #eceff1 !important; color: #4b5563 !important; }
+:root[data-theme="light"] .text-gray-500 { color: #64748b !important; }
+:root[data-theme="light"] .text-gray-600 { color: #475569 !important; }
+:root[data-theme="light"] .text-slate-100,
+:root[data-theme="light"] .text-slate-200,
+:root[data-theme="light"] .text-slate-300,
+:root[data-theme="light"] .text-slate-400 { color: #475569 !important; }
+:root[data-theme="light"] .text-slate-500,
+:root[data-theme="light"] .text-slate-600 { color: #64748b !important; }
+:root[data-theme="light"] .border-slate-600 { border-color: #cbd5e1 !important; }
+:root[data-theme="light"] .bg-black\/60 { background-color: rgb(15 23 42 / 0.28) !important; }
+:root[data-theme="light"] .glass-panel {
+  background: rgb(255 255 255 / 0.92);
+  border-color: #cbd5e1;
+}
+:root[data-theme="light"] .glass-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  border-color: #dbe3ec;
+}
+:root[data-theme="light"] * {
+  scrollbar-color: #94a3b8 #e2e8f0;
+}
+:root[data-theme="light"] ::-webkit-scrollbar-track { background: #e2e8f0; }
+:root[data-theme="light"] ::-webkit-scrollbar-thumb { background: #94a3b8; }
+:root[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #007acc; }
+
 body {
-  background-color: #181818;
-  color: #cccccc;
+  background-color: var(--theme-editor);
+  color: var(--theme-foreground);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 

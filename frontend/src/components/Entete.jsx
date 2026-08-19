@@ -5,9 +5,15 @@ import {
   VscLayoutSidebarRight,
   VscSearch,
   VscBell,
+  VscColorMode,
 } from 'react-icons/vsc';
+import { useState } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 const Entete = ({ onOpenCommandPalette, onToggleTerminal }) => {
+  const { theme, setTheme, themes } = useTheme();
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+
   return (
     <header className="flex items-center justify-between bg-vscode-titlebar h-9 px-3 text-gray-300 border-b border-vscode-border w-full select-none text-xs font-sans z-50">
       {/* Left: Window Dots & VS Code Menus */}
@@ -49,6 +55,41 @@ const Entete = ({ onOpenCommandPalette, onToggleTerminal }) => {
 
       {/* Right: Layout Controls & Notifications */}
       <div className="flex items-center space-x-2 text-gray-400">
+        <div className="relative">
+          <button
+            onClick={() => setIsThemeMenuOpen((isOpen) => !isOpen)}
+            className="p-1 rounded hover:bg-vscode-hover hover:text-white transition-colors"
+            title="Changer le thème de couleurs"
+            aria-label="Changer le thème de couleurs"
+            aria-expanded={isThemeMenuOpen}
+          >
+            <VscColorMode size={15} />
+          </button>
+          {isThemeMenuOpen && (
+            <div className="absolute right-0 top-8 z-50 w-44 rounded-md border border-vscode-border bg-vscode-sidebar p-1 shadow-2xl">
+              <p className="px-2 py-1 text-[10px] uppercase tracking-wider text-gray-500">Color Theme</p>
+              {Object.entries(themes).map(([themeId, themeOption]) => (
+                <button
+                  key={themeId}
+                  onClick={() => {
+                    setTheme(themeId);
+                    setIsThemeMenuOpen(false);
+                  }}
+                  className={`flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-xs transition-colors hover:bg-vscode-hover ${
+                    theme === themeId ? "bg-vscode-hover text-white" : "text-gray-300"
+                  }`}
+                >
+                  <span
+                    className="h-3 w-3 rounded-sm border border-white/20"
+                    style={{ backgroundColor: themeOption.swatch }}
+                  />
+                  {themeOption.label}
+                  {theme === themeId && <span className="ml-auto text-sky-400">✓</span>}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         <button
           onClick={onToggleTerminal}
           className="p-1 rounded hover:bg-vscode-hover hover:text-white transition-colors"

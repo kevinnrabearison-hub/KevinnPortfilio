@@ -203,7 +203,7 @@ export default function Acceuil() {
                   className="px-6 py-3 rounded-xl bg-vscode-hover/80 border border-vscode-border text-gray-300 font-semibold text-sm flex items-center gap-2 hover:text-white transition-all"
                 >
                   <Send size={18} className="text-purple-400" />
-                  <span>Me contacter</span>
+                  <span className="text-white">Me contacter</span>
                 </MotionButton>
               </div>
             </div>
@@ -272,11 +272,11 @@ export default function Acceuil() {
             >
               <div>
                 <div className="flex items-center space-x-3 mb-3">
-                  <div className="p-2.5 rounded-lg bg-vscode-editor border border-vscode-border group-hover:scale-110 transition-transform">
+                  <div className="p-2.5 rounded-lg bg-gray border border-vscode-border group-hover:scale-110 transition-transform">
                     {cat.icon}
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white group-hover:text-sky-300 transition-colors">
+                    <h3 className="text-base font-bold text-sky-300 group-hover:text-white transition-colors">
                       {cat.title}
                     </h3>
                     <span className="text-xs text-gray-400">{cat.desc}</span>

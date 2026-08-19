@@ -10,7 +10,7 @@ import {
 } from "react-icons/vsc";
 import { useTabs } from "../context/TabsContext";
 
-const Sidebar = ({ onOpenCommandPalette, onToggleTerminal }) => {
+const Sidebar = ({ onOpenCommandPalette, onToggleTerminal, onOpenSettings }) => {
   const [active, setActive] = useState("files");
   const { openTab } = useTabs();
 
@@ -29,7 +29,7 @@ const Sidebar = ({ onOpenCommandPalette, onToggleTerminal }) => {
 
   const bottomItems = [
     { id: "account", icon: <VscAccount />, tooltip: "Compte — Kevinn Rabearison", file: "Apropos.jsx" },
-    { id: "settings", icon: <VscSettingsGear />, tooltip: "Paramètres (Command Palette)", action: () => onOpenCommandPalette(true) },
+    { id: "settings", icon: <VscSettingsGear />, tooltip: "Paramètres — Thème de couleurs", action: onOpenSettings },
   ];
 
   const Item = ({ id, icon, tooltip, file, badge, action }) => (
