@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kevinn-portfilio.vercel.app/sitemap.xml
