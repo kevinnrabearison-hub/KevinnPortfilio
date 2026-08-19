@@ -4,10 +4,12 @@
 
 :root {
   color-scheme: dark;
-  --font-display: 'Syne', sans-serif;
+  --font-heading: 'JetBrains Mono', 'Fira Code', 'DM Mono', Consolas, monospace;
+  --font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'DM Mono', Consolas, monospace;
+  --font-display: var(--font-heading);
   --font-serif: 'Fraunces', serif;
-  --font-mono: 'DM Mono', monospace;
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
 }
 
 :root[data-theme="light"] {
@@ -59,14 +61,14 @@
 
 /* Runtime theme tokens for the VS Code shell. */
 :root {
-  --theme-foreground: #cccccc;
+  --theme-foreground: #e6e6e6;
   --theme-titlebar: #1e1e1e;
   --theme-activitybar: #181818;
   --theme-sidebar: #252526;
   --theme-editor: #1e1e1e;
-  --theme-tabbar: #2d2d2d;
-  --theme-border: #333333;
-  --theme-hover: #2a2d2e;
+  --theme-tabbar: #2d2d30;
+  --theme-border: #3e3e42;
+  --theme-hover: rgba(47, 82, 136, 0.35);
   --theme-statusbar: #007acc;
   --theme-statusbar-hover: #1f8ad2;
 }
@@ -173,12 +175,30 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid rgba(0, 122, 204, 0.85);
+  outline: 2px solid rgba(90, 179, 213, 0.85);
   outline-offset: 1px;
+}
+
+/* Grouped Typography System */
+h1, h2, h3, h4, h5, h6, .font-heading, .font-display {
+  font-family: var(--font-heading) !important;
+  letter-spacing: -0.015em;
+}
+
+body, p, button, input, select, textarea, .font-sans {
+  font-family: var(--font-sans);
+}
+
+code, pre, kbd, .font-mono, .font-code {
+  font-family: var(--font-mono) !important;
 }
 
 .font-display {
   font-family: var(--font-display) !important;
+}
+
+.font-heading {
+  font-family: var(--font-heading) !important;
 }
 
 .font-serif {
@@ -215,32 +235,32 @@ body {
 
 /* Custom Glassmorphism & UI Utilities */
 .glass-panel {
-  background: rgba(30, 30, 30, 0.75);
+  background: rgba(30, 30, 30, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #3e3e42;
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(37, 37, 38, 0.8) 0%, rgba(26, 26, 27, 0.9) 100%);
+  background: linear-gradient(135deg, rgba(37, 37, 38, 0.9) 0%, rgba(31, 56, 100, 0.35) 100%);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(90, 179, 213, 0.15);
 }
 
 .glow-blue {
-  box-shadow: 0 0 25px -5px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 25px -5px rgba(90, 179, 213, 0.4);
 }
 
 .glow-purple {
-  box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 25px -5px rgba(47, 82, 136, 0.4);
 }
 
 .glow-green {
-  box-shadow: 0 0 25px -5px rgba(34, 197, 94, 0.4);
+  box-shadow: 0 0 25px -5px rgba(0, 152, 255, 0.4);
 }
 
 .glow-orange {
-  box-shadow: 0 0 25px -5px rgba(249, 115, 22, 0.4);
+  box-shadow: 0 0 25px -5px rgba(0, 101, 169, 0.4);
 }
 
 /* Animations */

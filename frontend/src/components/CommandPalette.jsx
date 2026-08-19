@@ -30,7 +30,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpen
       type: "settings",
       title: "Thème",
       desc: "Afficher tous les thèmes de couleurs",
-      icon: <Palette className="text-sky-400" size={18} />,
+      icon: <Palette className="text-[#5ab3d5]" size={18} />,
       action: () => {
         onClose(false);
         onOpenSettings?.();
@@ -41,7 +41,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpen
       type: "file",
       title: "Accueil.jsx",
       desc: "Page d'accueil & présentation générale",
-      icon: <FileCode className="text-sky-400" size={18} />,
+      icon: <FileCode className="text-[#5ab3d5]" size={18} />,
       action: () => { openTab("Accueil.jsx"); onClose(false); },
     },
     {
@@ -49,7 +49,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpen
       type: "file",
       title: "Competence.jsx",
       desc: "Stack technique, frameworks & outils",
-      icon: <FileCode className="text-yellow-400" size={18} />,
+      icon: <FileCode className="text-[#0098ff]" size={18} />,
       action: () => { openTab("Competence.jsx"); onClose(false); },
     },
     {
@@ -57,7 +57,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpen
       type: "file",
       title: "Projet.jsx",
       desc: "Galerie de projets web & mobile",
-      icon: <FileCode className="text-purple-400" size={18} />,
+      icon: <FileCode className="text-[#5ab3d5]" size={18} />,
       action: () => { openTab("Projet.jsx"); onClose(false); },
     },
     {
@@ -65,7 +65,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpen
       type: "file",
       title: "Apropos.jsx",
       desc: "Bio, éducation INSI & philosophie",
-      icon: <FileCode className="text-emerald-400" size={18} />,
+      icon: <FileCode className="text-[#0098ff]" size={18} />,
       action: () => { openTab("Apropos.jsx"); onClose(false); },
     },
     {
@@ -73,7 +73,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpen
       type: "file",
       title: "Contact.jsx",
       desc: "Envoyer un message à Kevinn",
-      icon: <Send className="text-pink-400" size={18} />,
+      icon: <Send className="text-[#5ab3d5]" size={18} />,
       action: () => { openTab("Contact.jsx"); onClose(false); },
     },
     {
@@ -81,7 +81,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpen
       type: "action",
       title: "Télécharger le CV (PDF)",
       desc: "Télécharger et afficher CV KEVINN.pdf",
-      icon: <Download className="text-green-400" size={18} />,
+      icon: <Download className="text-[#0098ff]" size={18} />,
       action: () => {
         downloadAndOpenCV();
         onClose(false);
@@ -92,7 +92,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpen
       type: "action",
       title: "Ouvrir le Terminal VS Code",
       desc: "Afficher la console interactive au bas de l'écran",
-      icon: <Terminal className="text-blue-400" size={18} />,
+      icon: <Terminal className="text-[#5ab3d5]" size={18} />,
       action: () => {
         if (onOpenTerminal) onOpenTerminal();
         onClose(false);
@@ -155,7 +155,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpen
                       {item.icon}
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-gray-200 group-hover:text-blue-400">
+                      <div className="text-sm font-semibold text-gray-200 group-hover:text-[#5ab3d5]">
                         {item.title}
                       </div>
                       <div className="text-xs text-gray-400">{item.desc}</div>
@@ -163,7 +163,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpen
                   </div>
                   <ArrowRight
                     size={16}
-                    className="text-gray-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all"
+                    className="text-gray-500 group-hover:text-[#5ab3d5] group-hover:translate-x-1 transition-all"
                   />
                 </button>
               ))

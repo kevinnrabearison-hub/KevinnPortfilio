@@ -83,7 +83,7 @@ export default function PushNotificationPrompt() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-24 left-4 right-4 z-40 mx-auto max-w-md rounded-xl border border-blue-400/30 bg-slate-950/95 p-4 text-slate-100 shadow-2xl backdrop-blur-md sm:left-auto sm:right-6">
+    <div className="fixed bottom-24 left-4 right-4 z-40 mx-auto max-w-md rounded-xl border border-[#5ab3d5]/30 bg-slate-950/95 p-4 text-slate-100 shadow-2xl backdrop-blur-md sm:left-auto sm:right-6">
       <button
         type="button"
         onClick={dismiss}
@@ -93,7 +93,7 @@ export default function PushNotificationPrompt() {
         <X className="h-4 w-4" />
       </button>
       <div className="flex gap-3 pr-4">
-        <Bell className="mt-0.5 h-5 w-5 shrink-0 text-blue-400" />
+        <Bell className="mt-0.5 h-5 w-5 shrink-0 text-[#5ab3d5]" />
         <div>
           <p className="text-sm font-semibold">Recevoir ma réponse</p>
           <p className="mt-1 text-xs leading-relaxed text-slate-400">
@@ -105,7 +105,7 @@ export default function PushNotificationPrompt() {
               type="button"
               onClick={enableNotifications}
               disabled={busy}
-              className="flex items-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-xs font-medium text-white transition hover:bg-blue-500 disabled:opacity-60"
+              className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#0065a9] to-[#5ab3d5] px-3 py-2 text-xs font-medium text-white transition hover:opacity-90 disabled:opacity-60"
             >
               <Bell className="h-3.5 w-3.5" />
               {busy ? "Activation..." : "Activer"}

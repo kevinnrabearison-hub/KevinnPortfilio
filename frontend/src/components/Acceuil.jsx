@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Github,
   FolderOpen,
   Send,
   Download,
@@ -16,7 +15,8 @@ import {
 } from "lucide-react";
 import {
   FaHtml5, FaCss3Alt, FaReact, FaVuejs, FaPhp, FaSymfony,
-  FaDocker, FaGithub, FaMobileAlt, FaServer, FaTools, FaCode, FaFigma
+  FaDocker, FaGithub, FaMobileAlt, FaServer, FaTools, FaCode, FaFigma,
+  FaFacebook, FaLinkedinIn, FaEnvelope
 } from "react-icons/fa";
 import {
   SiFlutter, SiDjango, SiExpress, SiDotnet, SiTailwindcss,
@@ -45,65 +45,65 @@ const categories = [
   {
     title: "Développement Web",
     desc: "Interfaces réactives & Single Page Applications",
-    gradient: "from-sky-500/20 to-blue-600/10",
-    border: "border-sky-500/30",
-    icon: <Code2 className="text-sky-400" size={24} />,
+    gradient: "from-[#1f3864]/50 to-[#2f5288]/30",
+    border: "border-[#5ab3d5]/30",
+    icon: <Code2 className="text-[#5ab3d5]" size={24} />,
     items: [
-      { name: "React", icon: <FaReact className="text-sky-200" /> },
-      { name: "Vue.js", icon: <FaVuejs className="text-emerald-500" /> },
-      { name: "TypeScript", icon: <SiTypescript className="text-blue-400" /> },
-      { name: "HTML5", icon: <FaHtml5 className="text-orange-500" /> },
-      { name: "CSS3", icon: <FaCss3Alt className="text-blue-500" /> },
+      { name: "React", icon: <FaReact className="text-[#5ab3d5]" /> },
+      { name: "Vue.js", icon: <FaVuejs className="text-[#0098ff]" /> },
+      { name: "TypeScript", icon: <SiTypescript className="text-[#5ab3d5]" /> },
+      { name: "HTML5", icon: <FaHtml5 className="text-[#0065a9]" /> },
+      { name: "CSS3", icon: <FaCss3Alt className="text-[#0098ff]" /> },
     ],
   },
   {
     title: "Mobile & Cross-Platform",
     desc: "Applications hybrides performantes iOS & Android",
-    gradient: "from-purple-500/20 to-pink-600/10",
-    border: "border-purple-500/30",
-    icon: <FaMobileAlt className="text-pink-400" size={24} />,
+    gradient: "from-[#2f5288]/40 to-[#0065a9]/30",
+    border: "border-[#0098ff]/30",
+    icon: <FaMobileAlt className="text-[#0098ff]" size={24} />,
     items: [
-      { name: "React Native", icon: <FaReact className="text-sky-400" /> },
-      { name: "Flutter", icon: <SiFlutter className="text-cyan-400" /> },
+      { name: "React Native", icon: <FaReact className="text-[#5ab3d5]" /> },
+      { name: "Flutter", icon: <SiFlutter className="text-[#0098ff]" /> },
     ],
   },
   {
     title: "Backend & APIs",
     desc: "Architectures RESTful, bases de données & logique serveur",
-    gradient: "from-emerald-500/20 to-teal-600/10",
-    border: "border-emerald-500/30",
-    icon: <FaServer className="text-emerald-400" size={24} />,
+    gradient: "from-[#1f3864]/60 to-[#1e1e1e]",
+    border: "border-[#5ab3d5]/30",
+    icon: <FaServer className="text-[#5ab3d5]" size={24} />,
     items: [
-      { name: "Express.js", icon: <SiExpress className="text-gray-300" /> },
-      { name: "Django", icon: <SiDjango className="text-emerald-600" /> },
-      { name: "Symfony", icon: <FaSymfony className="text-white" /> },
-      { name: "PHP", icon: <FaPhp className="text-indigo-400" /> },
-      { name: ".NET", icon: <SiDotnet className="text-purple-400" /> },
+      { name: "Express.js", icon: <SiExpress className="text-[#e6e6e6]" /> },
+      { name: "Django", icon: <SiDjango className="text-[#0098ff]" /> },
+      { name: "Symfony", icon: <FaSymfony className="text-[#e6e6e6]" /> },
+      { name: "PHP", icon: <FaPhp className="text-[#2f5288]" /> },
+      { name: ".NET", icon: <SiDotnet className="text-[#5ab3d5]" /> },
     ],
   },
   {
     title: "UI / Styling & Design",
     desc: "Systèmes de design modernes et responsifs",
-    gradient: "from-cyan-500/20 to-blue-500/10",
-    border: "border-cyan-500/30",
-    icon: <SiTailwindcss className="text-cyan-400" size={24} />,
+    gradient: "from-[#2f5288]/50 to-[#0098ff]/20",
+    border: "border-[#0098ff]/30",
+    icon: <SiTailwindcss className="text-[#0098ff]" size={24} />,
     items: [
-      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-cyan-400" /> },
-      { name: "Bootstrap", icon: <SiBootstrap className="text-purple-500" /> },
+      { name: "Tailwind CSS", icon: <SiTailwindcss className="text-[#0098ff]" /> },
+      { name: "Bootstrap", icon: <SiBootstrap className="text-[#2f5288]" /> },
     ],
   },
   {
     title: "Bases de données & DevOps",
     desc: "Gestion de données et déploiement conteneurisé",
-    gradient: "from-amber-500/20 to-orange-600/10",
-    border: "border-amber-500/30",
-    icon: <FaTools className="text-amber-400" size={24} />,
+    gradient: "from-[#1f3864]/50 to-[#0065a9]/30",
+    border: "border-[#5ab3d5]/30",
+    icon: <FaTools className="text-[#5ab3d5]" size={24} />,
     items: [
-      { name: "PostgreSQL", icon: <SiPostgresql className="text-blue-400" /> },
-      { name: "MongoDB", icon: <SiMongodb className="text-green-500" /> },
-      { name: "Docker", icon: <FaDocker className="text-sky-400" /> },
-      { name: "GitHub", icon: <FaGithub className="text-white" /> },
-      { name: "GitLab", icon: <SiGitlab className="text-orange-500" /> },
+      { name: "PostgreSQL", icon: <SiPostgresql className="text-[#0098ff]" /> },
+      { name: "MongoDB", icon: <SiMongodb className="text-[#5ab3d5]" /> },
+      { name: "Docker", icon: <FaDocker className="text-[#0098ff]" /> },
+      { name: "GitHub", icon: <FaGithub className="text-[#e6e6e6]" /> },
+      { name: "GitLab", icon: <SiGitlab className="text-[#0065a9]" /> },
     ],
   },
 ];
@@ -162,11 +162,11 @@ export default function Acceuil() {
   };
 
   return (
-    <div className="bg-vscode-editor min-h-screen text-vscode-foreground font-display selection:bg-blue-600/30">
+    <div className="bg-vscode-editor min-h-screen text-vscode-foreground font-display selection:bg-[#5ab3d5]/30">
       {/* Background Ambient Glows */}
       <div className="relative overflow-hidden px-3 sm:px-6 lg:px-8 2xl:px-12">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/15 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-600/15 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#5ab3d5]/15 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-40 right-10 w-72 h-72 bg-[#1f3864]/30 blur-[100px] rounded-full pointer-events-none" />
 
         {/* Hero Card Container */}
         <div className="mx-auto w-full max-w-[1440px] glass-card p-4 sm:p-8 lg:p-10 2xl:p-12 relative z-10 shadow-2xl overflow-hidden">
@@ -196,9 +196,9 @@ export default function Acceuil() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -15 }}
                       transition={{ duration: 0.3 }}
-                      className="text-base sm:text-lg font-mono text-sky-400 font-semibold flex items-center gap-2"
+                      className="text-base sm:text-lg font-mono text-[#5ab3d5] font-semibold flex items-center gap-2"
                     >
-                      <Terminal size={18} className="text-blue-500" />
+                      <Terminal size={18} className="text-[#0098ff]" />
                       <span>{roles[roleIndex]}</span>
                     </motion.div>
                   </AnimatePresence>
@@ -207,7 +207,7 @@ export default function Acceuil() {
 
               {/* Bio Subtitle */}
               <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl font-mono relative z-10">
-                Je conçois des expériences numériques à l’intersection du <strong className="text-white">code, design</strong> et de l’<strong className="text-sky-300">innovation</strong>. Je crée des interfaces modernes, rapides et engageantes.
+                Je conçois des expériences numériques à l’intersection du <strong className="text-white">code, design</strong> et de l’<strong className="text-[#5ab3d5]">innovation</strong>. Je crée des interfaces modernes, rapides et engageantes.
               </p>
 
 
@@ -218,7 +218,7 @@ export default function Acceuil() {
                   onClick={() => openTab("Projet.jsx")}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-sky-500 text-white font-semibold text-sm flex items-center gap-2 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#0065a9] via-[#0098ff] to-[#5ab3d5] text-white font-semibold text-sm flex items-center gap-2 shadow-lg shadow-[#0065a9]/25 hover:shadow-[#0098ff]/40 transition-all"
                 >
                   <FolderOpen size={18} />
                   <span>Explorer mes Projets</span>
@@ -228,9 +228,9 @@ export default function Acceuil() {
                   onClick={downloadCV}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-6 py-3 rounded-xl bg-vscode-hover border border-vscode-border text-gray-200 font-semibold text-sm flex items-center gap-2 hover:border-emerald-500/50 hover:text-emerald-400 transition-all"
+                  className="px-6 py-3 rounded-xl bg-vscode-hover border border-vscode-border text-gray-200 font-semibold text-sm flex items-center gap-2 hover:border-[#5ab3d5]/60 hover:text-[#5ab3d5] transition-all"
                 >
-                  <Download size={18} className="text-emerald-400" />
+                  <Download size={18} className="text-[#5ab3d5]" />
                   <span>Télécharger mon CV (PDF)</span>
                 </MotionButton>
 
@@ -240,9 +240,52 @@ export default function Acceuil() {
                   whileTap={{ scale: 0.98 }}
                   className="px-6 py-3 rounded-xl bg-vscode-hover/80 border border-vscode-border text-gray-300 font-semibold text-sm flex items-center gap-2 hover:text-white transition-all"
                 >
-                  <Send size={18} className="text-purple-400" />
+                  <Send size={18} className="text-[#0098ff]" />
                   <span className="text-white">Me contacter</span>
                 </MotionButton>
+              </div>
+
+              {/* Social Media Links Bar */}
+              <div className="flex items-center gap-3 pt-3 relative z-10 font-mono text-xs text-gray-400">
+                <span className="text-gray-500 hidden sm:inline">&lt;réseaux /&gt;</span>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="mailto:kevinnrabearison@gmail.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    title="Gmail: kevinnrabearison@gmail.com"
+                    className="p-2.5 rounded-lg bg-vscode-sidebar border border-vscode-border hover:border-[#5ab3d5] text-[#5ab3d5] hover:scale-110 transition-all shadow-md"
+                  >
+                    <FaEnvelope size={16} />
+                  </a>
+                  <a
+                    href="https://github.com/kevinnrabearison-hub"
+                    target="_blank"
+                    rel="noreferrer"
+                    title="GitHub: kevinnrabearison-hub"
+                    className="p-2.5 rounded-lg bg-vscode-sidebar border border-vscode-border hover:border-[#5ab3d5] text-[#0098ff] hover:scale-110 transition-all shadow-md"
+                  >
+                    <FaGithub size={16} />
+                  </a>
+                  <a
+                    href="https://facebook.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    title="Facebook"
+                    className="p-2.5 rounded-lg bg-vscode-sidebar border border-vscode-border hover:border-[#5ab3d5] text-[#5ab3d5] hover:scale-110 transition-all shadow-md"
+                  >
+                    <FaFacebook size={16} />
+                  </a>
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    title="LinkedIn"
+                    className="p-2.5 rounded-lg bg-vscode-sidebar border border-vscode-border hover:border-[#5ab3d5] text-[#0098ff] hover:scale-110 transition-all shadow-md"
+                  >
+                    <FaLinkedinIn size={16} />
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -281,12 +324,12 @@ export default function Acceuil() {
 
           {/* Quick Metrics Bar */}
           <div className="mt-10 pt-8 border-t border-vscode-border/60 text-center space-y-2">
-            <div className="text-xl sm:text-2xl font-bold text-sky-400 font-mono">Licence en Génie Logiciel</div>
+            <div className="text-xl sm:text-2xl font-bold text-[#5ab3d5] font-mono">Licence en Génie Logiciel</div>
             <div className="text-xs uppercase tracking-[0.2em] text-gray-400">INSI Madagascar</div>
-            <div className="text-xl sm:text-2xl font-bold text-emerald-400 font-mono">8+ projets réalisés</div>
-            <div className="text-xl sm:text-2xl font-bold text-purple-400 font-mono">Full Stack</div>
+            <div className="text-xl sm:text-2xl font-bold text-[#0098ff] font-mono">8+ projets réalisés</div>
+            <div className="text-xl sm:text-2xl font-bold text-[#e6e6e6] font-mono">Full Stack</div>
             <div className="text-xs uppercase tracking-[0.2em] text-gray-400">Web & Mobile</div>
-            <div className="text-xl sm:text-2xl font-bold text-amber-400 font-mono">CI / CD</div>
+            <div className="text-xl sm:text-2xl font-bold text-[#5ab3d5] font-mono">CI / CD</div>
             <div className="text-xs uppercase tracking-[0.2em] text-gray-400">Docker &amp; Pipelines</div>
           </div>
         </div>
@@ -296,7 +339,7 @@ export default function Acceuil() {
       <section className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 2xl:px-12 py-10 sm:py-12 space-y-8">
         <div className="text-center space-y-2">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center justify-center gap-2">
-            <Sparkles className="text-yellow-400" size={24} />
+            <Sparkles className="text-[#5ab3d5]" size={24} />
             <span>Technologies & Compétences Clés</span>
           </h2>
           <p className="text-gray-400 text-sm max-w-xl mx-auto">
@@ -312,7 +355,7 @@ export default function Acceuil() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className={`bg-vscode-sidebar/90 rounded-xl p-6 border ${cat.border} hover:border-blue-500/60 transition-all duration-300 shadow-lg flex flex-col justify-between group`}
+              className={`bg-vscode-sidebar/90 rounded-xl p-6 border ${cat.border} hover:border-[#5ab3d5]/60 transition-all duration-300 shadow-lg flex flex-col justify-between group`}
             >
               <div>
                 <div className="flex items-center space-x-3 mb-3">
@@ -320,7 +363,7 @@ export default function Acceuil() {
                     {cat.icon}
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-sky-300 group-hover:text-white transition-colors">
+                    <h3 className="text-base font-bold text-[#5ab3d5] group-hover:text-white transition-colors">
                       {cat.title}
                     </h3>
                     <span className="text-xs text-gray-400">{cat.desc}</span>
@@ -331,7 +374,7 @@ export default function Acceuil() {
                   {cat.items.map((tech) => (
                     <div
                       key={tech.name}
-                      className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-vscode-editor border border-vscode-border/70 text-xs font-medium text-gray-200 hover:border-sky-500/50 hover:text-white transition-all"
+                      className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-vscode-editor border border-vscode-border/70 text-xs font-medium text-gray-200 hover:border-[#5ab3d5]/50 hover:text-white transition-all"
                     >
                       <span className="text-base">{tech.icon}</span>
                       <span>{tech.name}</span>
@@ -354,7 +397,7 @@ export default function Acceuil() {
 
           <MotionButton
             onClick={() => openTab("Projet.jsx")}
-            className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-vscode-hover text-sky-400 hover:text-white border border-vscode-border text-xs font-semibold transition-all"
+            className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-vscode-hover text-[#5ab3d5] hover:text-white border border-vscode-border text-xs font-semibold transition-all"
           >
             <span>Voir tous les projets</span>
             <ArrowRight size={14} />
@@ -362,7 +405,7 @@ export default function Acceuil() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="glass-card rounded-xl p-6 border border-vscode-border hover:border-blue-500/50 transition-all space-y-4">
+          <div className="glass-card rounded-xl p-6 border border-vscode-border hover:border-[#5ab3d5]/50 transition-all space-y-4">
             <div className="flex justify-between items-start">
               <h3 className="text-xl font-bold text-white">💻 Portfolio VS Code</h3>
   
@@ -380,15 +423,15 @@ export default function Acceuil() {
                 href="https://github.com/kevinnrabearison-hub/PortfolioVSC"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center space-x-2 text-xs font-semibold text-sky-400 hover:underline"
+                className="inline-flex items-center space-x-2 text-xs font-semibold text-[#5ab3d5] hover:underline"
               >
-                <Github size={14} />
+                <FaGithub size={14} />
                 <span>Voir le dépôt GitHub →</span>
               </a>
             </div>
           </div>
 
-          <div className="glass-card rounded-xl p-6 border border-vscode-border hover:border-purple-500/50 transition-all space-y-4">
+          <div className="glass-card rounded-xl p-6 border border-vscode-border hover:border-[#0098ff]/50 transition-all space-y-4">
             <div className="flex justify-between items-start">
               <h3 className="text-xl font-bold text-white">📱 BenevolatApp</h3>
               
@@ -406,9 +449,9 @@ export default function Acceuil() {
                 href="https://github.com/kevinnrabearison-hub/BenevolatApp"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center space-x-2 text-xs font-semibold text-purple-400 hover:underline"
+                className="inline-flex items-center space-x-2 text-xs font-semibold text-[#0098ff] hover:underline"
               >
-                <Github size={14} />
+                <FaGithub size={14} />
                 <span>Voir le dépôt GitHub →</span>
               </a>
             </div>
@@ -426,7 +469,7 @@ export default function Acceuil() {
           <MotionButton
             onClick={() => openTab("Contact.jsx")}
             whileHover={{ scale: 1.05 }}
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg"
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#0065a9] to-[#5ab3d5] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg"
           >
             <Send size={16} />
             <span>Envoyer un message</span>

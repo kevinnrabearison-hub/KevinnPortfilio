@@ -41,7 +41,7 @@ const Entete = ({ onOpenCommandPalette, onToggleTerminal, onOpenSettings }) => {
           className="flex w-full min-w-0 items-center justify-between rounded-md border border-vscode-border/70 bg-vscode-hover/70 px-2 py-1 text-xs text-gray-400 transition-all hover:bg-vscode-hover hover:text-gray-200 group sm:px-3"
         >
           <div className="flex min-w-0 items-center space-x-1.5 truncate sm:space-x-2">
-            <VscSearch className="text-blue-400 group-hover:scale-110 transition-transform" />
+            <VscSearch className="text-[#5ab3d5] group-hover:scale-110 transition-transform" />
             <span className="truncate sm:hidden">Rechercher...</span>
             <span className="hidden truncate sm:inline">Kevinn Portfolio — Command Palette (Recherche)</span>
           </div>
@@ -87,7 +87,7 @@ const Entete = ({ onOpenCommandPalette, onToggleTerminal, onOpenSettings }) => {
           title="Notifications"
         >
           <VscBell size={15} />
-          <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+          <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-[#5ab3d5] animate-pulse" />
         </button>
       </div>
     </header>

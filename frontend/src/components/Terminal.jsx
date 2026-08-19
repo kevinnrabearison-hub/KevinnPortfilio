@@ -181,11 +181,11 @@ DevOps & BDD: Docker, Git, MongoDB, PostgreSQL, MySQL`,
       <div className="p-3 h-[calc(100%-2.25rem)] overflow-y-auto font-mono space-y-1.5 leading-relaxed">
         {history.map((item, idx) => (
           <div key={idx} className="break-words">
-            {item.type === "cmd" && <span className="text-emerald-400 font-semibold">{item.text}</span>}
+            {item.type === "cmd" && <span className="text-[#5ab3d5] font-semibold">{item.text}</span>}
             {item.type === "info" && <span className="text-gray-400">{item.text}</span>}
             {item.type === "output" && <pre className="text-gray-300 whitespace-pre-wrap font-mono">{item.text}</pre>}
             {item.type === "success" && (
-              <span className="text-green-400 flex items-center gap-1">
+              <span className="text-[#5ab3d5] flex items-center gap-1">
                 <CheckCircle2 size={12} /> {item.text}
               </span>
             )}
@@ -194,7 +194,7 @@ DevOps & BDD: Docker, Git, MongoDB, PostgreSQL, MySQL`,
         ))}
 
         <form onSubmit={handleCommand} className="flex items-center space-x-2 pt-1">
-          <span className="text-emerald-400 font-semibold select-none">kevinn@portfolio:~$</span>
+          <span className="text-[#5ab3d5] font-semibold select-none">kevinn@portfolio:~$</span>
           <input
             ref={inputRef}
             type="text"

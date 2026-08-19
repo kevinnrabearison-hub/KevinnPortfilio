@@ -25,21 +25,21 @@ const timelineEvents = [
     title: "L3 INSI GL",
     institution: "Institut Supérieur d'Informatique (INSI)",
     desc: "Licence en Informatique, spécialité Génie Logiciel, avec approfondissement sur les bases de la programmation, l’architecture logicielle et les outils de développement moderne.",
-    icon: <GraduationCap className="text-sky-400" size={18} />,
+    icon: <GraduationCap className="text-[#5ab3d5]" size={18} />,
   },
   {
     year: "2022 - 2023",
     title: "Notion Web chez HOPES Formation",
     institution: "HOPES Formation - Andavamamba",
     desc: "Formation certifiée en HTML, CSS, JavaScript, avec un apprentissage pratique du développement front-end et des bases du web design.",
-    icon: <Code2 className="text-purple-400" size={18} />,
+    icon: <Code2 className="text-[#0098ff]" size={18} />,
   },
   {
     year: "Avant 2023",
     title: "Web Design & Bureautique chez IS Info Andranomena",
     institution: "IS Info Andranomena",
     desc: "Découverte du web design, Photoshop, Illustrator, et de la bureautique, avec une première immersion dans le monde du design numérique et des outils de création.",
-    icon: <Sparkles className="text-amber-400" size={18} />,
+    icon: <Sparkles className="text-[#5ab3d5]" size={18} />,
   },
 ];
 
@@ -92,12 +92,9 @@ export default function Apropos() {
       <div className="max-w-4xl mx-auto space-y-10">
         {/* Header Title */}
         <div className="text-center space-y-3 pb-6 border-b border-vscode-border">
-          <div className="inline-flex items-center space-x-2 px-3 py-1    text-sky-400 text-2xl font-mono">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 text-[#5ab3d5] text-2xl font-mono">
             <h1 className="font-bold">&lt;À propos /&gt;</h1>
-            
           </div>
-
-         
 
           <p className="text-gray-300 text-sm max-w-2xl mx-auto leading-relaxed italic">
             Je suis Kevinn Rabearison, développeur full-stack et créatif digital, passionné par la conception d’expériences web élégantes, performantes et utiles. J’aime transformer des idées en solutions concrètes et donner vie à des projets qui marquent leurs utilisateurs.
@@ -107,7 +104,7 @@ export default function Apropos() {
         {/* Profile Card & Key Info */}
         <div className="glass-card rounded-2xl p-6 sm:p-8 border border-vscode-border grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
           <div className="flex flex-col items-center text-center md:border-r border-vscode-border/60 md:pr-6 space-y-3">
-            <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-blue-500 shadow-lg">
+            <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-[#5ab3d5] shadow-lg">
               <video
                 ref={profileVideoRef}
                 src="/videos/pdpp.mp4"
@@ -123,7 +120,7 @@ export default function Apropos() {
 
             <div>
               <h3 className="text-lg font-bold text-white">Kevinn Rabearison</h3>
-              <div className="flex items-center justify-center space-x-1.5 text-xs text-sky-400 font-mono mt-0.5">
+              <div className="flex items-center justify-center space-x-1.5 text-xs text-[#5ab3d5] font-mono mt-0.5">
                 <MapPin size={13} />
                 <span>Antananarivo, Madagascar</span>
               </div>
@@ -131,7 +128,7 @@ export default function Apropos() {
 
             <button
               onClick={downloadCV}
-              className="w-full py-2 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center justify-center space-x-2 shadow-md transition-all"
+              className="w-full py-2 px-4 rounded-xl bg-gradient-to-r from-[#0065a9] to-[#5ab3d5] hover:opacity-90 text-white font-semibold text-xs flex items-center justify-center space-x-2 shadow-md transition-all"
             >
               <Download size={15} />
               <span>Télécharger le CV</span>
@@ -141,7 +138,7 @@ export default function Apropos() {
           <div className="md:col-span-2 space-y-4 text-sm text-gray-300 leading-relaxed">
             <p>
               Étudiant en <strong className="text-white">Licence Informatique (Génie Logiciel)</strong> à l'
-              <span className="inline-flex items-center space-x-1 font-semibold text-yellow-400 bg-yellow-950/40 px-2 py-0.5 rounded border border-yellow-800/50">
+              <span className="inline-flex items-center space-x-1 font-semibold text-[#5ab3d5] bg-[#1f3864]/60 px-2 py-0.5 rounded border border-[#2f5288]">
                 <span>INSI</span>
                 <img src={insiLogo} alt="INSI Logo" className="w-4 h-4 rounded-full object-contain" />
               </span>, je transforme les idées en interfaces nettes et les architectures en systèmes fiables.
@@ -153,14 +150,14 @@ export default function Apropos() {
 
             <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
               <div className="p-3 rounded-lg bg-vscode-editor border border-vscode-border flex items-center space-x-3">
-                <Mail className="text-blue-400" size={16} />
+                <Mail className="text-[#5ab3d5]" size={16} />
                 <a href="mailto:kevinnrabearison@gmail.com" className="hover:underline text-gray-200 truncate">
                   kevinnrabearison@gmail.com
                 </a>
               </div>
 
               <div className="p-3 rounded-lg bg-vscode-editor border border-vscode-border flex items-center space-x-3">
-                <Phone className="text-emerald-400" size={16} />
+                <Phone className="text-[#0098ff]" size={16} />
                 <span className="text-gray-200">038 35 482 45</span>
               </div>
             </div>
@@ -170,7 +167,7 @@ export default function Apropos() {
         {/* Timeline Git Commit History */}
         <div className="space-y-6">
           <div className="flex items-center space-x-3">
-            <GitCommit className="text-purple-400" size={22} />
+            <GitCommit className="text-[#5ab3d5]" size={22} />
             <h2 className="text-xl font-bold text-white">Parcours Académique & Expérience</h2>
           </div>
 
@@ -184,11 +181,11 @@ export default function Apropos() {
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
                 className="relative pl-10 group"
               >
-                <div className="absolute left-2 top-1.5 w-4 h-4 rounded-full bg-vscode-editor border-2 border-purple-500 group-hover:bg-purple-500 transition-colors" />
+                <div className="absolute left-2 top-1.5 w-4 h-4 rounded-full bg-vscode-editor border-2 border-[#5ab3d5] group-hover:bg-[#5ab3d5] transition-colors" />
 
-                <div className="glass-card rounded-xl p-5 border border-vscode-border space-y-2 hover:border-purple-500/50 transition-all">
+                <div className="glass-card rounded-xl p-5 border border-vscode-border space-y-2 hover:border-[#5ab3d5]/50 transition-all">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs font-mono">
-                    <span className="text-purple-400 font-semibold flex items-center space-x-1">
+                    <span className="text-[#5ab3d5] font-semibold flex items-center space-x-1">
                       {event.icon}
                       <span>{event.title}</span>
                     </span>
@@ -207,7 +204,7 @@ export default function Apropos() {
         </div>
 
         {/* Inspirational Quote */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-950/40 via-purple-950/30 to-vscode-editor border border-vscode-border/80 text-center italic text-sky-300 text-sm font-mono">
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-[#1f3864]/60 via-[#2f5288]/40 to-vscode-editor border border-[#5ab3d5]/30 text-center italic text-[#5ab3d5] text-sm font-mono">
           “Le code n’est pas seulement une suite d’instructions, c’est une façon de donner vie à des idées.”
         </div>
       </div>

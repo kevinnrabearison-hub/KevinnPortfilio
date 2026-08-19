@@ -60,7 +60,7 @@ export default function ThemeSettings({ isOpen, onClose }) {
               onClick={() => setActiveSection("themes")}
               className="flex w-full items-center gap-3 rounded px-3 py-3 text-left transition-colors hover:bg-vscode-hover"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded bg-vscode-editor text-sky-400">
+              <span className="flex h-9 w-9 items-center justify-center rounded bg-vscode-editor text-[#5ab3d5]">
                 <Palette size={18} />
               </span>
               <span className="min-w-0 flex-1">
@@ -82,7 +82,7 @@ export default function ThemeSettings({ isOpen, onClose }) {
                     <span className="block truncate text-xs font-medium text-gray-100">{option.label}</span>
                     <span className="block text-[10px] text-gray-500">{option.group}</span>
                   </span>
-                  {theme === themeId && <Check size={16} className="text-sky-400" />}
+                  {theme === themeId && <Check size={16} className="text-[#5ab3d5]" />}
                 </button>
               ))}
               {filteredThemes.length === 0 && <p className="p-6 text-center text-xs text-gray-500">Aucun thème trouvé.</p>}

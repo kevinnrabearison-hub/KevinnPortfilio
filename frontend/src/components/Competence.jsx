@@ -10,51 +10,51 @@ const skillCategories = [
   {
     id: "frontend",
     label: "Frontend",
-    icon: <Monitor className="text-sky-400" size={18} />,
-    color: "border-sky-500/40",
+    icon: <Monitor className="text-[#5ab3d5]" size={18} />,
+    color: "border-[#5ab3d5]/40",
     skills: [
-      { name: "React / React Native", level: 90, icon: <FaReact className="text-sky-400" /> },
-      { name: "Vue.js", level: 80, icon: <FaVuejs className="text-emerald-500" /> },
-      { name: "Angular", level: 70, icon: <FaAngular className="text-red-500" /> },
-      { name: "Tailwind CSS", level: 95, icon: <SiTailwindcss className="text-cyan-400" /> },
-      { name: "TypeScript", level: 82, icon: <SiTypescript className="text-blue-400" /> },
+      { name: "React / React Native", level: 90, icon: <FaReact className="text-[#5ab3d5]" /> },
+      { name: "Vue.js", level: 80, icon: <FaVuejs className="text-[#0098ff]" /> },
+      { name: "Angular", level: 70, icon: <FaAngular className="text-[#2f5288]" /> },
+      { name: "Tailwind CSS", level: 95, icon: <SiTailwindcss className="text-[#5ab3d5]" /> },
+      { name: "TypeScript", level: 82, icon: <SiTypescript className="text-[#0098ff]" /> },
     ],
   },
   {
     id: "backend",
     label: "Backend",
-    icon: <Server className="text-emerald-400" size={18} />,
-    color: "border-emerald-500/40",
+    icon: <Server className="text-[#0098ff]" size={18} />,
+    color: "border-[#0098ff]/40",
     skills: [
-      { name: "Node.js / Express", level: 88, icon: <FaNodeJs className="text-green-500" /> },
-      { name: "Django (Python)", level: 85, icon: <SiDjango className="text-emerald-600" /> },
-      { name: "Symfony (PHP)", level: 75, icon: <FaSymfony className="text-white" /> },
-      { name: "PHP", level: 80, icon: <FaPhp className="text-indigo-400" /> },
-      { name: "REST APIs", level: 90, icon: <TerminalIcon className="text-yellow-400" /> },
+      { name: "Node.js / Express", level: 88, icon: <FaNodeJs className="text-[#5ab3d5]" /> },
+      { name: "Django (Python)", level: 85, icon: <SiDjango className="text-[#0098ff]" /> },
+      { name: "Symfony (PHP)", level: 75, icon: <FaSymfony className="text-[#e6e6e6]" /> },
+      { name: "PHP", level: 80, icon: <FaPhp className="text-[#2f5288]" /> },
+      { name: "REST APIs", level: 90, icon: <TerminalIcon className="text-[#5ab3d5]" /> },
     ],
   },
   {
     id: "database",
     label: "Bases de Données",
-    icon: <Database className="text-amber-400" size={18} />,
-    color: "border-amber-500/40",
+    icon: <Database className="text-[#2f5288]" size={18} />,
+    color: "border-[#2f5288]/50",
     skills: [
-      { name: "MongoDB", level: 85, icon: <SiMongodb className="text-green-500" /> },
-      { name: "PostgreSQL", level: 82, icon: <SiPostgresql className="text-blue-400" /> },
-      { name: "MySQL", level: 85, icon: <SiMysql className="text-sky-600" /> },
-      { name: "Firebase", level: 78, icon: <SiFirebase className="text-yellow-500" /> },
+      { name: "MongoDB", level: 85, icon: <SiMongodb className="text-[#5ab3d5]" /> },
+      { name: "PostgreSQL", level: 82, icon: <SiPostgresql className="text-[#0098ff]" /> },
+      { name: "MySQL", level: 85, icon: <SiMysql className="text-[#0065a9]" /> },
+      { name: "Firebase", level: 78, icon: <SiFirebase className="text-[#5ab3d5]" /> },
     ],
   },
   {
     id: "devops",
     label: "Outils & DevOps",
-    icon: <Cpu className="text-purple-400" size={18} />,
-    color: "border-purple-500/40",
+    icon: <Cpu className="text-[#0065a9]" size={18} />,
+    color: "border-[#0065a9]/50",
     skills: [
-      { name: "Git / GitHub / GitLab", level: 90, icon: <FaGitAlt className="text-orange-500" /> },
-      { name: "Docker", level: 78, icon: <FaDocker className="text-sky-400" /> },
+      { name: "Git / GitHub / GitLab", level: 90, icon: <FaGitAlt className="text-[#5ab3d5]" /> },
+      { name: "Docker", level: 78, icon: <FaDocker className="text-[#0098ff]" /> },
       { name: "Linux / Bash", level: 82, icon: <TerminalIcon className="text-gray-300" /> },
-      { name: "Vercel / Netlify", level: 88, icon: <SiVercel className="text-white" /> },
+      { name: "Vercel / Netlify", level: 88, icon: <SiVercel className="text-[#e6e6e6]" /> },
     ],
   },
 ];
@@ -88,7 +88,7 @@ export default function Competence() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-vscode-border">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
-              <Code2 size={28} className="text-blue-400" />
+              <Code2 size={28} className="text-[#5ab3d5]" />
               <span>Stack Technique & Compétences</span>
             </h1>
             <p className="text-gray-400 text-sm mt-1">
@@ -128,7 +128,7 @@ export default function Competence() {
               onClick={() => setActiveFilter("all")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all border ${
                 activeFilter === "all"
-                  ? "bg-blue-600 border-blue-500 text-white shadow-md shadow-blue-500/20"
+                  ? "bg-[#0065a9] border-[#5ab3d5] text-white shadow-md shadow-[#0098ff]/20"
                   : "bg-vscode-sidebar border-vscode-border text-gray-400 hover:text-white hover:border-gray-500"
               }`}
             >
@@ -140,7 +140,7 @@ export default function Competence() {
                 onClick={() => setActiveFilter(cat.id)}
                 className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 border ${
                   activeFilter === cat.id
-                    ? "bg-blue-600 border-blue-500 text-white shadow-md shadow-blue-500/20"
+                    ? "bg-[#0065a9] border-[#5ab3d5] text-white shadow-md shadow-[#0098ff]/20"
                     : "bg-vscode-sidebar border-vscode-border text-gray-400 hover:text-white hover:border-gray-500"
                 }`}
               >
@@ -177,7 +177,7 @@ export default function Competence() {
                           <span className="text-base">{skill.icon}</span>
                           <span>{skill.name}</span>
                         </span>
-                        <span className="font-mono text-sky-400 font-semibold">{skill.level}%</span>
+                        <span className="font-mono text-[#5ab3d5] font-semibold">{skill.level}%</span>
                       </div>
                       <div className="w-full bg-vscode-editor rounded-full h-2 overflow-hidden border border-vscode-border/50">
                         <MotionDiv
@@ -185,7 +185,7 @@ export default function Competence() {
                           whileInView={{ width: `${skill.level}%` }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.8, ease: "easeOut" }}
-                          className="bg-gradient-to-r from-blue-500 to-sky-400 h-full rounded-full"
+                          className="bg-gradient-to-r from-[#0065a9] to-[#5ab3d5] h-full rounded-full"
                         />
                       </div>
                     </div>
@@ -196,7 +196,7 @@ export default function Competence() {
           </div>
         ) : (
           /* JSON Code View */
-          <div className="glass-panel rounded-xl p-6 border border-vscode-border font-mono text-xs text-sky-300 relative overflow-x-auto">
+          <div className="glass-panel rounded-xl p-6 border border-vscode-border font-mono text-xs text-[#5ab3d5] relative overflow-x-auto">
             <div className="absolute top-3 right-4 text-[11px] text-gray-400">
               skills.config.json
             </div>

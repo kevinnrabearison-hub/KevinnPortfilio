@@ -53,7 +53,7 @@ const Sidebar = ({ onOpenCommandPalette, onToggleTerminal, onOpenSettings }) => 
       <div className="text-2xl group-hover:scale-110 transition-transform relative">
         {icon}
         {badge && (
-          <span className="absolute -top-1 -right-2 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full border border-vscode-activitybar">
+          <span className="absolute -top-1 -right-2 bg-[#0065a9] text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full border border-vscode-activitybar">
             {badge}
           </span>
         )}

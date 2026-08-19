@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useChat } from "../context/ChatContext";
-import { MessageSquare, X, Send, User, Sparkles, Circle, ShieldCheck, Edit3, Check } from "lucide-react";
+import { MessageSquare, X, Send, User, Sparkles, Circle, ShieldCheck, Edit3, Check, Mail, Github, Linkedin, Facebook } from "lucide-react";
 
 export default function ChatWidget() {
   const {
@@ -70,7 +70,7 @@ export default function ChatWidget() {
       document.body.style.userSelect = "";
       try {
         localStorage.setItem("chatFloatingBtnPos", JSON.stringify(btnPos || { x: 0, y: 0 }));
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const onTouchMove = (e) => {
@@ -89,7 +89,7 @@ export default function ChatWidget() {
       draggingRef.current = false;
       try {
         localStorage.setItem("chatFloatingBtnPos", JSON.stringify(btnPos || { x: 0, y: 0 }));
-      } catch (err) {}
+      } catch (err) { }
     };
 
     window.addEventListener("mousemove", onMouseMove);
@@ -177,25 +177,24 @@ export default function ChatWidget() {
             onContextMenu={(e) => e.preventDefault()}
             onMouseDown={startDragWithMouse}
             onTouchStart={startDragWithTouch}
-            className="relative group flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 border border-white/20 backdrop-blur-md cursor-pointer"
-            title="Discuter en direct avec Kevinn (Drag right-click or touch to move)"
+            className="relative group flex items-center gap-3 px-4.5 py-3 bg-slate-900/90 hover:bg-slate-950/95 text-white rounded-2xl shadow-[0_0_25px_rgba(90,179,213,0.35)] transition-all duration-300 transform hover:scale-105 active:scale-95 border border-[#5ab3d5]/40 hover:border-[#5ab3d5] backdrop-blur-xl cursor-pointer select-none font-mono"
+            title="Discuter en direct avec Kevinn (Glisser pour déplacer)"
           >
-            <div className="relative">
-              {/* replace MessageSquare with a more realistic chat icon */}
-              <svg viewBox="0 0 24 24" width="24" height="24" className="text-white"><path fill="currentColor" d="M2 3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7l-5 4V3z"></path></svg>
+            <div className="relative flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-tr from-[#0065a9] via-[#0098ff] to-[#5ab3d5] text-white shadow-md p-1.5">
+              <MessageSquare className="w-5 h-5" />
               <span
-                className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-slate-900 ${
-                  isAdminOnline ? "bg-emerald-400 animate-pulse" : "bg-slate-400"
-                }`}
+                className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-slate-950 ${isAdminOnline ? "bg-emerald-400 animate-pulse" : "bg-[#5ab3d5]"
+                  }`}
               />
             </div>
-            <span className="font-medium text-sm hidden sm:inline-block">
-              {isAdminOnline ? "Chat Direct (En Ligne)" : "Laisser un Message"}
+
+            <span className="font-bold text-xs text-slate-100 hidden sm:inline-block font-mono">
+              Laisser un message
             </span>
 
             {/* Unread badge */}
             {unreadCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-rose-500 text-white font-bold text-xs w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-900 animate-bounce shadow-lg">
+              <span className="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold text-xs w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-950 animate-bounce shadow-xl font-mono">
                 {unreadCount}
               </span>
             )}
@@ -207,42 +206,83 @@ export default function ChatWidget() {
       {isOpen && (
         <div className="w-[360px] sm:w-[400px] h-[520px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/60 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 text-slate-100">
           {/* HEADER */}
-          <div className="p-4 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/80 border-b border-slate-800 flex items-center justify-between">
+          <div className="p-4 bg-gradient-to-r from-slate-950 via-slate-900 to-[#1f3864]/80 border-b border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 p-[2px] shadow-md">
-                  <div className="w-full h-full bg-slate-900 rounded-full flex items-center justify-center font-bold text-blue-400">
-                    KR
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0065a9] to-[#5ab3d5] p-[2px] shadow-md">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-slate-900">
+                    <img
+                      src="/bas.png"
+                      alt="Profile"
+                      className="w-full h-full object-cover object-center rounded-full block"
+                    />
                   </div>
                 </div>
                 <span
-                  className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-slate-900 ${
-                    isAdminOnline ? "bg-emerald-400 animate-pulse" : "bg-slate-500"
-                  }`}
+                  className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-slate-900 ${isAdminOnline ? "bg-[#5ab3d5] animate-pulse" : "bg-slate-500"
+                    }`}
                 />
               </div>
 
               <div>
                 <h3 className="font-semibold text-sm text-slate-100 flex items-center gap-1.5">
                   Kevinn Rabearison
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+
                 </h3>
                 <p className="text-xs text-slate-400 flex items-center gap-1">
                   <Circle
-                    className={`w-2 h-2 fill-current ${
-                      isAdminOnline ? "text-emerald-400" : "text-slate-500"
-                    }`}
+                    className={`w-2 h-2 fill-current ${isAdminOnline ? "text-[#5ab3d5]" : "text-slate-500"
+                      }`}
                   />
-                  {isAdminOnline ? "En ligne - Répond en direct" : "Hors ligne (Répondra sous peu)"}
+                  {isAdminOnline ? "En ligne" : "Hors ligne "}
                 </p>
               </div>
             </div>
 
-            {/* Header Actions */}
+            {/* Header Actions & Social Redirection Links */}
             <div className="flex items-center gap-1">
+              <a
+                href="mailto:kevinnrabearison@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+                title="Gmail"
+                className="p-1.5 hover:bg-slate-800/80 rounded-lg text-slate-400 hover:text-[#5ab3d5] transition-colors"
+              >
+                <Mail className="w-4 h-4" />
+              </a>
+              <a
+                href="https://github.com/kevinnrabearison-hub"
+                target="_blank"
+                rel="noreferrer"
+                title="GitHub"
+                className="p-1.5 hover:bg-slate-800/80 rounded-lg text-slate-400 hover:text-[#0098ff] transition-colors"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noreferrer"
+                title="Facebook"
+                className="p-1.5 hover:bg-slate-800/80 rounded-lg text-slate-400 hover:text-[#5ab3d5] transition-colors"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noreferrer"
+                title="LinkedIn"
+                className="p-1.5 hover:bg-slate-800/80 rounded-lg text-slate-400 hover:text-[#0098ff] transition-colors"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+
+              <div className="w-[1px] h-4 bg-slate-800 mx-1" />
+
               <button
                 onClick={() => setShowAdminModal(true)}
-                className="p-1.5 hover:bg-slate-800/80 rounded-lg text-slate-400 hover:text-amber-400 transition-colors"
+                className="p-1.5 hover:bg-slate-800/80 rounded-lg text-slate-400 hover:text-[#5ab3d5] transition-colors"
                 title="Accès Propriétaire (Admin)"
               >
                 <ShieldCheck className="w-4 h-4" />
@@ -264,23 +304,23 @@ export default function ChatWidget() {
                   type="text"
                   value={tempPseudo}
                   onChange={(e) => setTempPseudo(e.target.value)}
-                  className="bg-slate-800 text-slate-200 px-2 py-1 rounded text-xs outline-none border border-blue-500/50 w-full"
+                  className="bg-slate-800 text-slate-200 px-2 py-1 rounded text-xs outline-none border border-[#5ab3d5]/50 w-full"
                   placeholder="Ton prénom / pseudo"
                   autoFocus
                 />
-                <button type="submit" className="text-emerald-400 hover:text-emerald-300 p-1">
+                <button type="submit" className="text-[#5ab3d5] hover:text-[#0098ff] p-1">
                   <Check className="w-3.5 h-3.5" />
                 </button>
               </form>
             ) : (
               <>
                 <span className="flex items-center gap-1.5 truncate">
-                  <User className="w-3.5 h-3.5 text-blue-400" />
+                  <User className="w-3.5 h-3.5 text-[#5ab3d5]" />
                   Connecté en tant que : <strong className="text-slate-200">{pseudo}</strong>
                 </span>
                 <button
                   onClick={() => setIsEditingPseudo(true)}
-                  className="text-slate-400 hover:text-blue-400 flex items-center gap-1 hover:underline"
+                  className="text-slate-400 hover:text-[#5ab3d5] flex items-center gap-1 hover:underline"
                 >
                   <Edit3 className="w-3 h-3" /> Modifier
                 </button>
@@ -292,7 +332,7 @@ export default function ChatWidget() {
           <div className="flex-1 p-4 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-slate-700">
             {messages.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400 space-y-2">
-                <div className="w-12 h-12 rounded-full bg-blue-600/10 flex items-center justify-center text-blue-400 mb-1 border border-blue-500/20">
+                <div className="w-12 h-12 rounded-full bg-[#5ab3d5]/10 flex items-center justify-center text-[#5ab3d5] mb-1 border border-[#5ab3d5]/20">
                   <Sparkles className="w-6 h-6" />
                 </div>
                 <p className="text-sm font-medium text-slate-200">Bienvenue sur mon Portfolio !</p>
@@ -315,16 +355,15 @@ export default function ChatWidget() {
                   >
                     <div className="flex items-end gap-2 max-w-[85%]">
                       {!isVisitor && (
-                        <div className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs flex-shrink-0 mb-1">
+                        <div className="w-7 h-7 rounded-full bg-[#0065a9] text-white flex items-center justify-center font-bold text-xs flex-shrink-0 mb-1">
                           KR
                         </div>
                       )}
                       <div
-                        className={`p-3 rounded-2xl text-xs leading-relaxed break-words shadow-md ${
-                          isVisitor
-                            ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-br-none border border-blue-400/20"
-                            : "bg-slate-800/90 text-slate-100 rounded-bl-none border border-slate-700/60"
-                        }`}
+                        className={`p-3 rounded-2xl text-xs leading-relaxed break-words shadow-md ${isVisitor
+                          ? "bg-gradient-to-r from-[#0065a9] to-[#0098ff] text-white rounded-br-none border border-[#5ab3d5]/20"
+                          : "bg-slate-800/90 text-slate-100 rounded-bl-none border border-slate-700/60"
+                          }`}
                       >
                         <p>{msg.content}</p>
                       </div>
@@ -338,7 +377,7 @@ export default function ChatWidget() {
             {/* TYPING INDICATOR */}
             {isAdminTyping && (
               <div className="flex items-center gap-2 text-xs text-slate-400 italic bg-slate-800/40 p-2 rounded-xl w-fit border border-slate-700/30 animate-pulse">
-                <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-[10px]">
+                <div className="w-6 h-6 rounded-full bg-[#0065a9] text-white flex items-center justify-center font-bold text-[10px]">
                   KR
                 </div>
                 <span>Kevinn est en train d'écrire...</span>
@@ -355,12 +394,12 @@ export default function ChatWidget() {
               value={inputMessage}
               onChange={handleInputChange}
               placeholder="Écris ton message ici..."
-              className="flex-1 bg-slate-900 border border-slate-700/80 focus:border-blue-500 rounded-xl px-3.5 py-2.5 text-xs text-slate-100 outline-none transition-all placeholder:text-slate-500"
+              className="flex-1 bg-slate-900 border border-slate-700/80 focus:border-[#5ab3d5] rounded-xl px-3.5 py-2.5 text-xs text-slate-100 outline-none transition-all placeholder:text-slate-500"
             />
             <button
               type="submit"
               disabled={!inputMessage.trim()}
-              className="p-2.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 disabled:text-slate-600 text-white rounded-xl transition-all shadow-md flex items-center justify-center"
+              className="p-2.5 bg-gradient-to-r from-[#0065a9] to-[#5ab3d5] hover:opacity-90 disabled:bg-slate-800 disabled:text-slate-600 text-white rounded-xl transition-all shadow-md flex items-center justify-center"
             >
               <Send className="w-4 h-4" />
             </button>

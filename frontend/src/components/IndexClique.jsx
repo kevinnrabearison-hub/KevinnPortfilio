@@ -14,11 +14,11 @@ import { downloadAndOpenCV } from "../utils/downloadCv";
 
 const getFileIcon = (file) => {
   if (file === "MonCV.json") {
-    return <FiDownload className="text-emerald-400 text-sm hover:scale-110 transition-transform" />;
+    return <FiDownload className="text-[#5ab3d5] text-sm hover:scale-110 transition-transform" />;
   }
   if (file.endsWith(".jsx")) {
     return (
-      <svg className="w-4 h-4 text-sky-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+      <svg className="w-4 h-4 text-[#5ab3d5] shrink-0" viewBox="0 0 24 24" fill="currentColor">
         <circle cx="12" cy="12" r="2.5" />
         <path fill="none" stroke="currentColor" strokeWidth="1.5" d="M12 4.5c4.5 0 8 3.36 8 7.5s-3.5 7.5-8 7.5-8-3.36-8-7.5 3.5-7.5 8-7.5z" transform="rotate(30 12 12)" />
         <path fill="none" stroke="currentColor" strokeWidth="1.5" d="M12 4.5c4.5 0 8 3.36 8 7.5s-3.5 7.5-8 7.5-8-3.36-8-7.5 3.5-7.5 8-7.5z" transform="rotate(-30 12 12)" />
@@ -146,7 +146,7 @@ const IndexClique = () => {
                     </div>
 
                     {item.name === "MonCV.json" && (
-                      <span className="text-[10px] bg-emerald-950 text-emerald-400 px-1.5 py-0.2 rounded border border-emerald-800 font-mono">
+                      <span className="text-[10px] bg-[#1f3864]/60 text-[#5ab3d5] px-1.5 py-0.2 rounded border border-[#2f5288] font-mono">
                         PDF
                       </span>
                     )}
@@ -161,11 +161,11 @@ const IndexClique = () => {
       {/* Sidebar Footer Sections */}
       <div className="border-t border-vscode-border text-gray-400 text-[11px] font-mono">
         <div className="flex items-center gap-2 px-3 py-1.5 hover:bg-vscode-hover cursor-pointer transition-colors">
-          <VscSymbolInterface className="text-blue-400" />
+          <VscSymbolInterface className="text-[#5ab3d5]" />
           <span>OUTLINE</span>
         </div>
         <div className="flex items-center border-t border-vscode-border/50 gap-2 px-3 py-1.5 hover:bg-vscode-hover cursor-pointer transition-colors">
-          <VscHistory className="text-purple-400" />
+          <VscHistory className="text-[#0098ff]" />
           <span>TIMELINE</span>
         </div>
       </div>

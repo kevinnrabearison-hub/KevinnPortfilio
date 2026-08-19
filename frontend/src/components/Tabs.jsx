@@ -5,7 +5,7 @@ import { useTabs } from "../context/TabsContext";
 const getTabIcon = (tabName) => {
   if (tabName.endsWith(".jsx")) {
     return (
-      <svg className="w-3.5 h-3.5 text-sky-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+      <svg className="w-3.5 h-3.5 text-[#5ab3d5] shrink-0" viewBox="0 0 24 24" fill="currentColor">
         <circle cx="12" cy="12" r="2.5" />
         <path fill="none" stroke="currentColor" strokeWidth="1.5" d="M12 4.5c4.5 0 8 3.36 8 7.5s-3.5 7.5-8 7.5-8-3.36-8-7.5 3.5-7.5 8-7.5z" transform="rotate(30 12 12)" />
         <path fill="none" stroke="currentColor" strokeWidth="1.5" d="M12 4.5c4.5 0 8 3.36 8 7.5s-3.5 7.5-8 7.5-8-3.36-8-7.5 3.5-7.5 8-7.5z" transform="rotate(-30 12 12)" />
@@ -62,7 +62,7 @@ const Tabs = () => {
         <VscChevronRight className="text-white text-[10px]" />
         <span className="hover:text-white cursor-pointer">components</span>
         <VscChevronRight className="text-white text-[10px]" />
-        <div className="flex items-center space-x-1 text-sky-400 font-semibold">
+        <div className="flex items-center space-x-1 text-[#5ab3d5] font-semibold">
           <VscFileCode size={13} />
           <span>{activeTab}</span>
         </div>

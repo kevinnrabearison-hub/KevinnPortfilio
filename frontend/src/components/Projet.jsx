@@ -25,78 +25,78 @@ const projetsList = [
   {
     id: "nexcommerce",
     category: "Web",
-    icon: <Laptop className="text-sky-400" size={24} />,
+    icon: <Laptop className="text-[#5ab3d5]" size={24} />,
     title: "NexCommerce",
     description:
       "Full-stack e-commerce moderne avec recommandations IA et expérience utilisateur fluide.",
     stack: ["Next.js", "Stripe", "MongoDB"],
-    color: "from-blue-600 to-cyan-500",
-    borderColor: "border-blue-500/40",
+    color: "from-[#0065a9] to-[#5ab3d5]",
+    borderColor: "border-[#5ab3d5]/40",
     github: "#",
     details: "Plateforme de commerce connectée avec recommandations personnalisées, paiement sécurisé et interface responsive.",
   },
   {
     id: "lumina-dashboard",
     category: "Data",
-    icon: <BarChart className="text-indigo-400" size={24} />,
+    icon: <BarChart className="text-[#0098ff]" size={24} />,
     title: "Lumina Dashboard",
     description:
       "Dashboard analytique en temps réel avec visualisations interactives et données live.",
     stack: ["React", "D3.js", "WebSocket"],
-    color: "from-indigo-600 to-sky-500",
-    borderColor: "border-indigo-500/40",
+    color: "from-[#1f3864] to-[#2f5288]",
+    borderColor: "border-[#2f5288]/50",
     github: "#",
     details: "Tableau de bord professionnel affichant métriques, alertes et flux de données en direct pour la prise de décision rapide.",
   },
   {
     id: "pixelforge-studio",
     category: "Design",
-    icon: <Sparkles className="text-amber-400" size={24} />,
+    icon: <Sparkles className="text-[#5ab3d5]" size={24} />,
     title: "PixelForge Studio",
     description:
       "Suite créative browser pour générer des visuels et explorer des systèmes graphiques.",
     stack: ["Canvas API", "WebGL", "GSAP"],
-    color: "from-amber-600 to-orange-500",
-    borderColor: "border-amber-500/40",
+    color: "from-[#2f5288] to-[#0098ff]",
+    borderColor: "border-[#0098ff]/40",
     github: "#",
     details: "Expérience graphique évolutive pour créer du contenu visuel en temps réel dans le navigateur.",
   },
   {
     id: "cogni-ai-chat",
     category: "AI",
-    icon: <Globe className="text-emerald-400" size={24} />,
+    icon: <Globe className="text-[#5ab3d5]" size={24} />,
     title: "Cogni AI Chat",
     description:
       "Plateforme conversationnelle multi-modèles pour des assistants intelligents et réactifs.",
     stack: ["Python", "FastAPI", "OpenAI"],
-    color: "from-emerald-600 to-teal-500",
-    borderColor: "border-emerald-500/40",
+    color: "from-[#0065a9] to-[#1f3864]",
+    borderColor: "border-[#5ab3d5]/40",
     github: "#",
     details: "Système de chat IA avec routage de modèles, personnalisation et mise en production sécurisée.",
   },
   {
     id: "threadnest",
     category: "Social",
-    icon: <Users className="text-cyan-400" size={24} />,
+    icon: <Users className="text-[#0098ff]" size={24} />,
     title: "ThreadNest",
     description:
       "Plateforme communautaire pour développeurs avec partage de code et flux collaboratif.",
     stack: ["Node.js", "Socket.io", "Redis"],
-    color: "from-cyan-600 to-blue-500",
-    borderColor: "border-cyan-500/40",
+    color: "from-[#1f3864] to-[#5ab3d5]",
+    borderColor: "border-[#5ab3d5]/40",
     github: "#",
     details: "Espace social où les développeurs publient des threads, échangent et construisent ensemble en temps réel.",
   },
   {
     id: "vaultchain",
     category: "Security",
-    icon: <Code className="text-purple-400" size={24} />,
+    icon: <Code className="text-[#5ab3d5]" size={24} />,
     title: "VaultChain",
     description:
       "Solution de stockage décentralisé avec vérification blockchain et chiffrement d'entreprise.",
     stack: ["Solidity", "IPFS", "Web3.js"],
-    color: "from-purple-600 to-pink-500",
-    borderColor: "border-purple-500/40",
+    color: "from-[#2f5288] to-[#0065a9]",
+    borderColor: "border-[#0065a9]/50",
     github: "#",
     details: "Infrastructure sécurisée pour stocker et vérifier des données avec un registre immuable et une interface moderne.",
   },
@@ -120,7 +120,7 @@ export default function Projet() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-vscode-border">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
-              <FolderOpen size={28} className="text-blue-400" />
+              <FolderOpen size={28} className="text-[#5ab3d5]" />
               <span>Galerie des Projets</span>
             </h1>
             <p className="text-gray-400 text-sm mt-1">
@@ -128,7 +128,7 @@ export default function Projet() {
             </p>
           </div>
 
-          <div className="text-xs font-mono text-sky-400 bg-vscode-sidebar border border-vscode-border px-3 py-1.5 rounded-lg">
+          <div className="text-xs font-mono text-[#5ab3d5] bg-vscode-sidebar border border-vscode-border px-3 py-1.5 rounded-lg">
             {filteredProjets.length} Projets affichés
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function Projet() {
               onClick={() => setSelectedFilter(cat)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all border ${
                 selectedFilter === cat
-                  ? "bg-blue-600 border-blue-500 text-white shadow-md shadow-blue-500/20"
+                  ? "bg-[#0065a9] border-[#5ab3d5] text-white shadow-md shadow-[#0098ff]/20"
                   : "bg-vscode-sidebar border-vscode-border text-gray-400 hover:text-white hover:border-gray-500"
               }`}
             >
@@ -172,7 +172,7 @@ export default function Projet() {
                 </div>
 
                 {/* Title & Description */}
-                <h3 className="text-lg font-bold text-white group-hover:text-sky-300 transition-colors">
+                <h3 className="text-lg font-bold text-white group-hover:text-[#5ab3d5] transition-colors">
                   {proj.title}
                 </h3>
                 <p className="text-gray-300 text-xs leading-relaxed mt-2 line-clamp-3">
@@ -196,7 +196,7 @@ export default function Projet() {
               <div className="flex items-center justify-between pt-4 border-t border-vscode-border/40 mt-4">
                 <button
                   onClick={() => setActiveModalProject(proj)}
-                  className="text-xs text-sky-400 hover:text-sky-300 font-semibold underline flex items-center gap-1"
+                  className="text-xs text-[#5ab3d5] hover:text-[#0098ff] font-semibold underline flex items-center gap-1"
                 >
                   <Sparkles size={13} />
                   <span>Détails & Code</span>
@@ -207,7 +207,7 @@ export default function Projet() {
                     href={proj.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-vscode-hover border border-vscode-border text-xs text-gray-200 hover:text-white hover:border-blue-500/50 transition-all"
+                    className="flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-vscode-hover border border-vscode-border text-xs text-gray-200 hover:text-white hover:border-[#5ab3d5]/50 transition-all"
                   >
                     <Github size={14} />
                     <span>GitHub</span>
@@ -242,7 +242,7 @@ export default function Projet() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white">{activeModalProject.title}</h3>
-                  <span className="text-xs font-mono text-sky-400">{activeModalProject.category}</span>
+                  <span className="text-xs font-mono text-[#5ab3d5]">{activeModalProject.category}</span>
                 </div>
               </div>
 
@@ -265,7 +265,7 @@ export default function Projet() {
                     href={activeModalProject.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center space-x-2 shadow-lg"
+                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#0065a9] to-[#5ab3d5] hover:opacity-90 text-white font-semibold text-xs flex items-center space-x-2 shadow-lg"
                   >
                     <Github size={16} />
                     <span>Ouvrir sur GitHub</span>

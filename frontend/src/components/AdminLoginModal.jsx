@@ -32,9 +32,9 @@ export default function AdminLoginModal() {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in font-sans">
       <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden text-slate-100">
         {/* Header */}
-        <div className="p-6 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/80 border-b border-slate-800 flex items-center justify-between">
+        <div className="p-6 bg-gradient-to-r from-slate-950 via-slate-900 to-[#1f3864]/80 border-b border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-400">
+            <div className="p-2.5 bg-[#5ab3d5]/10 border border-[#5ab3d5]/20 rounded-xl text-[#5ab3d5]">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
@@ -53,7 +53,7 @@ export default function AdminLoginModal() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl flex items-center gap-2 text-xs text-rose-400">
+            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-2 text-xs text-red-400">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>{error}</span>
             </div>
@@ -61,7 +61,7 @@ export default function AdminLoginModal() {
 
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-              <Lock className="w-3.5 h-3.5 text-amber-400" />
+              <Lock className="w-3.5 h-3.5 text-[#5ab3d5]" />
               Mot de Passe Admin
             </label>
             <div className="relative">
@@ -70,7 +70,7 @@ export default function AdminLoginModal() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Entrez le mot de passe (ex: admin123)"
-                className="w-full bg-slate-950 border border-slate-800 focus:border-amber-500/80 rounded-xl px-4 py-3 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-600"
+                className="w-full bg-slate-950 border border-slate-800 focus:border-[#5ab3d5] rounded-xl px-4 py-3 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-600"
                 autoFocus
               />
               <KeyRound className="w-4 h-4 text-slate-600 absolute right-3.5 top-3.5" />
@@ -88,7 +88,7 @@ export default function AdminLoginModal() {
             <button
               type="submit"
               disabled={loading || !password.trim()}
-              className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold rounded-xl text-xs shadow-lg transition-all disabled:opacity-50"
+              className="px-5 py-2.5 bg-gradient-to-r from-[#0065a9] via-[#0098ff] to-[#5ab3d5] hover:opacity-90 text-white font-bold rounded-xl text-xs shadow-lg transition-all disabled:opacity-50"
             >
               {loading ? "Vérification..." : "Déverrouiller"}
             </button>

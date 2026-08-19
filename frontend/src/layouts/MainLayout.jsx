@@ -189,7 +189,7 @@ const MainLayout = () => {
             onClick={() => openTab(tab.id)}
             className={`flex flex-col items-center text-[10px] px-3 py-1 rounded-lg transition-colors ${
               activeTab === tab.id
-                ? "text-sky-400 font-semibold bg-vscode-hover/60"
+                ? "text-[#5ab3d5] font-semibold bg-vscode-hover/60"
                 : "text-gray-400 hover:text-white"
             }`}
             whileTap={{ scale: 0.9 }}
