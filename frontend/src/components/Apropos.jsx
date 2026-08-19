@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   Lightbulb,
@@ -44,6 +44,30 @@ const timelineEvents = [
 ];
 
 export default function Apropos() {
+  const profileVideoRef = useRef(null);
+
+  useEffect(() => {
+    const video = profileVideoRef.current;
+    if (!video) return undefined;
+
+    video.playbackRate = 1;
+    let hasStarted = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!hasStarted && entry.isIntersecting) {
+        hasStarted = true;
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      } else if (!entry.isIntersecting) {
+        hasStarted = false;
+        video.pause();
+        video.currentTime = 0;
+      }
+    }, { threshold: 0.5 });
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   const downloadCV = () => {
     downloadAndOpenCV();
   };
@@ -69,7 +93,17 @@ export default function Apropos() {
         <div className="glass-card rounded-2xl p-6 sm:p-8 border border-vscode-border grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
           <div className="flex flex-col items-center text-center md:border-r border-vscode-border/60 md:pr-6 space-y-3">
             <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-blue-500 shadow-lg">
-              <img src="/pdp2.jpg" alt="Kevinn" className="w-full h-full object-cover" />
+              <video
+                ref={profileVideoRef}
+                src="/videos/pdpp.mp4"
+                poster="/pdp2.jpg"
+                aria-label="Portrait animé de Kevinn Rabearison"
+                className="w-full h-full object-cover"
+                autoPlay
+                muted
+                playsInline
+                preload="metadata"
+              />
             </div>
 
             <div>

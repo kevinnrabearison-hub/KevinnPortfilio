@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Github,
@@ -111,12 +111,35 @@ const categories = [
 export default function Acceuil() {
   const { openTab } = useTabs();
   const [roleIndex, setRoleIndex] = useState(0);
+  const profileVideoRef = useRef(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setRoleIndex((prev) => (prev + 1) % roles.length);
     }, 3000);
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const video = profileVideoRef.current;
+    if (!video) return undefined;
+
+    video.playbackRate = 1.5;
+    let hasStarted = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!hasStarted && entry.isIntersecting) {
+        hasStarted = true;
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      } else if (!entry.isIntersecting) {
+        hasStarted = false;
+        video.pause();
+        video.currentTime = 0;
+      }
+    }, { threshold: 0.5 });
+
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   const downloadCV = () => {
@@ -214,10 +237,16 @@ export default function Acceuil() {
                 <div className="profile-image-glow" />
                 <div className="profile-image-frame">
                   <div className="profile-image">
-                    <img
-                      src="/pdp2.jpg"
-                      alt="Rabearison Fy Tahina Kevinn"
+                    <video
+                      ref={profileVideoRef}
+                      src="/videos/pdpp.mp4"
+                      poster="/pdp2.jpg"
+                      aria-label="Portrait animé de Rabearison Fy Tahina Kevinn"
                       className="profile-photo"
+                      autoPlay
+                      muted
+                      playsInline
+                      preload="metadata"
                     />
                   </div>
                 </div>

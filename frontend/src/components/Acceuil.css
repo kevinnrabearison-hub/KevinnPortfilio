@@ -362,8 +362,8 @@
   }
 
   .hero-image-wrapper {
-    max-width: 190px;
-    min-height: 200px;
+    max-width: 230px;
+    min-height: 220px;
   }
 
   .hero-image-container {
@@ -376,23 +376,41 @@
   }
 
   .floating-badge {
-    padding: 0.16rem 0.45rem;
+    width: min(112px, calc(100% - 12px));
+    max-width: calc(100% - 12px);
+    min-width: 0;
+    padding: 0.28rem 0.42rem;
     gap: 0.35rem;
-    font-size: 0.85rem;
+    font-size: 0.72rem;
+    box-sizing: border-box;
   }
 
   .badge-icon {
-    font-size: 0.95rem;
+    font-size: 0.82rem;
+  }
+
+  .badge-title {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.68rem;
+  }
+
+  .badge-libs {
+    display: block;
+    max-width: 100%;
+    font-size: 0.52rem;
   }
 
   .badge-top-right {
     top: 6%;
-    right: 4%;
+    right: 6px;
   }
 
   .badge-top-left {
     top: 20%;
-    left: 4%;
+    left: 0;
   }
 
   .badge-top-center {
@@ -401,11 +419,12 @@
 
   .badge-bottom-right {
     bottom: 6%;
-    right: 4%;
+    right: 0;
   }
 
-  .floating-badge {
-    max-width: 112px;
+  .badge-bottom-left {
+    bottom: 14%;
+    left: 6px;
   }
 
   .badge-libs {
