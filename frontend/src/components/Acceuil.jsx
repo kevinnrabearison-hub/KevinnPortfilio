@@ -124,13 +124,25 @@ export default function Acceuil() {
     const video = profileVideoRef.current;
     if (!video) return undefined;
 
-    video.playbackRate = 1.5;
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    video.playbackRate = isMobile ? 1.15 : 1.5;
     let hasStarted = false;
+    let isVisible = false;
+
+    const startVideo = () => {
+      if (!isVisible || hasStarted || video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
+      hasStarted = true;
+      video.currentTime = 0;
+      video.play().catch(() => {
+        hasStarted = false;
+      });
+    };
+
+    video.addEventListener("canplay", startVideo);
     const observer = new IntersectionObserver(([entry]) => {
-      if (!hasStarted && entry.isIntersecting) {
-        hasStarted = true;
-        video.currentTime = 0;
-        video.play().catch(() => {});
+      isVisible = entry.isIntersecting;
+      if (isVisible) {
+        startVideo();
       } else if (!entry.isIntersecting) {
         hasStarted = false;
         video.pause();
@@ -139,7 +151,10 @@ export default function Acceuil() {
     }, { threshold: 0.5 });
 
     observer.observe(video);
-    return () => observer.disconnect();
+    return () => {
+      video.removeEventListener("canplay", startVideo);
+      observer.disconnect();
+    };
   }, []);
 
   const downloadCV = () => {

@@ -142,6 +142,43 @@
   animation: float-badge 4s ease-in-out infinite;
 }
 
+@media (max-width: 640px) {
+  .profile-image-glow {
+    filter: blur(16px);
+    animation: none;
+  }
+
+  .floating-badge {
+    max-width: 104px;
+    padding: 0.16rem 0.4rem;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    animation-duration: 6s;
+  }
+
+  .badge-top-right {
+    top: 4%;
+    right: 0;
+  }
+
+  .badge-bottom-left {
+    bottom: 4%;
+    left: 0;
+  }
+
+  .badge-content {
+    min-width: 0;
+  }
+
+  .badge-title,
+  .badge-libs {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 .badge-icon {
   color: #7dd3fc;
   font-size: 1.15rem;
