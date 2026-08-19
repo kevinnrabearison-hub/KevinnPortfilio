@@ -7,6 +7,10 @@ self.addEventListener("push", (event) => {
       body: data.body || "Tu as reçu une nouvelle réponse.",
       icon: "/logo/vscode-alt.png",
       badge: "/logo/vscode-alt.png",
+      actions: [
+        { action: "reply", title: "Répondre" },
+        { action: "unsubscribe", title: "Se désabonner" },
+      ],
       data: { url: data.url || "/?chat=open" },
     })
   );
@@ -14,6 +18,17 @@ self.addEventListener("push", (event) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
+
+  if (event.action === "unsubscribe") {
+    event.waitUntil(
+      self.registration.pushManager.getSubscription().then((subscription) => {
+        if (subscription) return subscription.unsubscribe();
+        return undefined;
+      })
+    );
+    return;
+  }
+
   event.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((windows) => {
       const existingWindow = windows.find((client) => "focus" in client);
