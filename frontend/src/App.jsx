@@ -4,6 +4,7 @@ import MainLayout from './layouts/MainLayout';
 import AdminPage from './pages/AdminPage';
 import { TabsProvider } from './context/TabsContext';
 import { ChatProvider } from './context/ChatContext';
+import PushNotificationPrompt from './components/PushNotificationPrompt';
 
 function App() {
   return (
@@ -15,7 +16,10 @@ function App() {
             path="/"
             element={
               <TabsProvider>
-                <MainLayout />
+                <>
+                  <MainLayout />
+                  <PushNotificationPrompt />
+                </>
               </TabsProvider>
             }
           />

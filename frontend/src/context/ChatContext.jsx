@@ -52,6 +52,13 @@ export const ChatProvider = ({ children }) => {
   useEffect(() => { isOpenRef.current = isOpen; }, [isOpen]);
   useEffect(() => { adminTokenRef.current = adminToken; }, [adminToken]);
 
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("chat") === "open") {
+      setIsOpen(true);
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+  }, []);
+
   // ─── Initialize Socket ONCE ────────────────────────────────────────────────
   useEffect(() => {
     const newSocket = io(BACKEND_URL, {

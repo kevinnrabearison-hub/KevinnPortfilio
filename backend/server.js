@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import webpush from "web-push";
 
 import {
   initDb,
@@ -16,6 +17,9 @@ import {
   saveMessage,
   getMessages,
   markMessagesAsRead,
+  savePushSubscription,
+  getPushSubscriptions,
+  removePushSubscription,
 } from "./db.js";
 
 // ============================================================
@@ -42,6 +46,20 @@ const allowedOrigins = [
 
 // Supprimer les doublons
 const uniqueOrigins = [...new Set(allowedOrigins)];
+
+const pushConfigured = Boolean(
+  process.env.VAPID_PUBLIC_KEY &&
+  process.env.VAPID_PRIVATE_KEY &&
+  process.env.VAPID_SUBJECT
+);
+
+if (pushConfigured) {
+  webpush.setVapidDetails(
+    process.env.VAPID_SUBJECT,
+    process.env.VAPID_PUBLIC_KEY,
+    process.env.VAPID_PRIVATE_KEY
+  );
+}
 
 console.log("🌐 Origines CORS autorisées :", uniqueOrigins);
 
@@ -188,6 +206,29 @@ const notifyVisitorsList = async () => {
       error
     );
   }
+};
+
+const notifyVisitorOfAdminReply = async (sessionId, message) => {
+  if (!pushConfigured) return;
+
+  const subscriptions = await getPushSubscriptions(sessionId);
+  const payload = JSON.stringify({
+    title: "Nouvelle réponse de Kevinn",
+    body: message.content,
+    url: `${frontendUrl}/?chat=open`,
+  });
+
+  await Promise.all(subscriptions.map(async (subscription) => {
+    try {
+      await webpush.sendNotification(subscription, payload);
+    } catch (error) {
+      if (error.statusCode === 404 || error.statusCode === 410) {
+        await removePushSubscription(subscription.endpoint);
+      } else {
+        console.error("❌ Notification Push impossible:", error.message);
+      }
+    }
+  }));
 };
 
 // ============================================================
@@ -444,6 +485,11 @@ io.on("connection", (socket) => {
             msg
           );
 
+          await notifyVisitorOfAdminReply(
+            sessionId,
+            msg
+          );
+
           await notifyVisitorsList();
 
           console.log(
@@ -633,6 +679,48 @@ app.post(
     }
   }
 );
+
+// ============================================================
+// WEB PUSH
+// ============================================================
+
+app.get("/api/push/public-key", (req, res) => {
+  if (!pushConfigured) {
+    return res.status(503).json({
+      success: false,
+      error: "Notifications Push non configurées",
+    });
+  }
+
+  return res.json({
+    success: true,
+    publicKey: process.env.VAPID_PUBLIC_KEY,
+  });
+});
+
+app.post("/api/push/subscribe", async (req, res) => {
+  try {
+    const { sessionId, subscription } = req.body || {};
+
+    if (!sessionId || !subscription?.endpoint || !subscription?.keys) {
+      return res.status(400).json({
+        success: false,
+        error: "Abonnement Push invalide",
+      });
+    }
+
+    await getOrCreateVisitor(sessionId);
+    await savePushSubscription(sessionId, subscription);
+
+    return res.json({ success: true });
+  } catch (error) {
+    console.error("❌ POST /api/push/subscribe:", error);
+    return res.status(500).json({
+      success: false,
+      error: "Impossible d'enregistrer les notifications",
+    });
+  }
+});
 
 // ============================================================
 // ADMIN VISITORS

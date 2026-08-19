@@ -22,6 +22,7 @@ const dataFilePath = path.resolve(
 const memoryStore = {
   visitors: new Map(),
   messages: new Map(),
+  pushSubscriptions: new Map(),
   messageIdCounter: 1
 };
 
@@ -31,6 +32,7 @@ const saveMemoryStore = async () => {
     const data = {
       visitors: Array.from(memoryStore.visitors.entries()),
       messages: Array.from(memoryStore.messages.entries()),
+      pushSubscriptions: Array.from(memoryStore.pushSubscriptions.entries()),
       messageIdCounter: memoryStore.messageIdCounter
     };
 
@@ -64,6 +66,9 @@ const loadMemoryStore = async () => {
 
     memoryStore.messages =
       new Map(data.messages || []);
+
+    memoryStore.pushSubscriptions =
+      new Map(data.pushSubscriptions || []);
 
     memoryStore.messageIdCounter =
       data.messageIdCounter || 1;
@@ -159,6 +164,21 @@ export async function initDb() {
 
       );
 
+      CREATE TABLE IF NOT EXISTS push_subscriptions (
+
+        session_id VARCHAR(100)
+        REFERENCES visitors(session_id)
+        ON DELETE CASCADE,
+
+        endpoint TEXT PRIMARY KEY,
+
+        subscription JSONB NOT NULL,
+
+        created_at TIMESTAMP
+        DEFAULT CURRENT_TIMESTAMP
+
+      );
+
 
       CREATE TABLE IF NOT EXISTS messages (
 
@@ -182,6 +202,11 @@ export async function initDb() {
 
       );
 
+    `);
+
+    await pool.query(`
+      ALTER TABLE visitors
+      ADD COLUMN IF NOT EXISTS push_enabled BOOLEAN DEFAULT FALSE
     `);
 
 
@@ -437,6 +462,63 @@ export async function getAllVisitors() {
       new Date(a.last_seen)
     );
 
+}
+
+export async function savePushSubscription(sessionId, subscription) {
+  if (usePg) {
+    await pool.query(
+      `INSERT INTO push_subscriptions (session_id, endpoint, subscription)
+       VALUES ($1, $2, $3::jsonb)
+       ON CONFLICT (endpoint) DO UPDATE SET
+         session_id = EXCLUDED.session_id,
+         subscription = EXCLUDED.subscription`,
+      [sessionId, subscription.endpoint, JSON.stringify(subscription)]
+    );
+
+    await pool.query(
+      `UPDATE visitors SET push_enabled=TRUE WHERE session_id=$1`,
+      [sessionId]
+    );
+
+    return;
+  }
+
+  memoryStore.pushSubscriptions.set(subscription.endpoint, {
+    session_id: sessionId,
+    subscription,
+    created_at: new Date()
+  });
+
+  const visitor = memoryStore.visitors.get(sessionId);
+  if (visitor) visitor.push_enabled = true;
+  await saveMemoryStore();
+}
+
+export async function getPushSubscriptions(sessionId) {
+  if (usePg) {
+    const result = await pool.query(
+      `SELECT subscription FROM push_subscriptions WHERE session_id=$1`,
+      [sessionId]
+    );
+    return result.rows.map((row) => row.subscription);
+  }
+
+  return Array.from(memoryStore.pushSubscriptions.values())
+    .filter((entry) => entry.session_id === sessionId)
+    .map((entry) => entry.subscription);
+}
+
+export async function removePushSubscription(endpoint) {
+  if (usePg) {
+    await pool.query(
+      `DELETE FROM push_subscriptions WHERE endpoint=$1`,
+      [endpoint]
+    );
+    return;
+  }
+
+  memoryStore.pushSubscriptions.delete(endpoint);
+  await saveMemoryStore();
 }
 
 

@@ -50,6 +50,9 @@ GitHub repository
    - `ADMIN_PASSWORD` ou `ADMIN_PASSWORD_HASH`
    - `FRONTEND_URL` = URL du frontend Vercel
    - `EMAIL_USER` et `EMAIL_PASS` si nécessaire
+    - `VAPID_SUBJECT` = `mailto:ton-email@example.com`
+    - `VAPID_PUBLIC_KEY` et `VAPID_PRIVATE_KEY` générées avec :
+       `npx web-push generate-vapid-keys`
 
 ### 4. Déployer le frontend sur Vercel
 
@@ -76,6 +79,8 @@ GitHub repository
 3. Ouvre l’URL Render/admin.
 4. Connecte-toi en admin.
 5. Vérifie que les messages apparaissent et restent.
+
+6. Depuis un navigateur HTTPS, clique sur `Activer` dans l’alerte de notifications, puis vérifie qu’une réponse admin déclenche une notification après fermeture du portfolio.
 
 ## Conseils
 
