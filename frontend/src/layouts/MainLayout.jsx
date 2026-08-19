@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaHome,
@@ -13,10 +13,6 @@ import Entete from "../components/Entete";
 import IndexClique from "../components/IndexClique";
 import Sidebar from "../components/Sidebar";
 import StatusBar from "../components/StatusBar";
-import Contact from "../components/Contact";
-import Projet from "../components/Projet";
-import Competence from "../components/Competence";
-import Apropos from "../components/Apropos";
 
 import { useTabs } from "../context/TabsContext";
 import Tabs from "../components/Tabs";
@@ -31,10 +27,10 @@ const BACKEND_URL =
 
 const componentsMap = {
   "Accueil.jsx": Acceuil,
-  "Contact.jsx": Contact,
-  "Projet.jsx": Projet,
-  "Competence.jsx": Competence,
-  "Apropos.jsx": Apropos,
+  "Contact.jsx": lazy(() => import("../components/Contact")),
+  "Projet.jsx": lazy(() => import("../components/Projet")),
+  "Competence.jsx": lazy(() => import("../components/Competence")),
+  "Apropos.jsx": lazy(() => import("../components/Apropos")),
 };
 
 const MotionDiv = motion.div;
@@ -132,7 +128,15 @@ const MainLayout = () => {
                 transition={{ duration: 0.25, ease: "easeInOut" }}
                 className="h-full"
               >
-                <ActiveComponent />
+                <Suspense
+                  fallback={
+                    <div className="flex h-full min-h-48 items-center justify-center bg-vscode-editor text-sm text-gray-400 font-mono">
+                      Chargement...
+                    </div>
+                  }
+                >
+                  <ActiveComponent />
+                </Suspense>
               </MotionDiv>
             </AnimatePresence>
           </div>

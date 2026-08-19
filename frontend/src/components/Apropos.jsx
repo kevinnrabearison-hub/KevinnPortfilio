@@ -15,7 +15,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { downloadAndOpenCV } from "../utils/downloadCv";
-import insiLogo from "../../public/Logo INSI.png";
+const insiLogo = "/Logo INSI.png";
 
 const MotionDiv = motion.div;
 
