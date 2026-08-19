@@ -464,6 +464,17 @@ export async function getAllVisitors() {
 
 }
 
+export async function getVisitorCount() {
+  if (usePg) {
+    const result = await pool.query(
+      "SELECT COUNT(*)::integer AS count FROM visitors"
+    );
+    return result.rows[0].count;
+  }
+
+  return memoryStore.visitors.size;
+}
+
 export async function savePushSubscription(sessionId, subscription) {
   if (usePg) {
     await pool.query(

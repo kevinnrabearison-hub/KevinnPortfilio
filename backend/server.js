@@ -14,6 +14,7 @@ import {
   updateVisitorPseudo,
   updateVisitorLastSeen,
   getAllVisitors,
+  getVisitorCount,
   saveMessage,
   getMessages,
   markMessagesAsRead,
@@ -775,6 +776,19 @@ app.get(
     }
   }
 );
+
+app.get("/api/visitors/count", async (req, res) => {
+  try {
+    const count = await getVisitorCount();
+    return res.json({ success: true, count });
+  } catch (error) {
+    console.error("❌ GET /api/visitors/count:", error);
+    return res.status(500).json({
+      success: false,
+      error: "Impossible de récupérer le nombre de visiteurs",
+    });
+  }
+});
 
 // ============================================================
 // CHAT HISTORY
