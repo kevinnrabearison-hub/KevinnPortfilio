@@ -7,19 +7,14 @@ import {
   VscBell,
   VscColorMode,
 } from 'react-icons/vsc';
-import { useState } from "react";
-import { useTheme } from "../context/ThemeContext";
 
-const Entete = ({ onOpenCommandPalette, onToggleTerminal }) => {
-  const { theme, setTheme, themes } = useTheme();
-  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
-
+const Entete = ({ onOpenCommandPalette, onToggleTerminal, onOpenSettings }) => {
   return (
-    <header className="flex items-center justify-between bg-vscode-titlebar h-9 px-3 text-gray-300 border-b border-vscode-border w-full select-none text-xs font-sans z-50">
+    <header className="flex h-9 w-full min-w-0 items-center justify-between border-b border-vscode-border bg-vscode-titlebar px-2 text-xs font-sans text-gray-300 select-none sm:px-3 z-50">
       {/* Left: Window Dots & VS Code Menus */}
-      <div className="flex items-center space-x-3">
+      <div className="flex shrink-0 items-center space-x-2 sm:space-x-3">
         {/* macOS style Window controls */}
-        <div className="flex items-center space-x-1.5 mr-2">
+        <div className="mr-1 flex items-center space-x-1 sm:mr-2 sm:space-x-1.5">
           <div className="w-3 h-3 rounded-full bg-[#ff5f56] hover:brightness-110 cursor-pointer transition-all border border-black/20" title="Fermer" />
           <div className="w-3 h-3 rounded-full bg-[#ffbd2e] hover:brightness-110 cursor-pointer transition-all border border-black/20" title="Réduire" />
           <div className="w-3 h-3 rounded-full bg-[#27c93f] hover:brightness-110 cursor-pointer transition-all border border-black/20" title="Agrandir" />
@@ -37,62 +32,39 @@ const Entete = ({ onOpenCommandPalette, onToggleTerminal }) => {
         </nav>
       </div>
 
+
+
       {/* Center: Command Palette Trigger Input */}
-      <div className="flex-1 max-w-lg mx-4">
+      <div className="min-w-0 max-w-lg flex-1 mx-1 sm:mx-4">
         <button
           onClick={() => onOpenCommandPalette(true)}
-          className="w-full flex items-center justify-between px-3 py-1 rounded-md bg-vscode-hover/70 hover:bg-vscode-hover text-gray-400 hover:text-gray-200 border border-vscode-border/70 transition-all text-xs group"
+          className="flex w-full min-w-0 items-center justify-between rounded-md border border-vscode-border/70 bg-vscode-hover/70 px-2 py-1 text-xs text-gray-400 transition-all hover:bg-vscode-hover hover:text-gray-200 group sm:px-3"
         >
-          <div className="flex items-center space-x-2 truncate">
+          <div className="flex min-w-0 items-center space-x-1.5 truncate sm:space-x-2">
             <VscSearch className="text-blue-400 group-hover:scale-110 transition-transform" />
-            <span className="truncate">Kevinn Portfolio — Command Palette (Recherche)</span>
+            <span className="truncate sm:hidden">Rechercher...</span>
+            <span className="hidden truncate sm:inline">Kevinn Portfolio — Command Palette (Recherche)</span>
           </div>
           <kbd className="hidden sm:inline-block px-1.5 py-0.2 bg-vscode-editor/80 border border-vscode-border rounded text-[10px] text-gray-400 font-mono">
             Ctrl + K
           </kbd>
         </button>
       </div>
+            <button
+        onClick={onOpenSettings}
+        className="flex shrink-0 items-center gap-1 rounded px-1.5 py-1 text-gray-400 transition-colors hover:bg-vscode-hover hover:text-white sm:gap-1.5 sm:px-2"
+        title="Thème de couleurs"
+        aria-label="Ouvrir les thèmes de couleurs"
+      >
+        <VscColorMode size={15} />
+        <span className="hidden text-[11px] sm:inline">Thème</span>
+      </button>
 
       {/* Right: Layout Controls & Notifications */}
-      <div className="flex items-center space-x-2 text-gray-400">
-        <div className="relative">
-          <button
-            onClick={() => setIsThemeMenuOpen((isOpen) => !isOpen)}
-            className="p-1 rounded hover:bg-vscode-hover hover:text-white transition-colors"
-            title="Changer le thème de couleurs"
-            aria-label="Changer le thème de couleurs"
-            aria-expanded={isThemeMenuOpen}
-          >
-            <VscColorMode size={15} />
-          </button>
-          {isThemeMenuOpen && (
-            <div className="absolute right-0 top-8 z-50 w-44 rounded-md border border-vscode-border bg-vscode-sidebar p-1 shadow-2xl">
-              <p className="px-2 py-1 text-[10px] uppercase tracking-wider text-gray-500">Color Theme</p>
-              {Object.entries(themes).map(([themeId, themeOption]) => (
-                <button
-                  key={themeId}
-                  onClick={() => {
-                    setTheme(themeId);
-                    setIsThemeMenuOpen(false);
-                  }}
-                  className={`flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-xs transition-colors hover:bg-vscode-hover ${
-                    theme === themeId ? "bg-vscode-hover text-white" : "text-gray-300"
-                  }`}
-                >
-                  <span
-                    className="h-3 w-3 rounded-sm border border-white/20"
-                    style={{ backgroundColor: themeOption.swatch }}
-                  />
-                  {themeOption.label}
-                  {theme === themeId && <span className="ml-auto text-sky-400">✓</span>}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+      <div className="flex shrink-0 items-center space-x-1 text-gray-400 sm:space-x-2">
         <button
           onClick={onToggleTerminal}
-          className="p-1 rounded hover:bg-vscode-hover hover:text-white transition-colors"
+          className="rounded p-1 hover:bg-vscode-hover hover:text-white transition-colors"
           title="Basculer le terminal"
         >
           <VscLayoutPanel size={15} />

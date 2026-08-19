@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, FileCode, Terminal, Download, Send, ArrowRight, X } from "lucide-react";
+import { Search, FileCode, Terminal, Download, Send, ArrowRight, X, Palette } from "lucide-react";
 import { useTabs } from "../context/TabsContext";
 import { downloadAndOpenCV } from "../utils/downloadCv";
 
-export default function CommandPalette({ isOpen, onClose, onOpenTerminal }) {
+export default function CommandPalette({ isOpen, onClose, onOpenTerminal, onOpenSettings }) {
   const [query, setQuery] = useState("");
   const { openTab } = useTabs();
 
@@ -25,6 +25,17 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal }) {
   if (!isOpen) return null;
 
   const actions = [
+    {
+      id: "theme-settings",
+      type: "settings",
+      title: "Thème",
+      desc: "Afficher tous les thèmes de couleurs",
+      icon: <Palette className="text-sky-400" size={18} />,
+      action: () => {
+        onClose(false);
+        onOpenSettings?.();
+      },
+    },
     {
       id: "Accueil.jsx",
       type: "file",
@@ -113,7 +124,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenTerminal }) {
             <input
               type="text"
               autoFocus
-              placeholder="Tapez un nom de fichier ou une commande... (Ex: Projet, Terminal)"
+              placeholder="Rechercher un fichier, une commande ou un thème..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-sm font-mono"

@@ -98,6 +98,7 @@ const MainLayout = () => {
         <Entete
           onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
           onToggleTerminal={() => setIsTerminalOpen((prev) => !prev)}
+          onOpenSettings={() => setIsSettingsOpen(true)}
         />
       </header>
 
@@ -149,6 +150,7 @@ const MainLayout = () => {
         isOpen={isCommandPaletteOpen}
         onClose={setIsCommandPaletteOpen}
         onOpenTerminal={() => setIsTerminalOpen(true)}
+        onOpenSettings={() => setIsSettingsOpen(true)}
       />
 
       <ThemeSettings

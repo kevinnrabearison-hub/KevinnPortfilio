@@ -126,20 +126,20 @@ export default function Acceuil() {
   return (
     <div className="bg-vscode-editor min-h-screen text-vscode-foreground font-display selection:bg-blue-600/30">
       {/* Background Ambient Glows */}
-      <div className="relative overflow-hidden px-4 sm:px-8">
+      <div className="relative overflow-hidden px-3 sm:px-6 lg:px-8 2xl:px-12">
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/15 blur-[120px] rounded-full pointer-events-none" />
         <div className="absolute top-40 right-10 w-72 h-72 bg-purple-600/15 blur-[100px] rounded-full pointer-events-none" />
 
         {/* Hero Card Container */}
-        <div className="max-w-5xl  glass-card  p-6 sm:p-10 relative z-10 shadow-2xl overflow-hidden">
+        <div className="mx-auto w-full max-w-[1440px] glass-card p-4 sm:p-8 lg:p-10 2xl:p-12 relative z-10 shadow-2xl overflow-hidden">
           <div className="acceuil-bg" />
           <div className="acceuil-grid-lines" />
           <div className="acceuil-scanlines" />
           <div className="acceuil-noise" />
 
-          <div className="relative flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-10">
+          <div className="relative flex flex-col lg:flex-row items-center justify-between gap-8 xl:gap-14 2xl:gap-20">
             {/* Left Column: Text & Hero Info */}
-            <div className="flex-1 text-center lg:text-left space-y-6 relative z-10">
+            <div className="min-w-0 flex-1 text-center lg:text-left space-y-6 relative z-10">
 
 
               <div className="space-y-4">
@@ -249,7 +249,7 @@ export default function Acceuil() {
       </div>
 
       {/* Tech Stack Categories Grid */}
-      <section className="px-4 sm:px-8 py-12 max-w-6xl mx-auto space-y-8">
+      <section className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 2xl:px-12 py-10 sm:py-12 space-y-8">
         <div className="text-center space-y-2">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center justify-center gap-2">
             <Sparkles className="text-yellow-400" size={24} />
@@ -301,7 +301,7 @@ export default function Acceuil() {
       </section>
 
       {/* Featured Projects Highlights */}
-      <section className="px-4 sm:px-8 py-12 max-w-6xl mx-auto border-t border-vscode-border/60">
+      <section className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 2xl:px-12 py-10 sm:py-12 border-t border-vscode-border/60">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
           <div>
             <h2 className="text-2xl font-bold text-white">Projets à la une</h2>
@@ -373,7 +373,7 @@ export default function Acceuil() {
       </section>
 
       {/* Call to Contact Banner */}
-      <section className="px-4 sm:px-8 py-12 max-w-4xl mx-auto text-center">
+      <section className="w-full max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 2xl:px-12 py-10 sm:py-12 text-center">
         <div className="glass-card rounded-2xl p-8 border border-vscode-border space-y-4">
           <h2 className="text-2xl font-bold text-white">Envie de collaborer sur un projet ?</h2>
           <p className="text-gray-300 text-sm max-w-md mx-auto">

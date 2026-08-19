@@ -255,6 +255,26 @@
   }
 }
 
+@media (min-width: 1280px) {
+  .hero-heading {
+    font-size: clamp(3rem, 4vw, 4.6rem);
+  }
+
+  .hero-name {
+    font-size: clamp(3.2rem, 4.5vw, 5.4rem);
+  }
+
+  .hero-image-wrapper {
+    max-width: 300px;
+    min-height: 320px;
+  }
+
+  .hero-image-container {
+    width: min(280px, 24vw);
+    height: min(280px, 24vw);
+  }
+}
+
 @media (max-width: 768px) {
   .hero-image-wrapper {
     min-height: 240px;
@@ -382,5 +402,15 @@
   .badge-bottom-right {
     bottom: 6%;
     right: 4%;
+  }
+
+  .floating-badge {
+    max-width: 112px;
+  }
+
+  .badge-libs {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
