@@ -99,7 +99,7 @@ const MainLayout = () => {
       </header>
 
       {/* Main Workspace Body */}
-      <div className="flex flex-1 pt-9 pb-6 md:pb-6 overflow-hidden min-h-0">
+      <div className="flex flex-1 overflow-hidden min-h-0 pt-9 pb-24 md:pb-6">
         {/* Desktop Left Activitybar & Explorer */}
         <div className="hidden md:flex flex-shrink-0 h-full">
           <Sidebar
@@ -171,8 +171,18 @@ const MainLayout = () => {
         />
       </footer>
 
+      {/* Compact VS Code status bar below the mobile navigation */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40">
+        <StatusBar
+          compact
+          onToggleTerminal={() => setIsTerminalOpen((prev) => !prev)}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          visitorCount={visitorCount}
+        />
+      </div>
+
       {/* Mobile Bottom Quick Tabs Bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-vscode-tabbar/90 backdrop-blur-md border-t border-vscode-border flex justify-around items-center py-1.5 z-50">
+      <div className="md:hidden fixed bottom-6 left-0 right-0 bg-vscode-tabbar/90 backdrop-blur-md border-t border-vscode-border flex justify-around items-center py-1.5 z-50">
         {mobileTabs.map((tab) => (
           <MotionButton
             key={tab.id}

@@ -9,87 +9,48 @@ import {
   FaEye,
 } from "react-icons/fa";
 
-const StatusBar = ({ onToggleTerminal, onOpenCommandPalette, visitorCount }) => {
-
+const StatusBar = ({ onToggleTerminal, onOpenCommandPalette, visitorCount, compact = false }) => {
   return (
-    <footer className="w-full h-6 bg-vscode-statusbar text-white text-[11px] font-mono flex items-center justify-between px-3 border-t border-vscode-border select-none z-30">
-      {/* Left Items */}
+    <footer className={`flex w-full items-center justify-between border-t border-vscode-border bg-vscode-statusbar font-mono text-white select-none z-30 ${compact ? "h-7 px-2 text-[10px]" : "h-6 px-3 text-[11px]"}`}>
       <div className="flex items-center space-x-3">
-        {/* Remote / Git Branch */}
-        <button
-          onClick={onToggleTerminal}
-          className="flex items-center space-x-1 px-2 py-0.5 rounded hover:bg-vscode-statusbarHover transition-colors"
-          title="Branche Git actuelle"
-        >
-          <FaGitAlt className="text-white text-xs" />
+        <button onClick={onToggleTerminal} className="flex items-center space-x-1 rounded px-2 py-0.5 hover:bg-vscode-statusbarHover transition-colors" title="Branche Git actuelle">
+          <FaGitAlt className="text-xs text-white" />
           <span className="font-semibold">main*</span>
         </button>
-
-        <button
-          onClick={onToggleTerminal}
-          className="flex items-center space-x-1 px-2 py-0.5 rounded hover:bg-vscode-statusbarHover transition-colors text-red-200"
-          title="Erreurs"
-        >
-          <FaTimesCircle className="text-red-300 text-xs" />
+        <button onClick={onToggleTerminal} className="flex items-center space-x-1 rounded px-2 py-0.5 text-red-200 hover:bg-vscode-statusbarHover transition-colors" title="Erreurs">
+          <FaTimesCircle className="text-xs text-red-300" />
           <span>0</span>
         </button>
-
-        <button
-          onClick={onToggleTerminal}
-          className="flex items-center space-x-1 px-2 py-0.5 rounded hover:bg-vscode-statusbarHover transition-colors text-yellow-200"
-          title="Avertissements"
-        >
-          <FaExclamationTriangle className="text-yellow-300 text-xs" />
+        <button onClick={onToggleTerminal} className="flex items-center space-x-1 rounded px-2 py-0.5 text-yellow-200 hover:bg-vscode-statusbarHover transition-colors" title="Avertissements">
+          <FaExclamationTriangle className="text-xs text-yellow-300" />
           <span>0</span>
         </button>
-
-        <button
-          onClick={onToggleTerminal}
-          className="hidden sm:flex items-center space-x-1 px-2 py-0.5 rounded hover:bg-vscode-statusbarHover transition-colors text-gray-200"
-          title="Ouvrir le Terminal"
-        >
+        <button onClick={onToggleTerminal} className={`${compact ? "hidden" : "hidden sm:flex"} items-center space-x-1 rounded px-2 py-0.5 text-gray-200 hover:bg-vscode-statusbarHover transition-colors`} title="Ouvrir le Terminal">
           <FaTerminal className="text-xs" />
           <span>Terminal</span>
         </button>
       </div>
 
-      {/* Center Details */}
-      <div className="hidden lg:flex items-center space-x-4 text-gray-200">
+      <div className="hidden items-center space-x-4 text-gray-200 lg:flex">
         <span>Ln 42, Col 18</span>
         <span>Espaces: 2</span>
         <span>UTF-8</span>
         <span>LF</span>
-        <span className="text-sky-200 font-semibold">{`{ }`} React JSX</span>
+        <span className="font-semibold text-sky-200">{`{ }`} React JSX</span>
       </div>
 
-      {/* Right Action Items */}
       <div className="flex items-center space-x-2">
-        <button
-          onClick={() => onOpenCommandPalette && onOpenCommandPalette(true)}
-          className="flex items-center space-x-1 px-2 py-0.5 rounded hover:bg-vscode-statusbarHover transition-colors"
-          title="Statut du serveur de développement"
-        >
-          <FaBroadcastTower className="text-emerald-300 animate-pulse text-xs" />
-          <span>Port 5173</span>
+        <button onClick={() => onOpenCommandPalette && onOpenCommandPalette(true)} className="flex items-center space-x-1 rounded px-2 py-0.5 hover:bg-vscode-statusbarHover transition-colors" title="Statut du serveur de développement">
+          <FaBroadcastTower className="animate-pulse text-xs text-emerald-300" />
+          <span className={compact ? "hidden" : "inline"}>Port 5173</span>
         </button>
-
-        <span className="px-1.5 py-0.5 rounded hover:bg-vscode-statusbarHover transition-colors cursor-pointer hidden sm:inline">
-          ✓ Prettier
+        <span className="hidden rounded px-1.5 py-0.5 hover:bg-vscode-statusbarHover transition-colors sm:inline">✓ Prettier</span>
+        <span className={`flex shrink-0 items-center justify-center gap-1.5 rounded-md bg-vscode-statusbarHover px-2 py-0.5 font-semibold text-white shadow-sm ${compact ? "min-w-[78px]" : "min-w-[112px]"}`} title="Visiteurs uniques du portfolio">
+          <FaEye className="text-sm text-cyan-200" />
+          <span className="tabular-nums">{visitorCount ?? "-"}</span>
+          <span>{compact ? "vues" : "visiteurs"}</span>
         </span>
-
-        <span
-          className="flex items-center gap-1 px-1.5 py-0.5 text-cyan-100"
-          title="Visiteurs uniques du portfolio"
-        >
-          <FaEye className="text-cyan-300 text-xs" />
-          <span>{visitorCount ?? "-"} visiteurs</span>
-        </span>
-
-        <button
-          onClick={() => onOpenCommandPalette && onOpenCommandPalette(true)}
-          className="px-2 py-0.5 rounded hover:bg-vscode-statusbarHover transition-colors"
-          title="Notifications"
-        >
+        <button onClick={() => onOpenCommandPalette && onOpenCommandPalette(true)} className="rounded px-2 py-0.5 hover:bg-vscode-statusbarHover transition-colors" title="Notifications">
           <FaBell className="text-xs" />
         </button>
       </div>
@@ -98,4 +59,3 @@ const StatusBar = ({ onToggleTerminal, onOpenCommandPalette, visitorCount }) => 
 };
 
 export default StatusBar;
-
