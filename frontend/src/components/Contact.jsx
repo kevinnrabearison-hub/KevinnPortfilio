@@ -44,15 +44,18 @@ export default function Contact() {
     addLog(`POST /api/contact Payload: { name: "${formData.name}", email: "${formData.email}" }`, "info");
 
     try {
-      await axios.post(`${BACKEND_URL}/api/contact`, formData);
+      const response = await axios.post(`${BACKEND_URL}/api/contact`, formData);
+      if (!response.data?.success) {
+        throw new Error(response.data?.error || "Impossible d'envoyer le message.");
+      }
+
       addLog("HTTP 200 OK - Message transmis avec succès !", "success");
       setNotification({ type: "success", text: "Message envoyé avec succès 🎉" });
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
-      console.warn("Backend local offline. Simulating success response.");
-      addLog("API local non disponible (fallback simulé) -> Message enregistré !", "success");
-      setNotification({ type: "success", text: "Message enregistré avec succès ! Merci de votre prise de contact." });
-      setFormData({ name: "", email: "", message: "" });
+      const errorMessage = err.response?.data?.error || "Impossible d'envoyer le message.";
+      addLog(`Échec HTTP : ${errorMessage}`, "error");
+      setNotification({ type: "error", text: errorMessage });
     } finally {
       setIsLoading(false);
       setTimeout(() => setNotification(null), 5000);
@@ -272,7 +275,11 @@ export default function Contact() {
             exit={{ opacity: 0, y: 50 }}
             className="fixed bottom-10 right-6 z-[99999] flex items-center space-x-3 px-5 py-3.5 rounded-xl shadow-2xl glass-panel border border-[#5ab3d5]/50 bg-[#1f3864]/95 text-white text-xs font-semibold"
           >
-            <CheckCircle size={20} className="text-[#5ab3d5] shrink-0" />
+            {notification.type === "success" ? (
+              <CheckCircle size={20} className="text-[#5ab3d5] shrink-0" />
+            ) : (
+              <XCircle size={20} className="text-red-400 shrink-0" />
+            )}
             <span>{notification.text}</span>
           </MotionDiv>
         )}

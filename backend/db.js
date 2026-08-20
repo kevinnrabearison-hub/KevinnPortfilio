@@ -14,6 +14,9 @@ const { Pool } = pg;
 let pool = null;
 let usePg = false;
 
+const VISITOR_RETENTION_DAYS = 180;
+const MESSAGE_RETENTION_DAYS = 90;
+
 const dataFilePath = path.resolve(
   path.dirname(new URL(import.meta.url).pathname),
   "data.json"
@@ -92,6 +95,12 @@ export async function initDb() {
 
   if (!process.env.DATABASE_URL) {
 
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(
+        "DATABASE_URL manquante en production : démarrage interrompu"
+      );
+    }
+
     console.log(
       "ℹ️ DATABASE_URL absente → mode mémoire"
     );
@@ -118,7 +127,7 @@ export async function initDb() {
     pool = new Pool({
       connectionString: databaseUrl,
       ssl: {
-        rejectUnauthorized: false,
+        rejectUnauthorized: true,
       },
       max: 5,
       connectionTimeoutMillis: 30000,
@@ -209,6 +218,21 @@ export async function initDb() {
       ADD COLUMN IF NOT EXISTS push_enabled BOOLEAN DEFAULT FALSE
     `);
 
+    await pool.query(`
+      CREATE INDEX IF NOT EXISTS messages_session_id_idx
+      ON messages (session_id)
+    `);
+
+    await pool.query(`
+      CREATE INDEX IF NOT EXISTS messages_created_at_idx
+      ON messages (created_at)
+    `);
+
+    await pool.query(`
+      CREATE INDEX IF NOT EXISTS visitors_last_seen_idx
+      ON visitors (last_seen)
+    `);
+
 
     console.log(
       "✅ Tables visitors/messages créées"
@@ -226,15 +250,80 @@ export async function initDb() {
 
     usePg = false;
 
-    await loadMemoryStore();
+    if (pool) {
+      await pool.end().catch(() => {});
+      pool = null;
+    }
 
-
-    console.log(
-      "⚠️ Utilisation stockage mémoire"
+    throw new Error(
+      "Connexion PostgreSQL impossible : démarrage interrompu"
     );
 
   }
 
+}
+
+export async function purgeExpiredData() {
+  if (usePg) {
+    await pool.query(
+      `DELETE FROM messages
+       WHERE created_at < NOW() - ($1 * INTERVAL '1 day')`,
+      [MESSAGE_RETENTION_DAYS]
+    );
+
+    await pool.query(
+      `DELETE FROM visitors
+       WHERE last_seen < NOW() - ($1 * INTERVAL '1 day')`,
+      [VISITOR_RETENTION_DAYS]
+    );
+
+    await pool.query(
+      `DELETE FROM push_subscriptions subscription
+       WHERE created_at < NOW() - ($1 * INTERVAL '1 day')
+          OR NOT EXISTS (
+         SELECT 1
+         FROM visitors
+         WHERE visitors.session_id = subscription.session_id
+       )`,
+      [VISITOR_RETENTION_DAYS]
+    );
+
+    return;
+  }
+
+  const visitorCutoff = Date.now() - VISITOR_RETENTION_DAYS * 24 * 60 * 60 * 1000;
+  const messageCutoff = Date.now() - MESSAGE_RETENTION_DAYS * 24 * 60 * 60 * 1000;
+
+  for (const [sessionId, messages] of memoryStore.messages) {
+    const retainedMessages = messages.filter(
+      (message) => new Date(message.created_at).getTime() >= messageCutoff
+    );
+
+    if (retainedMessages.length) {
+      memoryStore.messages.set(sessionId, retainedMessages);
+    } else {
+      memoryStore.messages.delete(sessionId);
+    }
+  }
+
+  for (const [sessionId, visitor] of memoryStore.visitors) {
+    if (new Date(visitor.last_seen).getTime() < visitorCutoff) {
+      memoryStore.visitors.delete(sessionId);
+      memoryStore.messages.delete(sessionId);
+    }
+  }
+
+  for (const [endpoint, subscription] of memoryStore.pushSubscriptions) {
+    const createdAt = new Date(subscription.created_at).getTime();
+    if (
+      !memoryStore.visitors.has(subscription.session_id) ||
+      createdAt < visitorCutoff
+    ) {
+      memoryStore.pushSubscriptions.delete(endpoint);
+    }
+  }
+
+  await saveMemoryStore();
 }
 
 
@@ -439,7 +528,13 @@ export async function getAllVisitors() {
 
     const result = await pool.query(
 
-      `SELECT *
+      `SELECT session_id,
+              pseudo,
+              created_at,
+              last_seen,
+              unread_admin,
+              unread_visitor,
+              push_enabled
        FROM visitors
        ORDER BY last_seen DESC`
 

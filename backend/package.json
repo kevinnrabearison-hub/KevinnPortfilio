@@ -5,7 +5,11 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check server.js && node --check db.js && node --check security.js && node --check routes/admin.js && node --check routes/contact.js && node --check routes/public.js && node --check sockets/chat.js && node --check sockets/services.js",
+    "test:db": "node test-db.js",
+    "test:render": "node test-render.js",
+    "test:admin": "node test-admin-render.js"
   },
   "keywords": [
     "express",
@@ -21,12 +25,13 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-rate-limit": "^8.6.2",
     "jsonwebtoken": "^9.0.3",
     "nodemailer": "^6.9.13",
     "pg": "^8.23.0",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3",
-    "uuid": "^14.0.1"
-    ,"web-push": "^3.6.7"
+    "uuid": "^14.0.1",
+    "web-push": "^3.6.7"
   }
 }

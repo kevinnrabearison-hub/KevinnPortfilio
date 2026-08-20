@@ -35,6 +35,7 @@ const componentsMap = {
 
 const MotionDiv = motion.div;
 const MotionButton = motion.button;
+const VISITOR_COUNT_REFRESH_MS = 5 * 60 * 1000;
 
 const MainLayout = () => {
   const { activeTab, openTab } = useTabs();
@@ -71,11 +72,22 @@ const MainLayout = () => {
     };
 
     loadVisitorCount();
-    const intervalId = window.setInterval(loadVisitorCount, 30000);
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") {
+        loadVisitorCount();
+      }
+    };
+
+    const intervalId = window.setInterval(
+      refreshWhenVisible,
+      VISITOR_COUNT_REFRESH_MS
+    );
+    document.addEventListener("visibilitychange", refreshWhenVisible);
 
     return () => {
       isMounted = false;
       window.clearInterval(intervalId);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
     };
   }, []);
 

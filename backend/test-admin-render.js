@@ -25,7 +25,7 @@ try {
   console.log("\nRéponse login :");
   console.log(loginData);
 
-  if (!loginData.success) {
+  if (!loginResponse.ok || !loginData.success || !loginData.token) {
     console.error("❌ Login admin échoué");
     process.exit(1);
   }
@@ -45,10 +45,16 @@ try {
 
   const visitorsData = await visitorsResponse.json();
 
+  if (!visitorsResponse.ok || !visitorsData.success) {
+    console.error("❌ Lecture des visiteurs échouée");
+    process.exit(1);
+  }
+
   console.log("\n👥 Visiteurs :");
   console.log(JSON.stringify(visitorsData, null, 2));
 
   console.log("\n🎉 TEST ADMIN RÉUSSI !");
 } catch (error) {
   console.error("❌ Erreur :", error);
+  process.exitCode = 1;
 }

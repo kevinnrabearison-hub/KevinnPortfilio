@@ -35,7 +35,7 @@ export default function AdminChatDashboard({ fullPage = false }) {
     if (isAdminLoggedIn) {
       fetchVisitorsList();
     }
-  }, [isAdminLoggedIn]);
+  }, [isAdminLoggedIn, fetchVisitorsList]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

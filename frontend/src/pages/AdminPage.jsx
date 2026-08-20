@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 export default function AdminPage() {
-  const { loginAdmin, logoutAdmin, isAdminLoggedIn } = useChat();
+  const { loginAdmin, isAdminLoggedIn } = useChat();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

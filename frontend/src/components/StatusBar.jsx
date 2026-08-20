@@ -48,7 +48,7 @@ const StatusBar = ({ onToggleTerminal, onOpenCommandPalette, visitorCount, compa
         <span className={`flex shrink-0 items-center justify-center gap-1.5 rounded-md bg-vscode-statusbarHover px-2 py-0.5 font-semibold text-white shadow-sm ${compact ? "min-w-[78px]" : "min-w-[112px]"}`} title="Visiteurs uniques du portfolio">
           <FaEye className="text-sm text-cyan-200" />
           <span className="tabular-nums">{visitorCount ?? "-"}</span>
-          <span>{compact ? "vues" : "visiteurs"}</span>
+          <span>{compact ? "vues env." : "visiteurs env."}</span>
         </span>
         <button onClick={() => onOpenCommandPalette && onOpenCommandPalette(true)} className="rounded px-2 py-0.5 hover:bg-vscode-statusbarHover transition-colors" title="Notifications">
           <FaBell className="text-xs" />

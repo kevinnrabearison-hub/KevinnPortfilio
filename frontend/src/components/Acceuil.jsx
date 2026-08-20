@@ -339,7 +339,7 @@ export default function Acceuil() {
       <section className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 2xl:px-12 py-10 sm:py-12 space-y-8">
         <div className="text-center space-y-2">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center justify-center gap-2">
-            <Sparkles className="text-[#5ab3d5]" size={24} />
+            
             <span>Technologies & Compétences Clés</span>
           </h2>
           <p className="text-gray-400 text-sm max-w-xl mx-auto">

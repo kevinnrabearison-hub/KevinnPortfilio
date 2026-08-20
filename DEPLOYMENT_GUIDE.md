@@ -54,6 +54,13 @@ GitHub repository
     - `VAPID_PUBLIC_KEY` et `VAPID_PRIVATE_KEY` générées avec :
        `npx web-push generate-vapid-keys`
 
+      `DATABASE_URL` est obligatoire en production. Si Neon est indisponible,
+      le backend s'arrête au démarrage au lieu d'utiliser un stockage mémoire local.
+
+      Le backend purge quotidiennement les messages de plus de 90 jours, les
+      visiteurs inactifs depuis plus de 180 jours et les abonnements push anciens
+      ou orphelins.
+
 ### 4. Déployer le frontend sur Vercel
 
 1. Ouvre https://vercel.com.

@@ -47,7 +47,7 @@ export default function ChatWidget() {
           setBtnPos(parsed);
         }
       }
-    } catch (e) {
+    } catch {
       /* ignore */
     }
   }, []);
@@ -63,14 +63,16 @@ export default function ChatWidget() {
       setBtnPos(clampPosition(newX, newY));
     };
 
-    const onMouseUp = (e) => {
+    const onMouseUp = () => {
       if (!draggingRef.current) return;
       draggingRef.current = false;
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
       try {
         localStorage.setItem("chatFloatingBtnPos", JSON.stringify(btnPos || { x: 0, y: 0 }));
-      } catch (err) { }
+      } catch {
+        // Ignore localStorage failures.
+      }
     };
 
     const onTouchMove = (e) => {
@@ -89,7 +91,9 @@ export default function ChatWidget() {
       draggingRef.current = false;
       try {
         localStorage.setItem("chatFloatingBtnPos", JSON.stringify(btnPos || { x: 0, y: 0 }));
-      } catch (err) { }
+      } catch {
+        // Ignore localStorage failures.
+      }
     };
 
     window.addEventListener("mousemove", onMouseMove);
