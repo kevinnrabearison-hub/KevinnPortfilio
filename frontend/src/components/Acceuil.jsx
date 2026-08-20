@@ -246,7 +246,7 @@ export default function Acceuil() {
               </div>
 
               {/* Social Media Links Bar */}
-              <div className="flex items-center gap-3 pt-3 relative z-10 font-mono text-xs text-gray-400">
+              <div className="flex items-center justify-center sm:justify-start gap-3 pt-3 relative z-10 font-mono text-xs text-gray-400">
                 <span className="text-gray-500 hidden sm:inline">&lt;réseaux /&gt;</span>
                 <div className="flex items-center gap-2">
                   <a

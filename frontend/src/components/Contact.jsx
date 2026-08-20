@@ -120,8 +120,8 @@ export default function Contact() {
 
               {/* Social Media Redirection Buttons */}
               <div className="pt-4 border-t border-vscode-border/60">
-                <div className="text-xs font-mono text-gray-400 mb-2.5">&lt;réseaux_sociaux /&gt;</div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="text-center sm:text-left text-xs font-mono text-gray-400 mb-2.5">&lt;réseaux_sociaux /&gt;</div>
+                <div className="grid grid-cols-2 gap-2 max-w-sm mx-auto sm:max-w-none">
                   <a
                     href="mailto:kevinnrabearison@gmail.com"
                     target="_blank"
