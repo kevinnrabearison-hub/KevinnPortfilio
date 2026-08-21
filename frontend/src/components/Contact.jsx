@@ -17,6 +17,7 @@ import {
   Linkedin,
   Facebook
 } from "lucide-react";
+import "./Contact.css";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
@@ -80,89 +81,41 @@ export default function Contact() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          {/* Contact Details & Direct Cards */}
-          <div className="space-y-4">
-            <div className="glass-card rounded-xl p-6 border border-vscode-border space-y-4">
-              <h3 className="text-lg font-bold text-white mb-2 font-mono text-[#5ab3d5]">&lt;Contact /&gt;</h3>
-
-              <div className="flex items-center space-x-3 text-sm text-gray-300">
-                <div className="p-2.5 rounded-lg bg-[#1f3864]/80 text-[#5ab3d5] border border-[#2f5288]">
-                  <Mail size={18} />
-                </div>
-                <div>
-                  <div className="text-xs text-gray-400 font-mono">Email</div>
-                  <a href="mailto:kevinnrabearison@gmail.com" className="font-semibold text-gray-200 hover:text-[#5ab3d5] hover:underline">
-                    kevinnrabearison@gmail.com
-                  </a>
-                </div>
+        <div className="contact-layout">
+          <div className="contact-inner">
+            <form onSubmit={handleSubmit} className="contact-form-panel">
+              <div className="contact-field">
+                <h3>Contactez-moi</h3>
+                <p>Une idée, un projet ou une opportunité ? Écrivez-moi et je vous répondrai dès que possible.</p>
+                <label htmlFor="contact-name">Nom</label>
+                <div className="contact-input-wrap"><User size={17} /><input id="contact-name" type="text" name="name" placeholder="Votre nom" value={formData.name} onChange={handleChange} required disabled={isLoading} /></div>
+                <label htmlFor="contact-email">Email</label>
+                <div className="contact-input-wrap"><Mail size={17} /><input id="contact-email" type="email" name="email" placeholder="nom@exemple.com" value={formData.email} onChange={handleChange} required disabled={isLoading} /></div>
+                <label htmlFor="contact-message">Message</label>
+                <div className="contact-input-wrap contact-textarea-wrap"><MessageSquare size={17} /><textarea id="contact-message" name="message" placeholder="Parlez-moi de votre projet..." rows="4" value={formData.message} onChange={handleChange} required disabled={isLoading} /></div>
+                <MotionButton type="submit" disabled={isLoading} whileHover={!isLoading ? { scale: 1.02 } : {}} whileTap={!isLoading ? { scale: 0.98 } : {}} className="contact-submit">
+                  {isLoading ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
+                  <span>{isLoading ? "Envoi en cours..." : "Envoyer le message"}</span>
+                </MotionButton>
               </div>
+            </form>
 
-              <div className="flex items-center space-x-3 text-sm text-gray-300">
-                <div className="p-2.5 rounded-lg bg-[#1f3864]/80 text-[#0098ff] border border-[#2f5288]">
-                  <Phone size={18} />
-                </div>
-                <div>
-                  <div className="text-xs text-gray-400 font-mono">Téléphone</div>
-                  <span className="font-semibold text-gray-200">038 35 482 45</span>
-                </div>
+            <aside className="contact-info-panel">
+              <h4>Contact Info</h4>
+              <p className="contact-info-intro">Disponible pour des projets web, mobile et des collaborations créatives.</p>
+              <a className="contact-info-item" href="mailto:kevinnrabearison@gmail.com"><Mail size={20} /><span>kevinnrabearison@gmail.com</span></a>
+              <div className="contact-info-item"><Phone size={20} /><span>038 35 482 45</span></div>
+              <div className="contact-info-item"><MapPin size={20} /><span>Antananarivo, Madagascar</span></div>
+              <div className="contact-socials">
+                <a href="https://github.com/kevinnrabearison-hub" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={18} /></a>
+                <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><Facebook size={18} /></a>
+                <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={18} /></a>
               </div>
+            </aside>
+          </div>
 
-              <div className="flex items-center space-x-3 text-sm text-gray-300">
-                <div className="p-2.5 rounded-lg bg-[#1f3864]/80 text-[#5ab3d5] border border-[#2f5288]">
-                  <MapPin size={18} />
-                </div>
-                <div>
-                  <div className="text-xs text-gray-400 font-mono">Localisation</div>
-                  <span className="font-semibold text-gray-200">Antananarivo, Madagascar</span>
-                </div>
-              </div>
-
-              {/* Social Media Redirection Buttons */}
-              <div className="pt-4 border-t border-vscode-border/60">
-                <div className="text-center sm:text-left text-xs font-mono text-gray-400 mb-2.5">&lt;réseaux_sociaux /&gt;</div>
-                <div className="grid grid-cols-2 gap-2 max-w-sm mx-auto sm:max-w-none">
-                  <a
-                    href="mailto:kevinnrabearison@gmail.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-vscode-editor border border-vscode-border hover:border-[#5ab3d5] text-xs font-mono text-gray-200 hover:text-white transition-all group"
-                  >
-                    <Mail size={15} className="text-[#5ab3d5] group-hover:scale-110 transition-transform" />
-                    <span>Gmail</span>
-                  </a>
-                  <a
-                    href="https://github.com/kevinnrabearison-hub"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-vscode-editor border border-vscode-border hover:border-[#5ab3d5] text-xs font-mono text-gray-200 hover:text-white transition-all group"
-                  >
-                    <Github size={15} className="text-[#0098ff] group-hover:scale-110 transition-transform" />
-                    <span>GitHub</span>
-                  </a>
-                  <a
-                    href="https://facebook.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-vscode-editor border border-vscode-border hover:border-[#5ab3d5] text-xs font-mono text-gray-200 hover:text-white transition-all group"
-                  >
-                    <Facebook size={15} className="text-[#5ab3d5] group-hover:scale-110 transition-transform" />
-                    <span>Facebook</span>
-                  </a>
-                  <a
-                    href="https://linkedin.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-vscode-editor border border-vscode-border hover:border-[#5ab3d5] text-xs font-mono text-gray-200 hover:text-white transition-all group"
-                  >
-                    <Linkedin size={15} className="text-[#0098ff] group-hover:scale-110 transition-transform" />
-                    <span>LinkedIn</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Live Terminal Log Box */}
+          {/* Live Terminal Log Box */}
+          <div>
             {terminalLogs.length > 0 && (
               <div className="glass-panel rounded-xl p-4 border border-vscode-border font-mono text-xs text-gray-300 space-y-2">
                 <div className="flex items-center space-x-2 text-[#5ab3d5] font-semibold text-[11px] pb-2 border-b border-vscode-border/50">
@@ -182,86 +135,6 @@ export default function Contact() {
               </div>
             )}
           </div>
-
-          {/* Form Container */}
-          <form
-            onSubmit={handleSubmit}
-            className="glass-card rounded-xl p-6 sm:p-8 border border-vscode-border space-y-4 shadow-xl"
-          >
-            <div className="space-y-1">
-              <label className="text-xs font-mono text-gray-300">&lt;nom /&gt;</label>
-              <div className="relative">
-                <User className="absolute left-3 top-3 text-gray-400" size={18} />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Ex: Jean Dupont"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  disabled={isLoading}
-                  className="w-full pl-10 pr-4 py-2.5 bg-vscode-editor text-white text-sm rounded-lg border border-vscode-border focus:outline-none focus:border-[#5ab3d5] focus:ring-1 focus:ring-[#5ab3d5] font-sans"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-xs font-mono text-gray-300">&lt;email /&gt;</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="nom@exemple.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  disabled={isLoading}
-                  className="w-full pl-10 pr-4 py-2.5 bg-vscode-editor text-white text-sm rounded-lg border border-vscode-border focus:outline-none focus:border-[#5ab3d5] focus:ring-1 focus:ring-[#5ab3d5] font-sans"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-xs font-mono text-gray-300">&lt;message /&gt;</label>
-              <div className="relative">
-                <MessageSquare className="absolute left-3 top-3 text-gray-400" size={18} />
-                <textarea
-                  name="message"
-                  placeholder="Bonjour Kevinn, je souhaiterais échanger sur..."
-                  rows="4"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  disabled={isLoading}
-                  className="w-full pl-10 pr-4 py-2.5 bg-vscode-editor text-white text-sm rounded-lg border border-vscode-border focus:outline-none focus:border-[#5ab3d5] focus:ring-1 focus:ring-[#5ab3d5] resize-none font-sans"
-                />
-              </div>
-            </div>
-
-            <MotionButton
-              type="submit"
-              disabled={isLoading}
-              whileHover={!isLoading ? { scale: 1.02 } : {}}
-              whileTap={!isLoading ? { scale: 0.98 } : {}}
-              className={`w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 shadow-[0_0_20px_rgba(90,179,213,0.3)] transition-all font-mono ${isLoading
-                  ? "bg-[#1f3864] text-gray-300 cursor-not-allowed"
-                  : "bg-gradient-to-r from-[#0065a9] via-[#0098ff] to-[#5ab3d5] hover:opacity-95 text-white border border-[#5ab3d5]/30"
-                }`}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="animate-spin text-white" size={18} />
-                  <span>&lt;traitement_en_cours... /&gt;</span>
-                </>
-              ) : (
-                <>
-                  <Send size={18} />
-                  <span>&lt;envoyer_message /&gt;</span>
-                </>
-              )}
-            </MotionButton>
-          </form>
         </div>
       </div>
 

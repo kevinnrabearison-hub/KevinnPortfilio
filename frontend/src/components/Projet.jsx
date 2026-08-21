@@ -17,6 +17,7 @@ import {
   Sparkles,
   Layers
 } from "lucide-react";
+import "./Projet.css";
 
 const MotionDiv = motion.div;
 const MotionA = motion.a;
@@ -151,52 +152,53 @@ export default function Projet() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="project-browser-grid">
           {filteredProjets.map((proj, i) => (
             <MotionDiv
               key={proj.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: i * 0.08 }}
-              className={`glass-card rounded-xl p-6 border ${proj.borderColor} space-y-4 hover:scale-[1.02] transition-all duration-300 shadow-lg flex flex-col justify-between group`}
+              className="project-browser"
             >
-              <div>
-                {/* Header Icon & Category Badge */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 rounded-xl bg-gradient-to-br ${proj.color} shadow-md`}>
-                    {proj.icon}
+              <div className="project-tabs-head">
+                <div className="project-tabs">
+                  <div className="project-tab-open">
+                    <span className="project-tab-title">{proj.title}</span>
+                    <button className="project-close-tab" type="button" aria-label={`Fermer ${proj.title}`}>x</button>
                   </div>
-                  <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-vscode-editor border border-vscode-border text-gray-300">
-                    {proj.category}
-                  </span>
                 </div>
+                <div className="project-window-options" aria-hidden="true">
+                  <span>-</span><span>□</span><span className="project-window-close">x</span>
+                </div>
+              </div>
 
-                {/* Title & Description */}
-                <h3 className="text-lg font-bold text-white group-hover:text-[#5ab3d5] transition-colors">
-                  {proj.title}
-                </h3>
-                <p className="text-gray-300 text-xs leading-relaxed mt-2 line-clamp-3">
-                  {proj.description}
-                </p>
+              <div className="project-browser-toolbar">
+                <button type="button" aria-label="Retour">&#8592;</button>
+                <button type="button" aria-label="Avancer" disabled>&#8594;</button>
+                <div className="project-address">{proj.id}.app</div>
+                <button type="button" aria-label="Options">&#8942;</button>
+                <button className="project-star" type="button" aria-label="Ajouter aux favoris">&#9734;</button>
+              </div>
 
-                {/* Stack Badges */}
-                <div className="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-vscode-border/50">
+              <div className="project-browser-page">
+                <div className={`project-browser-icon bg-gradient-to-br ${proj.color}`}>
+                  {proj.icon}
+                </div>
+                <span className="project-category">{proj.category}</span>
+                <h3>{proj.title}</h3>
+                <p>{proj.description}</p>
+                <div className="project-stack">
                   {proj.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-0.5 rounded bg-vscode-editor border border-vscode-border/70 text-[10px] font-mono text-gray-300"
-                    >
-                      {tech}
-                    </span>
+                    <span key={tech}>{tech}</span>
                   ))}
                 </div>
               </div>
 
-              {/* Card Action Buttons */}
-              <div className="flex items-center justify-between pt-4 border-t border-vscode-border/40 mt-4">
+              <div className="project-browser-actions">
                 <button
                   onClick={() => setActiveModalProject(proj)}
-                  className="text-xs text-[#5ab3d5] hover:text-[#0098ff] font-semibold underline flex items-center gap-1"
+                  className="project-details-button"
                 >
                   <Sparkles size={13} />
                   <span>Détails & Code</span>
@@ -207,7 +209,7 @@ export default function Projet() {
                     href={proj.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-vscode-hover border border-vscode-border text-xs text-gray-200 hover:text-white hover:border-[#5ab3d5]/50 transition-all"
+                    className="project-github-link"
                   >
                     <Github size={14} />
                     <span>GitHub</span>

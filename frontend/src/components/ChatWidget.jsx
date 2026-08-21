@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useChat } from "../context/ChatContext";
 import { MessageSquare, X, Send, User, Sparkles, Circle, ShieldCheck, Edit3, Check, Mail, Github, Linkedin, Facebook } from "lucide-react";
+import "./ChatWidget.css";
 
 export default function ChatWidget() {
   const {
@@ -181,24 +182,24 @@ export default function ChatWidget() {
             onContextMenu={(e) => e.preventDefault()}
             onMouseDown={startDragWithMouse}
             onTouchStart={startDragWithTouch}
-            className="relative group flex items-center gap-3 px-4.5 py-3 bg-slate-900/90 hover:bg-slate-950/95 text-white rounded-2xl shadow-[0_0_25px_rgba(90,179,213,0.35)] transition-all duration-300 transform hover:scale-105 active:scale-95 border border-[#5ab3d5]/40 hover:border-[#5ab3d5] backdrop-blur-xl cursor-pointer select-none font-mono"
+            className="chat-floating-button"
             title="Discuter en direct avec Kevinn (Glisser pour déplacer)"
           >
-            <div className="relative flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-tr from-[#0065a9] via-[#0098ff] to-[#5ab3d5] text-white shadow-md p-1.5">
-              <MessageSquare className="w-5 h-5" />
+            <span className="chat-floating-icon">
+              <MessageSquare aria-hidden="true" />
               <span
-                className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-slate-950 ${isAdminOnline ? "bg-emerald-400 animate-pulse" : "bg-[#5ab3d5]"
-                  }`}
+                className={`chat-floating-status ${isAdminOnline ? "chat-floating-status-online" : ""}`}
               />
-            </div>
+            </span>
 
-            <span className="font-bold text-xs text-slate-100 hidden sm:inline-block font-mono">
-              Laisser un message
+            <span className="chat-floating-label">
+              <strong>Laisser un message</strong>
+              <em>{isAdminOnline ? "Réponse généralement rapide" : "Je vous répondrai bientôt"}</em>
             </span>
 
             {/* Unread badge */}
             {unreadCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold text-xs w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-950 animate-bounce shadow-xl font-mono">
+              <span className="chat-unread-badge">
                 {unreadCount}
               </span>
             )}

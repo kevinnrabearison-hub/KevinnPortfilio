@@ -347,7 +347,7 @@ export default function Acceuil() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="tech-3d-grid">
           {categories.map((cat, i) => (
             <MotionDiv
               key={cat.title}
@@ -355,31 +355,35 @@ export default function Acceuil() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className={`bg-vscode-sidebar/90 rounded-xl p-6 border ${cat.border} hover:border-[#5ab3d5]/60 transition-all duration-300 shadow-lg flex flex-col justify-between group`}
+              className="tech-3d-parent"
             >
-              <div>
-                <div className="flex items-center space-x-3 mb-3">
-                  <div className="p-2.5 rounded-lg bg-gray border border-vscode-border group-hover:scale-110 transition-transform">
-                    {cat.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold text-[#5ab3d5] group-hover:text-white transition-colors">
-                      {cat.title}
-                    </h3>
-                    <span className="text-xs text-gray-400">{cat.desc}</span>
+              <div className="tech-3d-card">
+                <div className="tech-3d-logo" aria-hidden="true">
+                  <span className="tech-3d-circle tech-3d-circle1" />
+                  <span className="tech-3d-circle tech-3d-circle2" />
+                  <span className="tech-3d-circle tech-3d-circle3" />
+                  <span className="tech-3d-circle tech-3d-circle4" />
+                  <span className="tech-3d-circle tech-3d-circle5">{cat.icon}</span>
+                </div>
+                <div className="tech-3d-glass" />
+                <div className="tech-3d-content">
+                  <span className="tech-3d-title">{cat.title}</span>
+                  <span className="tech-3d-text">{cat.desc}</span>
+                  <div className="tech-3d-stack">
+                  {cat.items.map((tech) => (
+                    <span key={tech.name}>{tech.name}</span>
+                  ))}
                   </div>
                 </div>
-
-                <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-vscode-border/50">
-                  {cat.items.map((tech) => (
-                    <div
-                      key={tech.name}
-                      className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-vscode-editor border border-vscode-border/70 text-xs font-medium text-gray-200 hover:border-[#5ab3d5]/50 hover:text-white transition-all"
-                    >
-                      <span className="text-base">{tech.icon}</span>
-                      <span>{tech.name}</span>
-                    </div>
-                  ))}
+                <div className="tech-3d-bottom">
+                  <div className="tech-3d-socials">
+                    {cat.items.slice(0, 3).map((tech) => (
+                      <span className="tech-3d-social" key={`${cat.title}-${tech.name}`} title={tech.name}>{tech.icon}</span>
+                    ))}
+                  </div>
+                  <button className="tech-3d-more" type="button" onClick={() => openTab("Competence.jsx")}>
+                    Voir plus <span aria-hidden="true">⌄</span>
+                  </button>
                 </div>
               </div>
             </MotionDiv>
@@ -404,58 +408,53 @@ export default function Acceuil() {
           </MotionButton>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="glass-card rounded-xl p-6 border border-vscode-border hover:border-[#5ab3d5]/50 transition-all space-y-4">
-            <div className="flex justify-between items-start">
-              <h3 className="text-xl font-bold text-white">💻 Portfolio VS Code</h3>
-  
-            </div>
-            <p className="text-gray-300 text-sm">
-              Portfolio interactif et immersif sous forme d'environnement de développement VS Code, avec onglets, terminal interactif et command palette.
-            </p>
-            <div className="flex flex-wrap gap-2 text-xs font-mono text-gray-400">
-              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">React 19</span>
-              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">TailwindCSS</span>
-              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">Framer Motion</span>
-            </div>
-            <div className="pt-2">
-              <a
-                href="https://github.com/kevinnrabearison-hub/PortfolioVSC"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center space-x-2 text-xs font-semibold text-[#5ab3d5] hover:underline"
-              >
-                <FaGithub size={14} />
-                <span>Voir le dépôt GitHub →</span>
-              </a>
-            </div>
-          </div>
+        <div className="featured-projects-grid">
+          {[
+            {
+              title: "Portfolio VS Code",
+              icon: "💻",
+              description: "Portfolio interactif et immersif sous forme d'environnement de développement VS Code, avec onglets, terminal interactif et command palette.",
+              stack: ["React 19", "TailwindCSS", "Framer Motion"],
+              github: "https://github.com/kevinnrabearison-hub/PortfolioVSC",
+            },
+            {
+              title: "BenevolatApp",
+              icon: "📱",
+              description: "Application mobile connectant bénévoles et associations pour la gestion de missions humanitaires et solidaires.",
+              stack: ["React Native", "Expo", "Firebase"],
+              github: "https://github.com/kevinnrabearison-hub/BenevolatApp",
+            },
+          ].map((project) => (
+            <div className="featured-browser-card" key={project.title}>
+              <div className="featured-browser-bar">
+                <div className="featured-browser-circles" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="featured-browser-controls">
+                  <button type="button" aria-label="Retour">&#8249;</button>
+                  <button type="button" aria-label="Avancer" disabled>&#8250;</button>
+                </div>
+                <div className="featured-search-bar">
+                  <span aria-hidden="true">⌕</span>
+                  <span>{project.title.toLowerCase().replaceAll(" ", "-")}.app</span>
+                </div>
+              </div>
 
-          <div className="glass-card rounded-xl p-6 border border-vscode-border hover:border-[#0098ff]/50 transition-all space-y-4">
-            <div className="flex justify-between items-start">
-              <h3 className="text-xl font-bold text-white">📱 BenevolatApp</h3>
-              
+              <div className="featured-browser-content">
+                <h3><span aria-hidden="true">{project.icon}</span> {project.title}</h3>
+                <p>{project.description}</p>
+                <div className="featured-project-stack">
+                  {project.stack.map((tech) => <span key={tech}>{tech}</span>)}
+                </div>
+                <a href={project.github} target="_blank" rel="noreferrer">
+                  <FaGithub size={14} />
+                  <span>Voir le dépôt GitHub →</span>
+                </a>
+              </div>
             </div>
-            <p className="text-gray-300 text-sm">
-              Application mobile connectant bénévoles et associations pour la gestion de missions humanitaires et solidaires.
-            </p>
-            <div className="flex flex-wrap gap-2 text-xs font-mono text-gray-400">
-              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">React Native</span>
-              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">Expo</span>
-              <span className="px-2 py-1 bg-vscode-editor rounded border border-vscode-border">Firebase</span>
-            </div>
-            <div className="pt-2">
-              <a
-                href="https://github.com/kevinnrabearison-hub/BenevolatApp"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center space-x-2 text-xs font-semibold text-[#0098ff] hover:underline"
-              >
-                <FaGithub size={14} />
-                <span>Voir le dépôt GitHub →</span>
-              </a>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 

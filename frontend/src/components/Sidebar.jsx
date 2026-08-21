@@ -39,6 +39,16 @@ const Sidebar = ({ onOpenCommandPalette, onToggleTerminal, onOpenSettings }) => 
         if (action) action();
         else if (file) openTab(file);
       }}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setActive(id);
+          if (action) action();
+          else if (file) openTab(file);
+        }
+      }}
+      role="button"
+      tabIndex={0}
       className={`relative flex items-center justify-center h-12 w-full cursor-pointer transition-all duration-200 group
         ${
           active === id

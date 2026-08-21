@@ -53,6 +53,11 @@ const MainLayout = () => {
         e.preventDefault();
         setIsTerminalOpen((prev) => !prev);
       }
+
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setIsCommandPaletteOpen(true);
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
