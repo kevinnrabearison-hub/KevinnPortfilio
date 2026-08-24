@@ -56,6 +56,11 @@ export default function Apropos() {
     let isVisible = false;
 
     const startVideo = () => {
+      if (isMobile) return;
+      if (!video.src) {
+        video.src = video.dataset.src;
+        video.load();
+      }
       if (!isVisible || hasStarted || video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
       hasStarted = true;
       video.currentTime = 0;
@@ -107,14 +112,14 @@ export default function Apropos() {
             <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-[#5ab3d5] shadow-lg">
               <video
                 ref={profileVideoRef}
-                src="/videos/pdpp.mp4"
-                poster="/pdp2.jpg"
+                data-src="/videos/pdpp.mp4"
+                poster="/bas.jpg"
                 aria-label="Portrait animé de Kevinn Rabearison"
                 className="w-full h-full object-cover"
                 autoPlay
                 muted
                 playsInline
-                preload="metadata"
+                preload="none"
               />
             </div>
 

@@ -130,6 +130,11 @@ export default function Acceuil() {
     let isVisible = false;
 
     const startVideo = () => {
+      if (isMobile) return;
+      if (!video.src) {
+        video.src = video.dataset.src;
+        video.load();
+      }
       if (!isVisible || hasStarted || video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
       hasStarted = true;
       video.currentTime = 0;
@@ -297,14 +302,14 @@ export default function Acceuil() {
                   <div className="profile-image">
                     <video
                       ref={profileVideoRef}
-                      src="/videos/pdpp.mp4"
-                      poster="/pdp2.jpg"
+                      data-src="/videos/pdpp.mp4"
+                      poster="/bas.jpg"
                       aria-label="Portrait animé de Rabearison Fy Tahina Kevinn"
                       className="profile-photo"
                       autoPlay
                       muted
                       playsInline
-                      preload="metadata"
+                      preload="none"
                     />
                   </div>
                 </div>
