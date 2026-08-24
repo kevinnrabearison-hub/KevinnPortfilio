@@ -4,11 +4,10 @@
 
 :root {
   color-scheme: dark;
-  --font-heading: 'JetBrains Mono', 'Fira Code', 'DM Mono', Consolas, monospace;
-  --font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'DM Mono', Consolas, monospace;
+  --font-heading: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --font-display: var(--font-heading);
-  --font-serif: 'Fraunces', serif;
   font-family: var(--font-sans);
 }
 
@@ -179,7 +178,7 @@ body {
   outline-offset: 1px;
 }
 
-/* Grouped Typography System */
+/* Shared typography utilities use only local system fonts. */
 h1, h2, h3, h4, h5, h6, .font-heading, .font-display {
   font-family: var(--font-heading) !important;
   letter-spacing: -0.015em;
@@ -190,22 +189,6 @@ body, p, button, input, select, textarea, .font-sans {
 }
 
 code, pre, kbd, .font-mono, .font-code {
-  font-family: var(--font-mono) !important;
-}
-
-.font-display {
-  font-family: var(--font-display) !important;
-}
-
-.font-heading {
-  font-family: var(--font-heading) !important;
-}
-
-.font-serif {
-  font-family: var(--font-serif) !important;
-}
-
-.font-mono {
   font-family: var(--font-mono) !important;
 }
 
