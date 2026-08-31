@@ -149,35 +149,7 @@ console.log("🌐 Origines CORS autorisées :", uniqueOrigins);
 // ============================================================
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    // Accepter les requêtes sans origin (requêtes same-origin ou Postman)
-    if (!origin) {
-      return callback(null, true);
-    }
-
-    // Accepter localhost en développement
-    if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
-      return callback(null, true);
-    }
-
-    // Si origines configurées, vérifier
-    if (uniqueOrigins.length > 0 && uniqueOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-
-    // Si pas d'origines configurées, accepter tout (mode dev)
-    if (uniqueOrigins.length === 0) {
-      console.warn("⚠️ Pas de FRONTEND_URL configurée - acceptant toutes origines (DEV MODE)");
-      return callback(null, true);
-    }
-
-    console.error("❌ CORS bloqué pour :", origin);
-
-    return callback(
-      new Error(`Origin ${origin} not allowed by CORS`)
-    );
-  },
-
+  origin: true, // Accepter TOUTES les origines (temporaire - à restreindre plus tard)
   credentials: true,
 
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -208,36 +180,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: (origin, callback) => {
-      // Accepter les requêtes sans origin
-      if (!origin) {
-        return callback(null, true);
-      }
-
-      // Accepter localhost
-      if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
-        return callback(null, true);
-      }
-
-      // Si origines configurées, vérifier
-      if (uniqueOrigins.length > 0 && uniqueOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      // Si pas d'origines configurées, accepter tout
-      if (uniqueOrigins.length === 0) {
-        return callback(null, true);
-      }
-
-      console.error("❌ Socket.IO CORS bloqué :", origin);
-
-      return callback(
-        new Error(`Socket origin ${origin} not allowed`)
-      );
-    },
-
+    origin: true, // Accepter TOUTES les origines (temporaire)
     methods: ["GET", "POST"],
-
     credentials: true,
   },
 
