@@ -110,8 +110,15 @@ const loadMemoryStore = async () => {
 export async function initDb() {
 
   if (!process.env.DATABASE_URL) {
-    console.warn(
-      "⚠️ DATABASE_URL absente → démarrage en mode mémoire (données non persistantes)"
+
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(
+        "DATABASE_URL manquante en production : démarrage interrompu"
+      );
+    }
+
+    console.log(
+      "ℹ️ DATABASE_URL absente → mode mémoire"
     );
 
     await loadMemoryStore();
@@ -256,9 +263,6 @@ export async function initDb() {
       err.message
     );
 
-    console.warn(
-      "⚠️ Impossible de connecter PostgreSQL → fallback mode mémoire"
-    );
 
     usePg = false;
 
@@ -267,8 +271,9 @@ export async function initDb() {
       pool = null;
     }
 
-    // Charger le stockage en mémoire en fallback
-    await loadMemoryStore();
+    throw new Error(
+      "Connexion PostgreSQL impossible : démarrage interrompu"
+    );
 
   }
 

@@ -142,7 +142,7 @@ if (pushConfigured) {
   );
 }
 
-console.log("🌐 Origines CORS autorisées :", uniqueOrigins.length ? uniqueOrigins : "[toutes en attente de FRONTEND_URL]");
+console.log("🌐 Origines CORS autorisées :", uniqueOrigins);
 
 // ============================================================
 // CORS
@@ -150,13 +150,7 @@ console.log("🌐 Origines CORS autorisées :", uniqueOrigins.length ? uniqueOri
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Si pas d'origines configurées (FRONTEND_URL manquante), accepter tout en dev
-    if (uniqueOrigins.length === 0) {
-      return callback(null, true);
-    }
-
-    // Si origines configurées, vérifier
-    if (!origin || uniqueOrigins.includes(origin)) {
+    if (uniqueOrigins.includes(origin)) {
       return callback(null, true);
     }
 
@@ -198,13 +192,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: (origin, callback) => {
-      // Si pas d'origines configurées, accepter tout en dev
-      if (uniqueOrigins.length === 0) {
-        return callback(null, true);
-      }
-
-      // Si origines configurées, vérifier
-      if (!origin || uniqueOrigins.includes(origin)) {
+      if (uniqueOrigins.includes(origin)) {
         return callback(null, true);
       }
 
