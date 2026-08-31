@@ -17,9 +17,3 @@ services:
     root: frontend
     buildCommand: npm install && npm run build
     publishPath: dist
-
-databases:
-  - name: portfolio-database
-    plan: starter
-    region: oregon
-    databaseName: portfolio
