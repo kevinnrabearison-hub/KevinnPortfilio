@@ -150,7 +150,24 @@ console.log("🌐 Origines CORS autorisées :", uniqueOrigins);
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (uniqueOrigins.includes(origin)) {
+    // Accepter les requêtes sans origin (requêtes same-origin ou Postman)
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    // Accepter localhost en développement
+    if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
+      return callback(null, true);
+    }
+
+    // Si origines configurées, vérifier
+    if (uniqueOrigins.length > 0 && uniqueOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    // Si pas d'origines configurées, accepter tout (mode dev)
+    if (uniqueOrigins.length === 0) {
+      console.warn("⚠️ Pas de FRONTEND_URL configurée - acceptant toutes origines (DEV MODE)");
       return callback(null, true);
     }
 
@@ -192,7 +209,23 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: (origin, callback) => {
-      if (uniqueOrigins.includes(origin)) {
+      // Accepter les requêtes sans origin
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      // Accepter localhost
+      if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
+        return callback(null, true);
+      }
+
+      // Si origines configurées, vérifier
+      if (uniqueOrigins.length > 0 && uniqueOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      // Si pas d'origines configurées, accepter tout
+      if (uniqueOrigins.length === 0) {
         return callback(null, true);
       }
 
