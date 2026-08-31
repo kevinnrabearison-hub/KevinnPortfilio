@@ -17,6 +17,10 @@ let usePg = false;
 const VISITOR_RETENTION_DAYS = 180;
 const MESSAGE_RETENTION_DAYS = 90;
 
+// Résilience pour Render gratuit
+const DB_RETRY_ATTEMPTS = 3;
+const DB_RETRY_DELAY = 1000; // 1 seconde
+
 const dataFilePath = path.resolve(
   path.dirname(new URL(import.meta.url).pathname),
   "data.json"
@@ -27,6 +31,18 @@ const memoryStore = {
   messages: new Map(),
   pushSubscriptions: new Map(),
   messageIdCounter: 1
+};
+
+// Utilitaire: retry avec backoff exponentiel
+const withRetry = async (fn, attempts = DB_RETRY_ATTEMPTS, delay = DB_RETRY_DELAY) => {
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (i === attempts - 1) throw err;
+      await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
+    }
+  }
 };
 
 
@@ -94,15 +110,8 @@ const loadMemoryStore = async () => {
 export async function initDb() {
 
   if (!process.env.DATABASE_URL) {
-
-    if (process.env.NODE_ENV === "production") {
-      throw new Error(
-        "DATABASE_URL manquante en production : démarrage interrompu"
-      );
-    }
-
-    console.log(
-      "ℹ️ DATABASE_URL absente → mode mémoire"
+    console.warn(
+      "⚠️ DATABASE_URL absente → démarrage en mode mémoire (données non persistantes)"
     );
 
     await loadMemoryStore();
@@ -247,6 +256,9 @@ export async function initDb() {
       err.message
     );
 
+    console.warn(
+      "⚠️ Impossible de connecter PostgreSQL → fallback mode mémoire"
+    );
 
     usePg = false;
 
@@ -255,9 +267,8 @@ export async function initDb() {
       pool = null;
     }
 
-    throw new Error(
-      "Connexion PostgreSQL impossible : démarrage interrompu"
-    );
+    // Charger le stockage en mémoire en fallback
+    await loadMemoryStore();
 
   }
 
