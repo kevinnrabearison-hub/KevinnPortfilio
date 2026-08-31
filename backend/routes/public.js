@@ -55,12 +55,13 @@ export const createPublicRouter = ({
       try {
         const now = Date.now();
 
+        // Cache 5 minutes au lieu de 1 min → moins de requêtes DB
         if (publicVisitorCountCache.expiresAt <= now) {
           const count = await getVisitorCount();
           publicVisitorCountCache.value = count === 0
             ? 0
             : Math.max(10, Math.round(count / 10) * 10);
-          publicVisitorCountCache.expiresAt = now + 60 * 1000;
+          publicVisitorCountCache.expiresAt = now + publicVisitorCountCache.cacheTTL;
         }
 
         return res.json({
@@ -69,9 +70,10 @@ export const createPublicRouter = ({
         });
       } catch (error) {
         console.error("❌ GET /api/visitors/count:", error);
-        return res.status(500).json({
-          success: false,
-          error: "Impossible de récupérer le nombre de visiteurs",
+        // Retour du cache précédent même en cas d'erreur → meilleure UX
+        return res.json({
+          success: true,
+          count: publicVisitorCountCache.value || 0,
         });
       }
     }

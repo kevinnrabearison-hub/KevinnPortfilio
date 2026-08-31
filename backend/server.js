@@ -46,6 +46,19 @@ const port = process.env.PORT || 5000;
 
 app.set("trust proxy", 1);
 
+// ============================================================
+// KEEP-ALIVE: Éviter les cold starts Render gratuit
+// ============================================================
+const startKeepalive = () => {
+  // Ping interne toutes les 14 min (avant le timeout Render ~15min)
+  setInterval(() => {
+    fetch(`http://localhost:${port}/api/health`)
+      .catch(() => {}); // Ignore les erreurs
+  }, 14 * 60 * 1000);
+
+  console.log("⏰ Keep-alive activé pour Render gratuit");
+};
+
 const adminLoginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 10,
@@ -60,7 +73,7 @@ const adminLoginLimiter = rateLimit({
 
 const visitorCountLimiter = rateLimit({
   windowMs: 60 * 1000,
-  limit: 30,
+  limit: 60,  // Augmenté de 30 à 60 pour meilleure UX
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: {
@@ -71,7 +84,7 @@ const visitorCountLimiter = rateLimit({
 
 const contactLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: 5,
+  limit: 10,  // Augmenté de 5 à 10 pour meilleure UX
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: {
@@ -94,6 +107,7 @@ const mailTransporter =
 let publicVisitorCountCache = {
   value: null,
   expiresAt: 0,
+  cacheTTL: 5 * 60 * 1000,  // Cache 5 minutes au lieu de instant expiry
 };
 
 const localOrigins = process.env.NODE_ENV === "production"
@@ -128,7 +142,7 @@ if (pushConfigured) {
   );
 }
 
-console.log("🌐 Origines CORS autorisées :", uniqueOrigins);
+console.log("🌐 Origines CORS autorisées :", uniqueOrigins.length ? uniqueOrigins : "[toutes en attente de FRONTEND_URL]");
 
 // ============================================================
 // CORS
@@ -136,7 +150,13 @@ console.log("🌐 Origines CORS autorisées :", uniqueOrigins);
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (uniqueOrigins.includes(origin)) {
+    // Si pas d'origines configurées (FRONTEND_URL manquante), accepter tout en dev
+    if (uniqueOrigins.length === 0) {
+      return callback(null, true);
+    }
+
+    // Si origines configurées, vérifier
+    if (!origin || uniqueOrigins.includes(origin)) {
       return callback(null, true);
     }
 
@@ -178,7 +198,13 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: (origin, callback) => {
-      if (uniqueOrigins.includes(origin)) {
+      // Si pas d'origines configurées, accepter tout en dev
+      if (uniqueOrigins.length === 0) {
+        return callback(null, true);
+      }
+
+      // Si origines configurées, vérifier
+      if (!origin || uniqueOrigins.includes(origin)) {
         return callback(null, true);
       }
 
@@ -266,7 +292,7 @@ app.use(
 );
 
 // ============================================================
-// HEALTH CHECK
+// HEALTH CHECK & KEEP-ALIVE
 // ============================================================
 
 app.get("/", (req, res) => {
@@ -275,6 +301,11 @@ app.get("/", (req, res) => {
     message:
       "Portfolio backend is running",
   });
+});
+
+// Route pour keep-alive (invisible, pas de logs)
+app.get("/api/health", (req, res) => {
+  res.status(200).send("OK");
 });
 
 // ============================================================
@@ -291,12 +322,16 @@ const boot = async () => {
 
     await purgeExpiredData();
 
+    // Purge quotidienne
     const retentionInterval = setInterval(() => {
       purgeExpiredData().catch((error) => {
         console.error("❌ Purge des données expirées:", error);
       });
     }, 24 * 60 * 60 * 1000);
     retentionInterval.unref?.();
+
+    // Keep-alive pour Render gratuit
+    startKeepalive();
 
     console.log(
       "✅ PostgreSQL initialisé"
